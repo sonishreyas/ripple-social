@@ -14,6 +14,7 @@ const Register = () => {
 		firstName: false,
 		lastName: false,
 		email: false,
+		username: false,
 		password: false,
 		confirmPassword: false,
 	};
@@ -121,7 +122,47 @@ const Register = () => {
 				</label>
 				<sub className="p-2 my-2 inactive-check"></sub>
 			</section>
-
+			<section
+				className={`input-container flex-column m-5 ${
+					registerState.username.length > 0 || registerState.focus.username
+						? "focused"
+						: ""
+				}`}
+			>
+				<input
+					id="username"
+					className="textbox-content p-5"
+					type="text"
+					name="username"
+					onChange={(e) =>
+						setValueHandler(e, "username", "UPDATE_USERNAME", registerDispatch)
+					}
+					value={registerState.username}
+					onFocus={() =>
+						setFocusHandler(
+							"username",
+							true,
+							"UPDATE_FOCUS",
+							registerDispatch,
+							focusReset
+						)
+					}
+					onBlur={() =>
+						setFocusHandler(
+							"username",
+							false,
+							"UPDATE_FOCUS",
+							registerDispatch,
+							focusReset
+						)
+					}
+				/>
+				<label htmlFor="username" className="textbox-label m-0 px-1">
+					{" "}
+					Username<span className="required-field">*</span>
+				</label>
+				<sub className="p-2 my-2 inactive-check"></sub>
+			</section>
 			<section
 				className={`input-container flex-column m-5 ${
 					registerState.email.length > 0 || registerState.focus.email

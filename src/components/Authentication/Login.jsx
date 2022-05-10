@@ -26,21 +26,23 @@ const Login = () => {
 		>
 			<section
 				className={`input-container flex-column m-5 ${
-					loginState.email.length > 0 || loginState.focus.email ? "focused" : ""
+					loginState.username.length > 0 || loginState.focus.username
+						? "focused"
+						: ""
 				}`}
 			>
 				<input
-					id="email"
+					id="username"
 					className="textbox-content p-5"
-					type="email"
-					name="email"
+					type="username"
+					name="username"
 					onChange={(e) =>
-						setValueHandler(e, "email", "UPDATE_EMAIL", loginDispatch)
+						setValueHandler(e, "username", "UPDATE_USERNAME", loginDispatch)
 					}
-					value={loginState.email}
+					value={loginState.username}
 					onFocus={() =>
 						setFocusHandler(
-							"email",
+							"username",
 							true,
 							"UPDATE_FOCUS",
 							loginDispatch,
@@ -49,7 +51,7 @@ const Login = () => {
 					}
 					onBlur={() =>
 						setFocusHandler(
-							"email",
+							"username",
 							false,
 							"UPDATE_FOCUS",
 							loginDispatch,
@@ -57,8 +59,8 @@ const Login = () => {
 						)
 					}
 				/>
-				<label htmlFor="email" className="textbox-label m-0 px-1">
-					Email<span className="required-field">*</span>
+				<label htmlFor="username" className="textbox-label m-0 px-1">
+					Username<span className="required-field">*</span>
 				</label>
 				<sub className="email-check p-2 my-2"></sub>
 			</section>

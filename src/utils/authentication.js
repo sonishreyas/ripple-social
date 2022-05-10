@@ -16,7 +16,10 @@ const RequireAuth = ({ children }) => {
  */
 const loginHandler = (e, location, navigate, loginState, authDispatch) => {
 	e.preventDefault();
-	const loginInfo = { email: loginState.email, password: loginState.password };
+	const loginInfo = {
+		username: loginState.username,
+		password: loginState.password,
+	};
 	(async () => {
 		try {
 			const response = await axios.post(`/api/auth/login`, loginInfo);
@@ -90,7 +93,7 @@ const setValueHandler = (e, field, type, loginDispatch) => {
 const setTestHandler = (loginDispatch) =>
 	loginDispatch({
 		type: "TEST_CREDENTIAL",
-		payload: { email: "test@gmail.com", password: "test123" },
+		payload: { username: "test", password: "test123" },
 	});
 
 const setFocusHandler = (field, value, type, loginDispatch, focusReset) => {

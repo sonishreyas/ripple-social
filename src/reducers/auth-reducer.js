@@ -6,8 +6,8 @@
  */
 const loginReducer = (loginState, { type, payload }) => {
 	switch (type) {
-		case "UPDATE_EMAIL":
-			return { ...loginState, email: payload.email };
+		case "UPDATE_USERNAME":
+			return { ...loginState, username: payload.username };
 		case "UPDATE_PASSWORD":
 			return {
 				...loginState,
@@ -18,15 +18,15 @@ const loginReducer = (loginState, { type, payload }) => {
 		case "TEST_CREDENTIAL":
 			return {
 				...loginState,
-				email: payload.email,
+				username: payload.username,
 				password: payload.password,
 			};
 		case "RESET":
 			return {
 				...loginState,
-				email: "",
+				username: "",
 				password: "",
-				focus: { email: false, password: false },
+				focus: { username: false, password: false },
 			};
 		default:
 			return loginState;
@@ -47,6 +47,8 @@ const registerReducer = (registerState, { type, payload }) => {
 			return { ...registerState, firstName: payload.firstName };
 		case "UPDATE_LAST_NAME":
 			return { ...registerState, lastName: payload.lastName };
+		case "UPDATE_USERNAME":
+			return { ...registerState, username: payload.username };
 		case "UPDATE_PASSWORD":
 			return {
 				...registerState,
@@ -66,6 +68,7 @@ const registerReducer = (registerState, { type, payload }) => {
 				password: "",
 				firstName: "",
 				lastName: "",
+				username: "",
 				confirmPassword: "",
 				focus: {
 					firstName: false,
@@ -92,6 +95,8 @@ const authReducer = (authState, { type, payload }) => {
 			return { ...authState, token: payload.token };
 		case "UPDATE_EMAIL":
 			return { ...authState, email: payload.email };
+		case "UPDATE_USERNAME":
+			return { ...authState, username: payload.username };
 		case "UPDATE_FIRSTNAME":
 			return { ...authState, firstName: payload.firstName };
 		case "UPDATE_LASTNAME":
