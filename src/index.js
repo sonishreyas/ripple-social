@@ -11,7 +11,7 @@ import {
 	RegisterProvider,
 	ThemeProvider,
 } from "context";
-
+import { ToastPortal } from "components";
 // Call make Server
 ReactDOM.render(
 	<React.StrictMode>
@@ -22,6 +22,7 @@ ReactDOM.render(
 						<LoginProvider>
 							<AuthProvider>
 								<App />
+								<ToastPortal />
 							</AuthProvider>
 						</LoginProvider>
 					</RegisterProvider>

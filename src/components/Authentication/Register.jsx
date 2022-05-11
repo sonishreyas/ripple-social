@@ -2,8 +2,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 import { useRegister, useAuth } from "context";
 import { registerHandler, setValueHandler, setFocusHandler } from "utils";
-import { ToastContainer, toast } from "react-toastify";
-
+import { useToast } from "custom-hooks";
 const Register = () => {
 	const { registerState, registerDispatch } = useRegister();
 	const { authDispatch } = useAuth();
@@ -11,6 +10,7 @@ const Register = () => {
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState();
 	const [showConfirmPassword, setShowConfirmPassword] = useState();
+	const { showToast } = useToast();
 	const focusReset = {
 		firstName: false,
 		lastName: false,
@@ -29,9 +29,16 @@ const Register = () => {
 
 	const handleSubmit = (e) => {
 		if (registerState.password !== registerState.confirmPassword) {
-			toast.error("Password should match");
+			showToast("Password should match", "error");
 		} else {
-			registerHandler(e, registerState, navigate, location, authDispatch);
+			registerHandler(
+				e,
+				registerState,
+				navigate,
+				location,
+				authDispatch,
+				showToast
+			);
 		}
 	};
 	return (
@@ -334,7 +341,6 @@ const Register = () => {
 					Register
 				</button>
 			</div>
-			<ToastContainer />
 		</>
 	);
 };
