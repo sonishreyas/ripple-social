@@ -20,29 +20,27 @@ const Login = () => {
 	return (
 		<form
 			onSubmit={(e) =>
-				loginHandler(e, location, navigate, loginState, authDispatch)
+				loginHandler(e, loginState, navigate, location, authDispatch)
 			}
 			className="input-form login flex-column flex-gap-1 flex-wrap h-auto w-100"
 		>
 			<section
 				className={`input-container flex-column m-5 ${
-					loginState.username.length > 0 || loginState.focus.username
-						? "focused"
-						: ""
+					loginState.email.length > 0 || loginState.focus.email ? "focused" : ""
 				}`}
 			>
 				<input
-					id="username"
+					id="email"
 					className="textbox-content p-5"
-					type="username"
-					name="username"
+					type="email"
+					name="email"
 					onChange={(e) =>
-						setValueHandler(e, "username", "UPDATE_USERNAME", loginDispatch)
+						setValueHandler(e, "email", "UPDATE_EMAIL", loginDispatch)
 					}
-					value={loginState.username}
+					value={loginState.email}
 					onFocus={() =>
 						setFocusHandler(
-							"username",
+							"email",
 							true,
 							"UPDATE_FOCUS",
 							loginDispatch,
@@ -51,7 +49,7 @@ const Login = () => {
 					}
 					onBlur={() =>
 						setFocusHandler(
-							"username",
+							"email",
 							false,
 							"UPDATE_FOCUS",
 							loginDispatch,
@@ -60,7 +58,7 @@ const Login = () => {
 					}
 				/>
 				<label htmlFor="username" className="textbox-label m-0 px-1">
-					Username<span className="required-field">*</span>
+					Email<span className="required-field">*</span>
 				</label>
 				<sub className="email-check p-2 my-2"></sub>
 			</section>
@@ -112,12 +110,12 @@ const Login = () => {
 				<sub className="password-check p-2 my-2"></sub>
 			</section>
 			<button
-				className="outline-btn p-5 b-radius-2 my-5 mx-0 text-bold"
+				className="outline-btn p-5 b-radius-2 my-5 mx-0 text-bold cursor-pointer"
 				onClick={() => setTestHandler(loginDispatch)}
 			>
 				Test Credentials
 			</button>
-			<button className="primary-btn p-5 b-radius-2 my-5 mx-0 text-bold">
+			<button className="primary-btn p-5 b-radius-2 my-5 mx-0 text-bold cursor-pointer">
 				Login
 			</button>
 		</form>

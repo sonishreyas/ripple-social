@@ -6,6 +6,8 @@
  */
 const loginReducer = (loginState, { type, payload }) => {
 	switch (type) {
+		case "UPDATE_EMAIL":
+			return { ...loginState, email: payload.email };
 		case "UPDATE_USERNAME":
 			return { ...loginState, username: payload.username };
 		case "UPDATE_PASSWORD":
@@ -18,7 +20,7 @@ const loginReducer = (loginState, { type, payload }) => {
 		case "TEST_CREDENTIAL":
 			return {
 				...loginState,
-				username: payload.username,
+				email: payload.email,
 				password: payload.password,
 			};
 		case "RESET":
