@@ -1,0 +1,9 @@
+.create-post-container {
+  width: 50rem;
+  height: 10rem;
+
+}
+
+.outline-btn {
+  background-color: var(--primary-color);
+}

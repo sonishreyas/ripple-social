@@ -1,10 +1,11 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import { Authentication, Home } from "pages";
-import { Header, Footer, NavBar } from "components";
-import { useNavbar } from "context";
+import { Header, Footer, NavBar, NewPostModal } from "components";
+import { useNavbar, usePost } from "context";
 import { RequireAuth } from "utils";
 function App() {
 	const { showNavbar } = useNavbar();
+	const { showPostModal } = usePost();
 	const location = useLocation();
 	return (
 		<div className="grid-container">
@@ -22,6 +23,7 @@ function App() {
 			</Routes>
 			<Outlet />
 			{showNavbar && location.pathname !== "/auth" && <NavBar />}
+			{showPostModal && <NewPostModal />}
 			<Footer />
 		</div>
 	);

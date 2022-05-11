@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "css/index.css";
+import "css/app.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -8,6 +8,7 @@ import {
 	AuthProvider,
 	LoginProvider,
 	NavbarProvider,
+	PostProvider,
 	RegisterProvider,
 	ThemeProvider,
 } from "context";
@@ -21,8 +22,10 @@ ReactDOM.render(
 					<RegisterProvider>
 						<LoginProvider>
 							<AuthProvider>
-								<App />
-								<ToastPortal />
+								<PostProvider>
+									<App />
+									<ToastPortal />
+								</PostProvider>
 							</AuthProvider>
 						</LoginProvider>
 					</RegisterProvider>
