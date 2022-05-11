@@ -33,25 +33,6 @@ const Header = () => {
 					</Link>
 				</div>
 				<div className="social-icon-container flex-row align-center flex-gap-2">
-					{location.pathname !== "/auth" && (
-						<ul className="no-list spaced-list flex-row align-center flex-gap-2 mx-5">
-							<li className="header-nav-icons h-auto pr-2">
-								<NavLink to={"/"} className={getActiveClass}>
-									Home
-								</NavLink>
-							</li>
-							<li className="header-nav-icons h-auto pr-2">
-								<NavLink to={"/dashboard"} className={getActiveClass}>
-									Dashboard
-								</NavLink>
-							</li>
-							<li className="header-nav-icons h-auto pr-2">
-								<NavLink to={"/habits/all"} className={getActiveClass}>
-									My Habits
-								</NavLink>
-							</li>
-						</ul>
-					)}
 					<ul className="no-list spaced-list flex-row align-center flex-gap-2 mx-5">
 						<li className="header-theme-small-icon h-auto pr-2 cursor-pointer">
 							<span className="social">

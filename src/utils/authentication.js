@@ -3,8 +3,17 @@ import {
 	signInWithEmailAndPassword,
 	updateProfile,
 } from "firebase/auth";
-import { auth } from "backend/firebase/firebase";
+import { auth, db } from "backend/firebase/firebase";
 import { Navigate, useLocation } from "react-router-dom";
+import {
+	collection,
+	doc,
+	getDocs,
+	query,
+	setDoc,
+	where,
+} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const RequireAuth = ({ children }) => {
 	const location = useLocation();
@@ -55,26 +64,46 @@ const registerHandler = (
 	e.preventDefault();
 	(async () => {
 		try {
-			const result = await createUserWithEmailAndPassword(
-				auth,
-				registerState.email,
-				registerState.password
-			);
-			await updateProfile(auth.currentUser, {
-				displayName: registerState.firstName + " " + registerState.lastName,
-			});
-			const userData = {
-				token: result.user.accessToken,
-				name: result.user.displayName,
-				email: result.user.email,
-				uid: result.user.uid,
-			};
-			authDispatch({
-				type: "UPDATE_USER",
-				payload: userData,
-			});
-			localStorage.setItem("user", JSON.stringify(userData));
-			navigate(location?.state?.from?.pathname);
+			if (!registerState.username.length)
+				toast.error("Username cannot be empty");
+			else {
+				const checkUsername = await getDocs(
+					query(
+						collection(db, "users"),
+						where("username", "==", registerState.username)
+					)
+				);
+				if (checkUsername.docs.length) {
+					toast.error("Username not available");
+				} else {
+					const result = await createUserWithEmailAndPassword(
+						auth,
+						registerState.email,
+						registerState.password
+					);
+					const userData = {
+						token: result.user.accessToken,
+						name: result.user.displayName,
+						email: result.user.email,
+						uid: result.user.uid,
+						username: registerState.username,
+					};
+					authDispatch({
+						type: "UPDATE_USER",
+						payload: userData,
+					});
+					localStorage.setItem("user", JSON.stringify(userData));
+					const newUserRef = doc(db, "users", userData.uid);
+					await setDoc(newUserRef, {
+						...userData,
+						followers: [],
+						following: [],
+						bookmarks: [],
+					});
+					toast.success("User registered successfully..");
+					navigate(location?.state?.from?.pathname);
+				}
+			}
 		} catch (error) {
 			console.log(error);
 		}

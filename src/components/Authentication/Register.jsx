@@ -150,7 +150,7 @@ const Register = () => {
 								registerDispatch
 							)
 						}
-						value={registerState.lastName}
+						value={registerState.username}
 						onFocus={() =>
 							setFocusHandler(
 								"username",
