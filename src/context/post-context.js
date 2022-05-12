@@ -5,6 +5,7 @@ const defaultPostInitialState = {
 	newPost: {
 		postText: "",
 		uploadedFiles: [],
+		fileUrls: [],
 	},
 	feedPosts: [],
 	explorePosts: [],

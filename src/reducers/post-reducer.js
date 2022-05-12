@@ -24,7 +24,10 @@ const postReducer = (state, { type, payload }) => {
 				...state,
 				newPost: {
 					...state.newPost,
-					fileUrls: [...state.newPost.fileUrls, { ...payload.fileUrls }],
+					fileUrls: [
+						...state.newPost.fileUrls,
+						{ ...payload.newPost.fileUrls },
+					],
 				},
 			};
 		default:
