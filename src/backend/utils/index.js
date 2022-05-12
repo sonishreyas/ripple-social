@@ -7,4 +7,4 @@ export {
 	setFocusHandler,
 } from "./authentication";
 export { getAllUsers, getCurrentUser, updateUser } from "./users-management";
-export { addNewPost } from "./post-management";
+export { addNewPost, uploadFilesForPost } from "./post-management";

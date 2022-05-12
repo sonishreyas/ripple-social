@@ -4,6 +4,7 @@ import { postReducer } from "reducers";
 const defaultPostInitialState = {
 	newPost: {
 		postText: "",
+		uploadedFiles: [],
 	},
 	feedPosts: [],
 	explorePosts: [],

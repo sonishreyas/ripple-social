@@ -8,6 +8,25 @@ const postReducer = (state, { type, payload }) => {
 					postText: payload?.newPost?.postText,
 				},
 			};
+		case "UPDATE_UPLOAD_FILE":
+			return {
+				...state,
+				newPost: {
+					...state.newPost,
+					uploadedFiles: [
+						...state.newPost.uploadedFiles,
+						{ ...payload.newPost.uploadedFiles },
+					],
+				},
+			};
+		case "UPDATE_UPLOADED_URL":
+			return {
+				...state,
+				newPost: {
+					...state.newPost,
+					fileUrls: [...state.newPost.fileUrls, { ...payload.fileUrls }],
+				},
+			};
 		default:
 			return state;
 	}

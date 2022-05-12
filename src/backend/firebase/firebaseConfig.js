@@ -1,6 +1,7 @@
 const firebaseConfig = {
 	apiKey: "AIzaSyBQjjRSge1NWeYnXiqeRpIwMPcssDHGnyY",
 	authDomain: "ripple-54aa4.firebaseapp.com",
+	databaseURL: "gs://ripple-54aa4.appspot.com",
 	projectId: "ripple-54aa4",
 	storageBucket: "ripple-54aa4.appspot.com",
 	messagingSenderId: "452159462020",

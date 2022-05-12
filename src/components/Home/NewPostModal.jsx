@@ -1,13 +1,17 @@
-import { useModal, usePost } from "context";
+import { addNewPost } from "backend";
+import { useAuth, useModal, usePost } from "context";
 import { useToast } from "custom-hooks";
 import { useState } from "react";
 import { EmojiContainer } from "./EmojiContainer";
+import { v4 as uuid } from "uuid";
+import { uploadFilesForPost } from "backend/utils";
 
 const NewPostModal = () => {
 	const { showPostModal, setShowPostModal, postState, postDispatch } =
 		usePost();
 	const { showToast } = useToast();
 	const { modalDispatch, setShowModal } = useModal();
+	const { authState } = useAuth();
 	const [showEmojiContainer, setShowEmojiContainer] = useState(false);
 	const handleDismissModal = () => setShowModal(false);
 
@@ -34,7 +38,35 @@ const NewPostModal = () => {
 		showEmojiContainer
 			? setShowEmojiContainer(false)
 			: setShowEmojiContainer(true);
-	// console.log(postState);
+
+	const handleCreatePost = (e) => {
+		let newPost;
+		if (postState.newPost?.createdAt?.length) {
+			newPost = {
+				...postState.newPost,
+				userId: authState.uid,
+			};
+		} else {
+			newPost = {
+				...postState.newPost,
+				createdAt: new Date(),
+				userId: authState.uid,
+			};
+		}
+
+		addNewPost(e, newPost, postDispatch, showToast);
+		setShowPostModal(false);
+	};
+
+	const handleUploadFiles = (e, type) => {
+		Object.keys(e.target.files).map((i) =>
+			uploadFilesForPost(
+				{ type: type, payload: e.target.files[i] },
+				postDispatch
+			)
+		);
+	};
+
 	return (
 		<div className="modal flex-row justify-content-center align-center">
 			<div className="modal-background"></div>
@@ -51,7 +83,7 @@ const NewPostModal = () => {
 				<textarea
 					placeholder="What's in your mind?"
 					className="post-text-container my-5 b-radius-1 p-5 w-100"
-					value={postState.newPost.postText}
+					value={postState?.newPost?.postText}
 					onChange={(e) =>
 						postDispatch({
 							type: "UPDATE_POST_TEXT",
@@ -63,14 +95,48 @@ const NewPostModal = () => {
 						})
 					}
 				/>
-				<div className="flex-row justify-content-space-between align-center flex-gap-1">
+				<div className="flex-row justify-content-space-between align-center flex-gap-1 flex-wrap">
 					<div className="flex-row justify-content-center align-center flex-gap-1">
-						<span className="basic-card  b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
+						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
+							<input
+								type="file"
+								multiple
+								accept="image/jpeg, image/png, image/svg"
+								className="remove-input-file-style"
+								onChange={(e) => handleUploadFiles(e, "images")}
+							/>
 							<i className="fa-solid fa-images social post-icons"></i>
-						</span>
-						<span className=" p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
+						</label>
+						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
+							<input
+								type="file"
+								multiple
+								accept="video/*"
+								className="remove-input-file-style"
+								onChange={(e) => handleUploadFiles(e, "videos")}
+							/>
+							<i className="fa-solid fa-video social post-icons"></i>
+						</label>
+						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
+							<input
+								type="file"
+								multiple
+								accept="image/gif"
+								className="remove-input-file-style"
+								onChange={(e) => handleUploadFiles(e, "gifs")}
+							/>
 							<p className="text-bold social post-icons">GIF</p>
-						</span>
+						</label>
+						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
+							<input
+								type="file"
+								multiple
+								accept=".pdf"
+								className="remove-input-file-style"
+								onChange={(e) => handleUploadFiles(e, "pdfs")}
+							/>
+							<i className="fa-solid fa-file-pdf social post-icons"></i>
+						</label>
 						<span
 							className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer"
 							onClick={handleEmojiContainer}
@@ -79,10 +145,19 @@ const NewPostModal = () => {
 						</span>
 					</div>
 					<div className="flex-row justify-content-center align-center flex-gap-1">
-						<button className="primary-btn p-5 cursor-pointer b-radius-2 ">
+						<button
+							className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
+							onClick={handleCreatePost}
+						>
+							Schedule Post
+						</button>
+						<button
+							className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
+							onClick={handleCreatePost}
+						>
 							Create Post
 						</button>
-						<button className="outline-btn p-5 cursor-pointer b-radius-2">
+						<button className="outline-btn p-5 cursor-pointer b-radius-2 flex-grow-1">
 							Save Draft
 						</button>
 					</div>
