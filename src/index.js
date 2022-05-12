@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import {
 	AuthProvider,
 	LoginProvider,
+	ModalProvider,
 	NavbarProvider,
 	PostProvider,
 	RegisterProvider,
@@ -23,8 +24,10 @@ ReactDOM.render(
 						<LoginProvider>
 							<AuthProvider>
 								<PostProvider>
-									<App />
-									<ToastPortal />
+									<ModalProvider>
+										<App />
+										<ToastPortal />
+									</ModalProvider>
 								</PostProvider>
 							</AuthProvider>
 						</LoginProvider>

@@ -11,11 +11,11 @@ const CreatePost = () => {
 		<div className="basic-card create-post-container p-5 b-radius-2 flex-row justify-content-center align-center flex-gap-1">
 			{authState.token && (
 				<Link to={"/profile"} className="no-link">
-					<article class="avatar-container flex-row justify-content-center align-center flex-gap-1">
+					<article className="avatar-container flex-row justify-content-center align-center flex-gap-1">
 						<img
 							src="https://raw.githubusercontent.com/sonishreyas/rippleUI/dev/components/media/images/profile.jpeg"
 							alt="User Profile Picture"
-							class="avatar b-radius-circle l"
+							className="avatar b-radius-circle l"
 							aria-label="User Profile Avatar"
 						/>
 					</article>
