@@ -2,7 +2,7 @@ import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import { Authentication, Home } from "pages";
 import { Header, Footer, NavBar, NewPostModal, ConfirmModal } from "components";
 import { useModal, useNavbar, usePost } from "context";
-import { RequireAuth } from "utils";
+import { RequireAuth } from "backend";
 function App() {
 	const { showNavbar } = useNavbar();
 	const { showPostModal } = usePost();

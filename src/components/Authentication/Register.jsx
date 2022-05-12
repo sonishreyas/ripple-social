@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 import { useRegister, useAuth } from "context";
-import { registerHandler, setValueHandler, setFocusHandler } from "utils";
+import { registerHandler, setValueHandler, setFocusHandler } from "backend";
 import { useToast } from "custom-hooks";
 const Register = () => {
 	const { registerState, registerDispatch } = useRegister();
