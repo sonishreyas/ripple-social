@@ -1,17 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "css/index.css";
+import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
-import { makeServer } from "./server";
 import { BrowserRouter as Router } from "react-router-dom";
+import {
+	AuthProvider,
+	LoginProvider,
+	NavbarProvider,
+	RegisterProvider,
+	ThemeProvider,
+} from "context";
 
 // Call make Server
-makeServer();
-
 ReactDOM.render(
 	<React.StrictMode>
 		<Router>
-			<App />
+			<ThemeProvider>
+				<NavbarProvider>
+					<RegisterProvider>
+						<LoginProvider>
+							<AuthProvider>
+								<App />
+							</AuthProvider>
+						</LoginProvider>
+					</RegisterProvider>
+				</NavbarProvider>
+			</ThemeProvider>
 		</Router>
 	</React.StrictMode>,
 	document.getElementById("root")
