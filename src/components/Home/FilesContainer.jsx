@@ -20,17 +20,7 @@ const FilesContainer = () => {
 		}
 	};
 	const moveIndex = (index) => setSlideIndex(index);
-	// useEffect(() => {
-	// 	const moveSlide = () => {
-	// 		if (slideIndex >= sliderData.length) {
-	// 			setSlideIndex(1);
-	// 		} else {
-	// 			setSlideIndex(slideIndex + 1);
-	// 		}
-	// 	};
-	// 	clearTimeout();
-	// 	setTimeout(moveSlide, 15000);
-	// }, [slideIndex]);
+
 	return (
 		<>
 			<article className="post-image-container flex-row justify-content-center align-center">
