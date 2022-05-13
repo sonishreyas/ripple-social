@@ -3,12 +3,17 @@ import { useAuth, useModal, usePost } from "context";
 import { useToast } from "custom-hooks";
 import { useState } from "react";
 import { EmojiContainer } from "./EmojiContainer";
-import { v4 as uuid } from "uuid";
 import { uploadFilesForPost } from "backend/utils";
+import { FilesContainer } from ".";
 
 const NewPostModal = () => {
-	const { showPostModal, setShowPostModal, postState, postDispatch } =
-		usePost();
+	const {
+		setShowPostModal,
+		postState,
+		postDispatch,
+		showScheduleDateInput,
+		setShowScheduleDateInput,
+	} = usePost();
 	const { showToast } = useToast();
 	const { modalDispatch, setShowModal } = useModal();
 	const { authState } = useAuth();
@@ -27,6 +32,16 @@ const NewPostModal = () => {
 			},
 		});
 		setShowModal(true);
+		postDispatch({
+			type: "RESET_FORM",
+			payload: {
+				newPost: {
+					postText: "",
+					fileUrls: [],
+				},
+			},
+		});
+		setShowScheduleDateInput(false);
 	};
 
 	const handleDismissPostModal = () => {
@@ -40,22 +55,41 @@ const NewPostModal = () => {
 			: setShowEmojiContainer(true);
 
 	const handleCreatePost = (e) => {
-		let newPost;
-		if (postState.newPost?.createdAt?.length) {
-			newPost = {
-				...postState.newPost,
-				userId: authState.uid,
-			};
-		} else {
-			newPost = {
-				...postState.newPost,
-				createdAt: new Date(),
-				userId: authState.uid,
-			};
-		}
+		let newPost, msg;
 
-		addNewPost(e, newPost, postDispatch, showToast);
-		setShowPostModal(false);
+		msg = `Post created successfully`;
+		if (
+			!postState?.newPost?.fileUrls?.length &&
+			!postState?.newPost?.postText?.length
+		) {
+			showToast("Please add something to create a post", "error");
+		} else {
+			if (postState.newPost?.createdAt?.length) {
+				newPost = {
+					...postState.newPost,
+					userId: authState.uid,
+				};
+				msg = `Post is scheduled on ${postState.newPost.createdAt}`;
+			} else {
+				newPost = {
+					...postState.newPost,
+					createdAt: new Date().toISOString(),
+					userId: authState.uid,
+				};
+			}
+			addNewPost(e, newPost, postDispatch, showToast, msg);
+			setShowPostModal(false);
+			postDispatch({
+				type: "RESET_FORM",
+				payload: {
+					newPost: {
+						postText: "",
+						fileUrls: [],
+					},
+				},
+			});
+			setShowScheduleDateInput(false);
+		}
 	};
 
 	const handleUploadFiles = (e, type) => {
@@ -95,7 +129,8 @@ const NewPostModal = () => {
 						})
 					}
 				/>
-				<div className="flex-row justify-content-space-between align-center flex-gap-1 flex-wrap">
+				{postState?.newPost?.fileUrls?.length ? <FilesContainer /> : <></>}
+				<div className="flex-row justify-content-space-between align-center flex-gap-1 flex-wrap w-100">
 					<div className="flex-row justify-content-center align-center flex-gap-1">
 						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
 							<input
@@ -144,13 +179,37 @@ const NewPostModal = () => {
 							<i className="fa-solid fa-face-laugh social post-icons"></i>
 						</span>
 					</div>
-					<div className="flex-row justify-content-center align-center flex-gap-1">
-						<button
-							className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
-							onClick={handleCreatePost}
-						>
-							Schedule Post
-						</button>
+					<div className="flex-row justify-content-center align-center flex-gap-1 w-100">
+						{!showScheduleDateInput ? (
+							<button
+								className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
+								onClick={() => setShowScheduleDateInput(true)}
+							>
+								Schedule Post
+							</button>
+						) : (
+							<div className="flex-row align-center flex-gap-1 flex-wrap">
+								<label>
+									<p>Created Date : </p>
+								</label>
+								<input
+									type="date"
+									name="created-date"
+									aria-label="created date"
+									className="b-radius-2 p-4 date-input-container flex-grow-1"
+									onChange={(e) =>
+										postDispatch({
+											type: "UPDATE_CREATED_DATE",
+											payload: {
+												newPost: {
+													createdAt: new Date(e.target.value).toISOString(),
+												},
+											},
+										})
+									}
+								/>
+							</div>
+						)}
 						<button
 							className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
 							onClick={handleCreatePost}

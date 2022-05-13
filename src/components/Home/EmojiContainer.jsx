@@ -14,7 +14,7 @@ const EmojiContainer = () => {
 		});
 	};
 	return (
-		<div>
+		<div className="emoji-container">
 			<Picker
 				onEmojiClick={onEmojiClick}
 				disableAutoFocus={true}

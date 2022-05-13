@@ -3,7 +3,7 @@ import { collection, doc, setDoc } from "firebase/firestore";
 import { storage } from "backend/firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-const addNewPost = (e, newPost, postDispatch, showToast) => {
+const addNewPost = (e, newPost, postDispatch, showToast, msg) => {
 	e.preventDefault();
 	(async () => {
 		try {
@@ -15,7 +15,7 @@ const addNewPost = (e, newPost, postDispatch, showToast) => {
 					postData: { _id: newPostRef.id, ...newPost },
 				},
 			});
-			showToast("Post Created Successfully", "success");
+			showToast(msg, "success");
 		} catch (error) {
 			console.log(error);
 		}

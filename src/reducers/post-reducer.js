@@ -8,15 +8,12 @@ const postReducer = (state, { type, payload }) => {
 					postText: payload?.newPost?.postText,
 				},
 			};
-		case "UPDATE_UPLOAD_FILE":
+		case "UPDATE_CREATED_DATE":
 			return {
 				...state,
 				newPost: {
 					...state.newPost,
-					uploadedFiles: [
-						...state.newPost.uploadedFiles,
-						{ ...payload.newPost.uploadedFiles },
-					],
+					createdAt: payload.newPost.createdAt,
 				},
 			};
 		case "UPDATE_UPLOADED_URL":
@@ -30,6 +27,12 @@ const postReducer = (state, { type, payload }) => {
 					],
 				},
 			};
+		case "RESET_FORM":
+			return {
+				...state,
+				newPost: { ...payload.newPost },
+			};
+
 		default:
 			return state;
 	}

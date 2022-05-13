@@ -4,8 +4,8 @@ import { postReducer } from "reducers";
 const defaultPostInitialState = {
 	newPost: {
 		postText: "",
-		uploadedFiles: [],
 		fileUrls: [],
+		createdAt: "",
 	},
 	feedPosts: [],
 	explorePosts: [],
@@ -18,10 +18,18 @@ const PostProvider = ({ children }) => {
 		defaultPostInitialState
 	);
 	const [showPostModal, setShowPostModal] = useState(false);
-	// console.log(postState);
+	const [showScheduleDateInput, setShowScheduleDateInput] = useState(false);
+
 	return (
 		<PostContext.Provider
-			value={{ postState, postDispatch, showPostModal, setShowPostModal }}
+			value={{
+				postState,
+				postDispatch,
+				showPostModal,
+				setShowPostModal,
+				showScheduleDateInput,
+				setShowScheduleDateInput,
+			}}
 		>
 			{children}
 		</PostContext.Provider>
