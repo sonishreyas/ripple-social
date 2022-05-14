@@ -10,7 +10,7 @@ const HomeContent = () => {
 				<select className="options-container p-2 b-radius-1">
 					<option value="trending">Trending</option>
 					<option value="recent">Recent</option>
-					<option value="date">Date</option>
+					<option value="date">Date old to new</option>
 				</select>
 			</div>
 			<Posts />
