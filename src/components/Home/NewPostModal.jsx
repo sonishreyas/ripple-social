@@ -102,7 +102,7 @@ const NewPostModal = () => {
 	};
 
 	return (
-		<div className="modal flex-row justify-content-center align-center">
+		<div className="modal flex-row justify-content-center align-start">
 			<div className="modal-background"></div>
 			<div className="modal-content p-5 m-5 b-radius-2 card-shadow">
 				<div className="flex-row justify-content-space-between align-center flex-gap-1">
@@ -129,7 +129,11 @@ const NewPostModal = () => {
 						})
 					}
 				/>
-				{postState?.newPost?.fileUrls?.length ? <FilesContainer /> : <></>}
+				{postState?.newPost?.fileUrls?.length ? (
+					<FilesContainer fileUrls={postState?.newPost?.fileUrls} />
+				) : (
+					<></>
+				)}
 				<div className="flex-row justify-content-space-between align-center flex-gap-1 flex-wrap w-100">
 					<div className="flex-row justify-content-center align-center flex-gap-1">
 						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">

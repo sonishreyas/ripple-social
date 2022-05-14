@@ -214,6 +214,9 @@ const deleteNoteFromHabits = (data, updatedData) =>
 		[]
 	);
 
+const getUserData = (userId, users) =>
+	users.filter((item) => item.uid === userId)[0];
+
 export {
 	removeFromArray,
 	removeFromDateArray,
@@ -234,4 +237,5 @@ export {
 	getStreaks,
 	addNoteToHabits,
 	deleteNoteFromHabits,
+	getUserData,
 };

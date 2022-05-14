@@ -3,6 +3,17 @@
 	height: 10rem;
 }
 
+.post-card {
+	width: 50rem;
+	height: auto;
+}
+.post-card .card-image-container {
+	background-color: var(--primary-color);
+}
+
+.post-card .banner-nav-btn-container {
+	top: -20rem;
+}
 .outline-btn {
 	background-color: var(--primary-color);
 }

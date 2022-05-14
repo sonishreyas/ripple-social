@@ -18,4 +18,5 @@ export {
 	getStreaks,
 	addNoteToHabits,
 	deleteNoteFromHabits,
+	getUserData,
 } from "./helpers";

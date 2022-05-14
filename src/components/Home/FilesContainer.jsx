@@ -1,12 +1,11 @@
 import { usePost } from "context";
 import { useState } from "react";
 
-const FilesContainer = () => {
-	const { postState } = usePost();
+const FilesContainer = ({ fileUrls }) => {
 	const [slideIndex, setSlideIndex] = useState(1);
 
 	const nextSlide = () => {
-		if (slideIndex >= postState?.newPost?.fileUrls?.length) {
+		if (slideIndex >= fileUrls?.length) {
 			setSlideIndex(1);
 		} else {
 			setSlideIndex(slideIndex + 1);
@@ -14,7 +13,7 @@ const FilesContainer = () => {
 	};
 	const prevSlide = () => {
 		if (slideIndex === 1) {
-			setSlideIndex(postState?.newPost?.fileUrls?.length);
+			setSlideIndex(fileUrls?.length);
 		} else {
 			setSlideIndex(slideIndex - 1);
 		}
@@ -24,8 +23,8 @@ const FilesContainer = () => {
 	return (
 		<>
 			<article className="post-image-container flex-row justify-content-center align-center">
-				{postState?.newPost?.fileUrls?.length &&
-					postState?.newPost?.fileUrls?.map(({ type, url }, index) => {
+				{fileUrls?.length &&
+					fileUrls?.map(({ type, url }, index) => {
 						if (type === "images" || type === "gifs") {
 							return (
 								<img
@@ -63,17 +62,15 @@ const FilesContainer = () => {
 					})}
 			</article>
 			<div className="flex-row justify-content-center align-center flex-gap-half banner-dots-container">
-				{Array.from({ length: postState?.newPost?.fileUrls?.length }).map(
-					(item, index) => (
-						<i
-							key={index}
-							onClick={() => moveIndex(index + 1)}
-							className={`fa-solid fa-circle banner-dot ${
-								slideIndex === index + 1 ? "active-dot" : "dot"
-							}`}
-						></i>
-					)
-				)}
+				{Array.from({ length: fileUrls?.length }).map((item, index) => (
+					<i
+						key={index}
+						onClick={() => moveIndex(index + 1)}
+						className={`fa-solid fa-circle banner-dot ${
+							slideIndex === index + 1 ? "active-dot" : "dot"
+						}`}
+					></i>
+				))}
 			</div>
 			<div className="flex-row justify-content-space-between align-center banner-nav-btn-container w-100 px-10">
 				<i className="fa-solid fa-circle-chevron-left" onClick={prevSlide}></i>
