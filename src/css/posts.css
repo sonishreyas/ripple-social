@@ -34,6 +34,15 @@
 .border-bottom-secondary {
 	border-bottom: 0.2rem solid var(--secondary-background-color);
 }
+
+.options-container {
+	background-color: var(--secondary-background-color);
+	color: var(--secondary-color);
+	border: none;
+	font-size: inherit;
+	font-family: inherit;
+}
+
 textarea {
 	border: none;
 	overflow: auto;
