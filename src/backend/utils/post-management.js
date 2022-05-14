@@ -1,5 +1,12 @@
 import { db } from "backend/firebase/firebase";
-import { collection, doc, setDoc } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	getDocs,
+	query,
+	setDoc,
+	where,
+} from "firebase/firestore";
 import { storage } from "backend/firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -83,4 +90,46 @@ const uploadFilesForPost = (file, postDispatch) => {
 		}
 	})();
 };
-export { addNewPost, uploadFilesForPost };
+
+const getFeedPost = (userFollowing, postDispatch) => {
+	(async () => {
+		try {
+			await userFollowing.forEach(async (item) => {
+				const postsData = [];
+				const q = query(collection(db, "posts"), where("userId", "==", item));
+				const querySnapshot = await getDocs(q);
+				querySnapshot.forEach((doc) => {
+					let data = doc.data();
+					postsData.push({ id: doc.id, ...data });
+				});
+				postDispatch({
+					type: "GET_FEED_POST",
+					payload: { feedPosts: postsData },
+				});
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	})();
+};
+
+const getExplorePost = (postDispatch) => {
+	(async () => {
+		try {
+			const postsData = [];
+			const q = query(collection(db, "posts"));
+			const querySnapshot = await getDocs(q);
+			querySnapshot.forEach((doc) => {
+				let data = doc.data();
+				postsData.push({ id: doc.id, ...data });
+			});
+			postDispatch({
+				type: "GET_EXPLORE_POST",
+				payload: { explorePosts: postsData },
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	})();
+};
+export { addNewPost, uploadFilesForPost, getFeedPost, getExplorePost };

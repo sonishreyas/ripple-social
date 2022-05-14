@@ -1,5 +1,13 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useReducer,
+	useState,
+} from "react";
 import { postReducer } from "reducers";
+import { getExplorePost, getFeedPost } from "backend";
+import { useUser } from ".";
 
 const defaultPostInitialState = {
 	newPost: {
@@ -19,7 +27,17 @@ const PostProvider = ({ children }) => {
 	);
 	const [showPostModal, setShowPostModal] = useState(false);
 	const [showScheduleDateInput, setShowScheduleDateInput] = useState(false);
+	const { userState } = useUser();
 
+	useEffect(() => {
+		console.log(userState);
+		if (userState?.userProfile?.following?.length) {
+			getFeedPost(userState?.userProfile?.following, postDispatch);
+			getExplorePost(postDispatch);
+		}
+	}, [userState]);
+
+	console.log("hehe", postState);
 	return (
 		<PostContext.Provider
 			value={{

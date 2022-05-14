@@ -26,7 +26,7 @@ const updateUser = (e, userId, updatedValue, usersDispatch) => {
 	})();
 };
 
-const getAllUsers = (usersDispatch) => {
+const getAllUsers = (userDispatch) => {
 	(async () => {
 		try {
 			const q = query(collection(db, "users"));
@@ -36,7 +36,7 @@ const getAllUsers = (usersDispatch) => {
 				let data = doc.data();
 				usersData.push({ id: doc.id, ...data });
 			});
-			usersDispatch({
+			userDispatch({
 				type: "GET_ALL_USERS",
 				payload: {
 					users: usersData,
@@ -48,13 +48,13 @@ const getAllUsers = (usersDispatch) => {
 	})();
 };
 
-const getCurrentUser = (userId, usersDispatch) => {
+const getCurrentUser = (userId, userDispatch) => {
 	(async () => {
 		try {
 			const userRef = doc(db, "users", userId);
 			const userSnapshot = await getDoc(userRef);
 			const user = userSnapshot.data();
-			usersDispatch({
+			userDispatch({
 				type: "SET_USER_PROFILE",
 				payload: {
 					userProfile: user,

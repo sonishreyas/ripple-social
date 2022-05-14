@@ -1,42 +1,45 @@
 .create-post-container {
-  width: 50rem;
-  height: 10rem;
-
+	width: 50rem;
+	height: 10rem;
 }
 
 .outline-btn {
-  background-color: var(--primary-color);
+	background-color: var(--primary-color);
 }
 
 .post-icons {
-  font-size: 1.8rem;
+	font-size: 1.8rem;
+}
+
+.border-bottom {
+	border-bottom: 0.1rem solid var(--secondary-background-color);
 }
 textarea {
-  border: none;
-  overflow: auto;
-  outline: none;
+	border: none;
+	overflow: auto;
+	outline: none;
 
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 
-  resize: none; /*remove the resize handle on the bottom right*/
+	resize: none; /*remove the resize handle on the bottom right*/
 }
 .post-text-container {
-  background-color: var(--primary-color);
-  font-family: inherit;
-  font-size: inherit;
-  height: 20rem;
-  border: 0.1rem solid var(--primary-color); 
-  color: var(--secondary-color);
+	background-color: var(--primary-color);
+	font-family: inherit;
+	font-size: inherit;
+	height: 20rem;
+	border: 0.1rem solid var(--primary-color);
+	color: var(--secondary-color);
 }
 
 .remove-input-file-style {
-  display: none;
+	display: none;
 }
 
-@media screen and (max-width: 650px)  {
-  .create-post-container {
-    width: 100%;
-  }
+@media screen and (max-width: 650px) {
+	.create-post-container {
+		width: 100%;
+	}
 }

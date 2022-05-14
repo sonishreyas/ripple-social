@@ -1,5 +1,6 @@
-import { useNavbar, useAuth } from "../../context";
+import { useNavbar, useAuth } from "context";
 import { Link, NavLink } from "react-router-dom";
+import { navData } from "./nav-data";
 
 const NavBar = () => {
 	const { setShowNavbar } = useNavbar();
@@ -31,36 +32,20 @@ const NavBar = () => {
 								></i>
 							</section>
 						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">Home</span>
-								</div>
-							</NavLink>
-						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/dashboard"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">Dashboard</span>
-								</div>
-							</NavLink>
-						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/habits"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">My Habits</span>
-								</div>
-							</NavLink>
-						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/profile"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">
-										{authState.token ? "Profile" : "SignIn"}
-									</span>
-								</div>
-							</NavLink>
-						</li>
+						<>
+							{navData.map(({ id, route, name, icon }) => (
+								<li className="rui-drawer-content" key={id}>
+									<NavLink to={route} className={getActiveClass}>
+										<div className="rui-drawer-links flex-row justify-content-start align-center flex-gap-1 p-5 m-2">
+											<span>
+												<i className={`${icon}`}></i>
+											</span>
+											<span className="rui-drawer-content--text">{name}</span>
+										</div>
+									</NavLink>
+								</li>
+							))}
+						</>
 					</ul>
 				</nav>
 			</div>

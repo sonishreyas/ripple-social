@@ -9,4 +9,6 @@ export {
 	getCurrentUser,
 	updateUser,
 	addNewPost,
+	getFeedPost,
+	getExplorePost,
 } from "./utils";

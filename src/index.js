@@ -12,6 +12,7 @@ import {
 	PostProvider,
 	RegisterProvider,
 	ThemeProvider,
+	UserProvider,
 } from "context";
 import { ToastPortal } from "components";
 // Call make Server
@@ -23,12 +24,14 @@ ReactDOM.render(
 					<RegisterProvider>
 						<LoginProvider>
 							<AuthProvider>
-								<PostProvider>
-									<ModalProvider>
-										<App />
-										<ToastPortal />
-									</ModalProvider>
-								</PostProvider>
+								<ModalProvider>
+									<UserProvider>
+										<PostProvider>
+											<App />
+											<ToastPortal />
+										</PostProvider>
+									</UserProvider>
+								</ModalProvider>
 							</AuthProvider>
 						</LoginProvider>
 					</RegisterProvider>

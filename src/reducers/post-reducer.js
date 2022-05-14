@@ -27,6 +27,17 @@ const postReducer = (state, { type, payload }) => {
 					],
 				},
 			};
+
+		case "GET_FEED_POST":
+			return {
+				...state,
+				feedPosts: [...state.feedPosts, ...payload.feedPosts],
+			};
+		case "GET_EXPLORE_POST":
+			return {
+				...state,
+				explorePosts: [...state.explorePosts, ...payload.explorePosts],
+			};
 		case "RESET_FORM":
 			return {
 				...state,
