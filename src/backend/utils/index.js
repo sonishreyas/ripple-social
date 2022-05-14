@@ -13,3 +13,8 @@ export {
 	getFeedPost,
 	getExplorePost,
 } from "./post-management";
+export {
+	getBookmarkDataHandler,
+	addPostToBookmark,
+	removePostFromBookmark,
+} from "./bookmark-management";

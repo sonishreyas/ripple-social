@@ -30,14 +30,12 @@ const PostProvider = ({ children }) => {
 	const { userState } = useUser();
 
 	useEffect(() => {
-		console.log(userState);
 		if (userState?.userProfile?.following?.length) {
 			getFeedPost(userState?.userProfile?.following, postDispatch);
 			getExplorePost(postDispatch);
 		}
 	}, [userState]);
 
-	console.log("hehe", postState);
 	return (
 		<PostContext.Provider
 			value={{

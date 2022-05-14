@@ -6,6 +6,7 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import {
 	AuthProvider,
+	BookmarkProvider,
 	LoginProvider,
 	ModalProvider,
 	NavbarProvider,
@@ -27,8 +28,10 @@ ReactDOM.render(
 								<ModalProvider>
 									<UserProvider>
 										<PostProvider>
-											<App />
-											<ToastPortal />
+											<BookmarkProvider>
+												<App />
+												<ToastPortal />
+											</BookmarkProvider>
 										</PostProvider>
 									</UserProvider>
 								</ModalProvider>

@@ -1,6 +1,15 @@
+import { usePost } from "context";
+import { useEffect, useState } from "react";
 import { CreatePost, Posts } from ".";
 
 const HomeContent = () => {
+	const { postState } = usePost();
+	const [postData, setPostData] = useState([]);
+	useEffect(() => {
+		postState?.feedPosts.length && setPostData(postState?.feedPosts);
+	}, [postState]);
+
+	console.log(postData, postState);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />
@@ -13,7 +22,7 @@ const HomeContent = () => {
 					<option value="date">Date old to new</option>
 				</select>
 			</div>
-			<Posts />
+			<Posts postData={postData} />
 		</main>
 	);
 };

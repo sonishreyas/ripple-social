@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import { Authentication, Home } from "pages";
+import { Authentication, Bookmark, Home } from "pages";
 import { Header, Footer, NavBar, NewPostModal, ConfirmModal } from "components";
 import { useModal, useNavbar, usePost } from "context";
 import { RequireAuth } from "backend";
@@ -18,6 +18,14 @@ function App() {
 					element={
 						<RequireAuth>
 							<Home />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path="/bookmarks"
+					element={
+						<RequireAuth>
+							<Bookmark />
 						</RequireAuth>
 					}
 				/>

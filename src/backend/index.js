@@ -11,4 +11,7 @@ export {
 	addNewPost,
 	getFeedPost,
 	getExplorePost,
+	getBookmarkDataHandler,
+	addPostToBookmark,
+	removePostFromBookmark,
 } from "./utils";

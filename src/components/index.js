@@ -5,3 +5,5 @@ export { NavBar } from "./NavBar";
 export { HomeContent, NewPostModal } from "./Home";
 export { ToastPortal } from "./Toast";
 export { ConfirmModal } from "./Modal";
+export { Posts } from "./Home";
+export { BookmarkContent } from "./Bookmark";
