@@ -14,6 +14,11 @@
 .post-card .banner-nav-btn-container {
 	top: -20rem;
 }
+
+.post-card .banner-dot {
+	top: -2rem;
+}
+
 .outline-btn {
 	background-color: var(--primary-color);
 }
@@ -23,7 +28,11 @@
 }
 
 .border-bottom {
-	border-bottom: 0.1rem solid var(--secondary-background-color);
+	border-bottom: 0.2rem solid var(--primary-color);
+}
+
+.border-bottom-secondary {
+	border-bottom: 0.2rem solid var(--secondary-background-color);
 }
 textarea {
 	border: none;

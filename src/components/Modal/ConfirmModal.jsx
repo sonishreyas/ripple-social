@@ -3,7 +3,7 @@ import { useModal } from "context";
 const ConfirmModal = () => {
 	const { modalState } = useModal();
 	return (
-		<div className="modal flex-row justify-content-center align-center">
+		<div className="modal flex-row justify-content-center align-start">
 			<div className="modal-background"></div>
 			<div className="modal-content p-5 m-5 b-radius-2 project-form-container card-shadow">
 				<p>{modalState.message}</p>
