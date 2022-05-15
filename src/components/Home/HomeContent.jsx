@@ -1,15 +1,24 @@
 import { usePost } from "context";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "redux/features";
 import { CreatePost, Posts } from ".";
 
 const HomeContent = () => {
 	const { postState } = usePost();
-	const [postData, setPostData] = useState([]);
-	useEffect(() => {
-		postState?.feedPosts.length && setPostData(postState?.feedPosts);
-	}, [postState]);
+	const dispatch = useDispatch();
+	let { allPosts, sortBy } = useSelector((state) => state.posts);
 
-	console.log(postData, postState);
+	const [postData, setPostData] = useState([]);
+	// useEffect(() => {
+	// 	postState?.feedPosts.length && setPostData(postState?.feedPosts);
+	// }, [postState]);
+	useEffect(() => {
+		console.log("here");
+		dispatch(getPosts());
+	}, []);
+
+	console.log(allPosts);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />

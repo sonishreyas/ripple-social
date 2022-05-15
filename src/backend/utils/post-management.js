@@ -91,29 +91,25 @@ const uploadFilesForPost = (file, postDispatch) => {
 	})();
 };
 
-const getFeedPost = (userFollowing, postDispatch) => {
+const getFeedPost = (userFollowing) =>
 	(async () => {
 		try {
+			const postsData = [];
 			await userFollowing.forEach(async (item) => {
-				const postsData = [];
 				const q = query(collection(db, "posts"), where("userId", "==", item));
 				const querySnapshot = await getDocs(q);
 				querySnapshot.forEach((doc) => {
 					let data = doc.data();
 					postsData.push({ id: doc.id, ...data });
 				});
-				postDispatch({
-					type: "GET_FEED_POST",
-					payload: { feedPosts: postsData },
-				});
 			});
+			return postsData;
 		} catch (error) {
-			console.log(error);
+			return error;
 		}
 	})();
-};
 
-const getExplorePost = (postDispatch) => {
+const getExplorePost = () => {
 	(async () => {
 		try {
 			const postsData = [];
@@ -123,12 +119,10 @@ const getExplorePost = (postDispatch) => {
 				let data = doc.data();
 				postsData.push({ id: doc.id, ...data });
 			});
-			postDispatch({
-				type: "GET_EXPLORE_POST",
-				payload: { explorePosts: postsData },
-			});
+			console.log("here", postsData);
+			return postsData;
 		} catch (error) {
-			console.log(error);
+			return error;
 		}
 	})();
 };

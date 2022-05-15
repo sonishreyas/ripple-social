@@ -29,12 +29,12 @@ const PostProvider = ({ children }) => {
 	const [showScheduleDateInput, setShowScheduleDateInput] = useState(false);
 	const { userState } = useUser();
 
-	useEffect(() => {
-		if (userState?.userProfile?.following?.length) {
-			getFeedPost(userState?.userProfile?.following, postDispatch);
-			getExplorePost(postDispatch);
-		}
-	}, [userState]);
+	// useEffect(() => {
+	// 	if (userState?.userProfile?.following?.length) {
+	// 		getFeedPost(userState?.userProfile?.following, postDispatch);
+	// 		getExplorePost(postDispatch);
+	// 	}
+	// }, [userState]);
 
 	return (
 		<PostContext.Provider
