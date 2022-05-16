@@ -54,7 +54,6 @@ const Register = () => {
 		} else {
 			e.preventDefault();
 			const res = await dispatch(register(registerState));
-			console.log("register", res);
 			if (res) {
 				navigate(location?.state?.from?.pathname);
 			}

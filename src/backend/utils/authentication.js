@@ -29,7 +29,6 @@ const loginHandler = async (email, password) => {
 		const result = await signInWithEmailAndPassword(auth, email, password);
 		const userData = {
 			token: result.user.accessToken,
-			name: result.user.displayName,
 			email: result.user.email,
 			uid: result.user.uid,
 		};
@@ -39,49 +38,47 @@ const loginHandler = async (email, password) => {
 	}
 };
 
-const registerHandler = (registerData) => {
-	(async () => {
-		try {
-			if (!registerData.username.length)
-				toast.error("Username cannot be empty");
-			else {
-				const checkUsername = await getDocs(
-					query(
-						collection(db, "users"),
-						where("username", "==", registerData.username)
-					)
+const registerHandler = async (registerData) => {
+	try {
+		if (!registerData.username.length) toast.error("Username cannot be empty");
+		else {
+			const checkUsername = await getDocs(
+				query(
+					collection(db, "users"),
+					where("username", "==", registerData.username)
+				)
+			);
+			if (checkUsername.docs.length) {
+				toast.error("Username not available");
+			} else {
+				const result = await createUserWithEmailAndPassword(
+					auth,
+					registerData.email,
+					registerData.password
 				);
-				if (checkUsername.docs.length) {
-					toast.error("Username not available");
-				} else {
-					const result = await createUserWithEmailAndPassword(
-						auth,
-						registerData.email,
-						registerData.password
-					);
-					const userData = {
-						token: result.user.accessToken,
-						name: result.user.displayName,
-						email: result.user.email,
-						uid: result.user.uid,
-						username: registerData.username,
-					};
-					localStorage.setItem("user", JSON.stringify(userData));
-					const newUserRef = doc(db, "users", userData.uid);
-					await setDoc(newUserRef, {
-						...userData,
-						followers: [],
-						following: [],
-						bookmarks: [],
-					});
-					// showToast("User registered successfully..", "success");
-					return userData;
-				}
+				const userData = {
+					token: result.user.accessToken,
+					name: registerData.firstName + " " + registerData.lastName,
+					email: result.user.email,
+					uid: result.user.uid,
+					username: registerData.username,
+				};
+				localStorage.setItem("user", JSON.stringify(userData));
+				const newUserRef = doc(db, "users", userData.uid);
+				await setDoc(newUserRef, {
+					...userData,
+					followers: [],
+					following: [],
+					bookmarks: [],
+				});
+				// showToast("User registered successfully..", "success");
+				console.log(userData);
+				return userData;
 			}
-		} catch (error) {
-			console.log(error);
 		}
-	})();
+	} catch (error) {
+		return error;
+	}
 };
 
 const setValueHandler = (e, field, type, loginDispatch) => {

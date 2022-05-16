@@ -15,7 +15,6 @@ export const login = createAsyncThunk(
 	async ({ email, password }, { rejectWithValue }) => {
 		try {
 			const response = await loginHandler(email, password);
-			console.log("here", response);
 			return response;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -28,7 +27,6 @@ export const register = createAsyncThunk(
 	async (registerData, { rejectWithValue }) => {
 		try {
 			const response = await registerHandler(registerData);
-			console.log("here", response);
 			return response;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -71,19 +69,14 @@ const authSlice = createSlice({
 		},
 
 		[register.fulfilled]: (state, { payload }) => {
-			state.token = payload.user.accessToken;
-			state.name = payload.user.displayName;
-			state.email = payload.user.email;
-			state.uid = payload.user.uid;
+			console.log(payload);
+			state.token = payload.token;
+			state.email = payload.email;
+			state.uid = payload.uid;
 			state.authStatus = "success";
-			const userData = {
-				token: payload.user.accessToken,
-				name: payload.user.displayName,
-				email: payload.user.email,
-				uid: payload.user.uid,
-			};
-			localStorage.setItem("user", JSON.stringify(userData));
+			localStorage.setItem("user", JSON.stringify(payload));
 		},
+
 		[register.rejected]: (state, { payload }) => {
 			state.authStatus = "rejected";
 			state.authError = payload.errors;
