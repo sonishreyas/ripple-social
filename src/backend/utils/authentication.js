@@ -24,75 +24,48 @@ const RequireAuth = ({ children }) => {
 	);
 };
 
-const loginHandler = (e, loginState, navigate, location, authDispatch) => {
-	e.preventDefault();
-	(async () => {
-		try {
-			const result = await signInWithEmailAndPassword(
-				auth,
-				loginState.email,
-				loginState.password
-			);
-			const userData = {
-				token: result.user.accessToken,
-				name: result.user.displayName,
-				email: result.user.email,
-				avatar: result.user.displayName
-					.split(" ")
-					.reduce((prev, curr) => prev + curr[0].toUpperCase(), ""),
-				uid: result.user.uid,
-			};
-			authDispatch({
-				type: "UPDATE_USER",
-				payload: userData,
-			});
-			localStorage.setItem("user", JSON.stringify(userData));
-			navigate(location?.state?.from?.pathname);
-		} catch (error) {
-			console.log(error);
-		}
-	})();
+const loginHandler = async (email, password) => {
+	try {
+		const result = await signInWithEmailAndPassword(auth, email, password);
+		const userData = {
+			token: result.user.accessToken,
+			name: result.user.displayName,
+			email: result.user.email,
+			uid: result.user.uid,
+		};
+		return userData;
+	} catch (error) {
+		return error;
+	}
 };
 
-const registerHandler = (
-	e,
-	registerState,
-	navigate,
-	location,
-	authDispatch,
-	showToast
-) => {
-	e.preventDefault();
+const registerHandler = (registerData) => {
 	(async () => {
 		try {
-			if (!registerState.username.length)
+			if (!registerData.username.length)
 				toast.error("Username cannot be empty");
 			else {
 				const checkUsername = await getDocs(
 					query(
 						collection(db, "users"),
-						where("username", "==", registerState.username)
+						where("username", "==", registerData.username)
 					)
 				);
 				if (checkUsername.docs.length) {
-					showToast("Username not available", "error");
+					toast.error("Username not available");
 				} else {
 					const result = await createUserWithEmailAndPassword(
 						auth,
-						registerState.email,
-						registerState.password
+						registerData.email,
+						registerData.password
 					);
 					const userData = {
 						token: result.user.accessToken,
 						name: result.user.displayName,
 						email: result.user.email,
 						uid: result.user.uid,
-						username: registerState.username,
+						username: registerData.username,
 					};
-					authDispatch({
-						type: "UPDATE_USER",
-						payload: userData,
-					});
 					localStorage.setItem("user", JSON.stringify(userData));
 					const newUserRef = doc(db, "users", userData.uid);
 					await setDoc(newUserRef, {
@@ -101,8 +74,8 @@ const registerHandler = (
 						following: [],
 						bookmarks: [],
 					});
-					showToast("User registered successfully..", "success");
-					navigate(location?.state?.from?.pathname);
+					// showToast("User registered successfully..", "success");
+					return userData;
 				}
 			}
 		} catch (error) {

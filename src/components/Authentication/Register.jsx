@@ -1,13 +1,34 @@
 import { useLocation, useNavigate } from "react-router";
-import { useState } from "react";
-import { useRegister, useAuth } from "context";
+import { useReducer, useState } from "react";
 import { registerHandler, setValueHandler, setFocusHandler } from "backend";
 import { useToast } from "custom-hooks";
+import { register } from "redux/features";
+import { registerReducer } from "reducers";
+import { useDispatch, useSelector } from "react-redux";
 const Register = () => {
-	const { registerState, registerDispatch } = useRegister();
-	const { authDispatch } = useAuth();
+	const [registerState, registerDispatch] = useReducer(registerReducer, {
+		email: "",
+		password: "",
+		firstName: "",
+		lastName: "",
+		username: "",
+		confirmPassword: "",
+		showPassword: { password: false, confirmPassword: false },
+		focus: {
+			firstName: false,
+			lastName: false,
+			username: false,
+			email: false,
+			password: false,
+			confirmPassword: false,
+		},
+	});
 	const location = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { token, email, uid, authStatus, authError } = useSelector(
+		(state) => state.auth
+	);
 	const [showPassword, setShowPassword] = useState();
 	const [showConfirmPassword, setShowConfirmPassword] = useState();
 	const { showToast } = useToast();
@@ -27,18 +48,16 @@ const Register = () => {
 			? setShowConfirmPassword(false)
 			: setShowConfirmPassword(true);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		if (registerState.password !== registerState.confirmPassword) {
 			showToast("Password should match", "error");
 		} else {
-			registerHandler(
-				e,
-				registerState,
-				navigate,
-				location,
-				authDispatch,
-				showToast
-			);
+			e.preventDefault();
+			const res = await dispatch(register(registerState));
+			console.log("register", res);
+			if (res) {
+				navigate(location?.state?.from?.pathname);
+			}
 		}
 	};
 	return (

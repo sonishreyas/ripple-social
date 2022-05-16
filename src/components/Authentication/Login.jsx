@@ -1,27 +1,43 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import {
 	loginHandler,
 	setValueHandler,
 	setTestHandler,
 	setFocusHandler,
 } from "backend";
-import { useLogin, useAuth } from "context";
+import { loginReducer } from "reducers";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "redux/features";
 const Login = () => {
-	const { loginState, loginDispatch } = useLogin();
-	const { authDispatch } = useAuth();
+	const [loginState, loginDispatch] = useReducer(loginReducer, {
+		email: "",
+		password: "",
+		focus: { email: false, password: false },
+	});
 	const [showPassword, setShowPassword] = useState();
 	const location = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	// const { token, email, uid, authStatus, authError } = useSelector(
+	// 	(state) => state.auth
+	// );
 	const focusReset = { email: false, password: false };
 	const showPasswordHandler = () =>
 		showPassword ? setShowPassword(false) : setShowPassword(true);
-
+	const handleLogin = async (e) => {
+		e.preventDefault();
+		const res = await dispatch(
+			login({ email: loginState.email, password: loginState.password })
+		);
+		console.log("login", res);
+		if (res) {
+			navigate(location?.state?.from?.pathname);
+		}
+	};
 	return (
 		<form
-			onSubmit={(e) =>
-				loginHandler(e, loginState, navigate, location, authDispatch)
-			}
+			onSubmit={handleLogin}
 			className="input-form login flex-column flex-gap-1 flex-wrap h-auto w-100"
 		>
 			<section

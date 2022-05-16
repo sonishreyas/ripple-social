@@ -1,7 +1,6 @@
 import { getAllUsers, getCurrentUser } from "backend";
 import { useReducer, createContext, useContext, useEffect } from "react";
 import { userReducer } from "../reducers";
-import { useAuth } from "./auth-context";
 
 const defaultUserState = {
 	userProfile: {},
@@ -12,13 +11,13 @@ const UserContext = createContext({ defaultUserState });
 
 const UserProvider = ({ children }) => {
 	const [userState, userDispatch] = useReducer(userReducer, defaultUserState);
-	const { authState } = useAuth();
-	useEffect(() => {
-		if (authState.uid.length) {
-			getAllUsers(userDispatch);
-			getCurrentUser(authState.uid, userDispatch);
-		}
-	}, [authState]);
+	// const { authState } = useAuth();
+	// useEffect(() => {
+	// 	if (authState.uid.length) {
+	// 		getAllUsers(userDispatch);
+	// 		getCurrentUser(authState.uid, userDispatch);
+	// 	}
+	// }, [authState]);
 	return (
 		<UserContext.Provider value={{ userState, userDispatch }}>
 			{children}

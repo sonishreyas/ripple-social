@@ -1,51 +1,95 @@
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// const initialState = {
-// 	status: "idle",
-// 	error: null,
-// 	email: "",
-// 	password: "",
-// 	focus: { email: false, password: false },
-// };
+import { loginHandler, registerHandler } from "backend";
 
-// export const login = createAsyncThunk(
-//   'auth/login',
-//   ({ email, password }) => {
-//       try {
-//         const result = await signInWithEmailAndPassword(
-//           auth,
-//           email,
-//           password
-//         );
-//         const userData = {
-//           token: result.user.accessToken,
-//           name: result.user.displayName,
-//           email: result.user.email,
-//           uid: result.user.uid,
-//         };
-//         localStorage.setItem("user", JSON.stringify(userData));
-//         return userData;
-//       } catch (error) {
-//         console.log(error);
-//       }
-//   }
-// );
+const initialState = JSON.parse(localStorage.getItem("user")) || {
+	token: "",
+	email: "",
+	uid: "",
+	authStatus: "idle",
+	authError: null,
+};
 
-// const authSlice = createSlice({
-//   name: "user",
-//   initialState,
-//   reducers: {
-//     updateEmail: (state, {payload}) => {
-//       state.email = payload
-//     },
-//     updatePassword: (state, {payload}) => {
-//       state.password = payload
-//     },
-//     updateFocus: (state, {payload}) => {
-//       state.focus = payload
-//     },
-//     loginFromLocal: (state,action) => {
-//       state.user = action.payload
-//     }
-//   }
-// })
+export const login = createAsyncThunk(
+	"auth/login",
+	async ({ email, password }, { rejectWithValue }) => {
+		try {
+			const response = await loginHandler(email, password);
+			console.log("here", response);
+			return response;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const register = createAsyncThunk(
+	"auth/register",
+	async (registerData, { rejectWithValue }) => {
+		try {
+			const response = await registerHandler(registerData);
+			console.log("here", response);
+			return response;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+const authSlice = createSlice({
+	name: "auth",
+	initialState,
+	reducers: {
+		logout: (state) => {
+			state.token = "";
+			state.email = "";
+			state.uid = "";
+		},
+	},
+	extraReducers: {
+		[login.pending]: (state) => {
+			state.authStatus = "loading";
+		},
+
+		[login.fulfilled]: (state, { payload }) => {
+			console.log("full", payload);
+
+			state.token = payload.token;
+			state.email = payload.email;
+			state.uid = payload.uid;
+			state.authStatus = "success";
+			localStorage.setItem("user", JSON.stringify(payload));
+		},
+
+		[login.rejected]: (state, { payload }) => {
+			state.authStatus = "rejected";
+			state.authError = payload.errors;
+		},
+
+		[register.pending]: (state) => {
+			state.authStatus = "loading";
+		},
+
+		[register.fulfilled]: (state, { payload }) => {
+			state.token = payload.user.accessToken;
+			state.name = payload.user.displayName;
+			state.email = payload.user.email;
+			state.uid = payload.user.uid;
+			state.authStatus = "success";
+			const userData = {
+				token: payload.user.accessToken,
+				name: payload.user.displayName,
+				email: payload.user.email,
+				uid: payload.user.uid,
+			};
+			localStorage.setItem("user", JSON.stringify(userData));
+		},
+		[register.rejected]: (state, { payload }) => {
+			state.authStatus = "rejected";
+			state.authError = payload.errors;
+		},
+	},
+});
+
+export const { logout } = authSlice.actions;
+export const authReducer = authSlice.reducer;

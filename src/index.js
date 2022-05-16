@@ -5,13 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import {
-	AuthProvider,
 	BookmarkProvider,
-	LoginProvider,
 	ModalProvider,
 	NavbarProvider,
 	PostProvider,
-	RegisterProvider,
 	ThemeProvider,
 	UserProvider,
 } from "context";
@@ -25,22 +22,16 @@ ReactDOM.render(
 			<Router>
 				<ThemeProvider>
 					<NavbarProvider>
-						<RegisterProvider>
-							<LoginProvider>
-								<AuthProvider>
-									<ModalProvider>
-										<UserProvider>
-											<PostProvider>
-												<BookmarkProvider>
-													<App />
-													<ToastPortal />
-												</BookmarkProvider>
-											</PostProvider>
-										</UserProvider>
-									</ModalProvider>
-								</AuthProvider>
-							</LoginProvider>
-						</RegisterProvider>
+						<ModalProvider>
+							<UserProvider>
+								<PostProvider>
+									<BookmarkProvider>
+										<App />
+										<ToastPortal />
+									</BookmarkProvider>
+								</PostProvider>
+							</UserProvider>
+						</ModalProvider>
 					</NavbarProvider>
 				</ThemeProvider>
 			</Router>
