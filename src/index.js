@@ -10,7 +10,6 @@ import {
 	NavbarProvider,
 	PostProvider,
 	ThemeProvider,
-	UserProvider,
 } from "context";
 import { ToastPortal } from "components";
 import { store } from "redux/store/store";
@@ -23,14 +22,12 @@ ReactDOM.render(
 				<ThemeProvider>
 					<NavbarProvider>
 						<ModalProvider>
-							<UserProvider>
-								<PostProvider>
-									<BookmarkProvider>
-										<App />
-										<ToastPortal />
-									</BookmarkProvider>
-								</PostProvider>
-							</UserProvider>
+							<PostProvider>
+								<BookmarkProvider>
+									<App />
+									<ToastPortal />
+								</BookmarkProvider>
+							</PostProvider>
 						</ModalProvider>
 					</NavbarProvider>
 				</ThemeProvider>

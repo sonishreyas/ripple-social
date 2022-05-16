@@ -19,9 +19,7 @@ const Login = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	// const { token, email, uid, authStatus, authError } = useSelector(
-	// 	(state) => state.auth
-	// );
+
 	const focusReset = { email: false, password: false };
 	const showPasswordHandler = () =>
 		showPassword ? setShowPassword(false) : setShowPassword(true);

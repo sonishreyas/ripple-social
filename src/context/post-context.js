@@ -7,7 +7,6 @@ import {
 } from "react";
 import { postReducer } from "reducers";
 import { getExplorePost, getFeedPost } from "backend";
-import { useUser } from ".";
 
 const defaultPostInitialState = {
 	newPost: {
@@ -27,7 +26,6 @@ const PostProvider = ({ children }) => {
 	);
 	const [showPostModal, setShowPostModal] = useState(false);
 	const [showScheduleDateInput, setShowScheduleDateInput] = useState(false);
-	const { userState } = useUser();
 
 	// useEffect(() => {
 	// 	if (userState?.userProfile?.following?.length) {

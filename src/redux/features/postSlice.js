@@ -11,31 +11,14 @@ import {
 	where,
 } from "firebase/firestore";
 import { storage } from "backend/firebase/firebase";
-const initialState = {
-	status: "idle",
-	error: null,
-	newPost: {
-		postText: "",
-		fileUrls: [],
-		createdAt: "",
-	},
-	feedPosts: [],
-	allPosts: [],
-	explorePosts: [],
-};
+import { useSelector } from "react-redux";
 
 export const getPosts = createAsyncThunk(
 	"posts/getPosts",
 	async (_, { rejectWithValue }) => {
 		try {
-			const postsData = [];
-			const q = query(collection(db, "posts"));
-			const querySnapshot = await getDocs(q);
-			querySnapshot.forEach((doc) => {
-				let data = doc.data();
-				postsData.push({ id: doc.id, ...data });
-			});
-			return postsData;
+			const res = getExplorePost();
+			return res;
 		} catch (err) {
 			return rejectWithValue(err.response.data);
 		}
@@ -46,14 +29,22 @@ export const getFeedPosts = createAsyncThunk(
 	"posts/getFeedPosts",
 	async ({ userFollowing }, { rejectWithValue }) => {
 		try {
-			const response = await getFeedPost(userFollowing);
-			console.log("res", response);
-			return response;
+			const res = await getFeedPost(userFollowing);
+			console.log("res", res);
+			return res;
 		} catch (err) {
 			return rejectWithValue(err.response.data);
 		}
 	}
 );
+
+const initialState = {
+	status: "idle",
+	error: null,
+	feedPosts: [],
+	allPosts: [],
+	explorePosts: [],
+};
 
 const postSlice = createSlice({
 	name: "posts",
@@ -84,3 +75,4 @@ const postSlice = createSlice({
 
 export const { sortByValue } = postSlice.actions;
 export const postReducer = postSlice.reducer;
+export const usePosts = useSelector((state) => state.posts);

@@ -91,39 +91,34 @@ const uploadFilesForPost = (file, postDispatch) => {
 	})();
 };
 
-const getFeedPost = (userFollowing) =>
-	(async () => {
-		try {
-			const postsData = [];
-			await userFollowing.forEach(async (item) => {
-				const q = query(collection(db, "posts"), where("userId", "==", item));
-				const querySnapshot = await getDocs(q);
-				querySnapshot.forEach((doc) => {
-					let data = doc.data();
-					postsData.push({ id: doc.id, ...data });
-				});
-			});
-			return postsData;
-		} catch (error) {
-			return error;
-		}
-	})();
-
-const getExplorePost = () => {
-	(async () => {
-		try {
-			const postsData = [];
-			const q = query(collection(db, "posts"));
+const getFeedPost = async (userFollowing) => {
+	try {
+		const postsData = [];
+		await userFollowing.forEach(async (item) => {
+			const q = query(collection(db, "posts"), where("userId", "==", item));
 			const querySnapshot = await getDocs(q);
 			querySnapshot.forEach((doc) => {
 				let data = doc.data();
 				postsData.push({ id: doc.id, ...data });
 			});
-			console.log("here", postsData);
-			return postsData;
-		} catch (error) {
-			return error;
-		}
-	})();
+		});
+		return postsData;
+	} catch (error) {
+		return error;
+	}
+};
+const getExplorePost = async () => {
+	try {
+		const postsData = [];
+		const q = query(collection(db, "posts"));
+		const querySnapshot = await getDocs(q);
+		querySnapshot.forEach((doc) => {
+			let data = doc.data();
+			postsData.push({ id: doc.id, ...data });
+		});
+		return postsData;
+	} catch (error) {
+		return error;
+	}
 };
 export { addNewPost, uploadFilesForPost, getFeedPost, getExplorePost };
