@@ -1,15 +1,16 @@
-import { useAuth, usePost } from "context";
+import { usePost } from "context";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const CreatePost = () => {
-	const { authState } = useAuth();
+	const { token } = useSelector((state) => state.auth);
 	const { setShowPostModal } = usePost();
 
 	const handleShowPostModal = () => setShowPostModal(true);
 
 	return (
 		<div className="basic-card create-post-container p-5 b-radius-2 flex-row justify-content-center align-center flex-gap-1">
-			{authState.token && (
+			{token && (
 				<Link to={"/profile"} className="no-link">
 					<article className="avatar-container flex-row justify-content-center align-center flex-gap-1">
 						<img

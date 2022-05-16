@@ -26,9 +26,6 @@ const Register = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { token, email, uid, authStatus, authError } = useSelector(
-		(state) => state.auth
-	);
 	const [showPassword, setShowPassword] = useState();
 	const [showConfirmPassword, setShowConfirmPassword] = useState();
 	const { showToast } = useToast();

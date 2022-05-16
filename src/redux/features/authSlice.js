@@ -50,8 +50,6 @@ const authSlice = createSlice({
 		},
 
 		[login.fulfilled]: (state, { payload }) => {
-			console.log("full", payload);
-
 			state.token = payload.token;
 			state.email = payload.email;
 			state.uid = payload.uid;
@@ -69,7 +67,6 @@ const authSlice = createSlice({
 		},
 
 		[register.fulfilled]: (state, { payload }) => {
-			console.log(payload);
 			state.token = payload.token;
 			state.email = payload.email;
 			state.uid = payload.uid;

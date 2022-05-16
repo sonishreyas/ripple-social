@@ -8,62 +8,46 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 
-const updateUser = (e, userId, updatedValue, usersDispatch) => {
-	e.preventDefault();
-	(async () => {
-		try {
-			const userRef = doc(db, "users", userId);
-			await updateDoc(userRef, updatedValue);
-			usersDispatch({
-				type: "UPDATE_USER",
-				payload: {
-					postsCount: { id: userId, ...updatedValue },
-				},
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	})();
+const updateUser = async (userId, updatedValue) => {
+	try {
+		const userRef = doc(db, "users", userId);
+		const response = await updateDoc(userRef, updatedValue);
+		console.log(response);
+		return response;
+	} catch (error) {
+		return error;
+	}
 };
 
-const getAllUsers = (userDispatch) => {
-	(async () => {
-		try {
-			const q = query(collection(db, "users"));
-			const querySnapshot = await getDocs(q);
-			const usersData = [];
-			querySnapshot.forEach((doc) => {
-				let data = doc.data();
-				usersData.push({ id: doc.id, ...data });
-			});
-			userDispatch({
-				type: "GET_ALL_USERS",
-				payload: {
-					users: usersData,
-				},
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	})();
+const getAllUsers = async () => {
+	try {
+		const q = query(collection(db, "users"));
+		const querySnapshot = await getDocs(q);
+		const usersData = [];
+		querySnapshot.forEach((doc) => {
+			let data = doc.data();
+			usersData.push({ id: doc.id, ...data });
+		});
+		return usersData;
+	} catch (error) {
+		return error;
+	}
 };
 
-const getCurrentUser = (userId, userDispatch) => {
-	(async () => {
-		try {
-			const userRef = doc(db, "users", userId);
-			const userSnapshot = await getDoc(userRef);
-			const user = userSnapshot.data();
-			userDispatch({
-				type: "SET_USER_PROFILE",
-				payload: {
-					userProfile: user,
-				},
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	})();
+const getCurrentUser = async (userId, userDispatch) => {
+	try {
+		const userRef = doc(db, "users", userId);
+		const userSnapshot = await getDoc(userRef);
+		const user = userSnapshot.data();
+		userDispatch({
+			type: "SET_USER_PROFILE",
+			payload: {
+				userProfile: user,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export { getAllUsers, getCurrentUser, updateUser };
