@@ -10,23 +10,15 @@ import {
 import { storage } from "backend/firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-const addNewPost = (e, newPost, postDispatch, showToast, msg) => {
-	e.preventDefault();
-	(async () => {
-		try {
-			const newPostRef = doc(collection(db, "posts"));
-			await setDoc(newPostRef, newPost);
-			postDispatch({
-				type: "ADD_NEW_POST",
-				payload: {
-					postData: { _id: newPostRef.id, ...newPost },
-				},
-			});
-			showToast(msg, "success");
-		} catch (error) {
-			console.log(error);
-		}
-	})();
+const addNewPost = async (newPost, showToast, msg) => {
+	try {
+		const newPostRef = doc(collection(db, "posts"));
+		await setDoc(newPostRef, newPost);
+		showToast(msg, "success");
+		return { _id: newPostRef.id, ...newPost };
+	} catch (error) {
+		return error;
+	}
 };
 
 const uploadFilesForPost = (file, postDispatch) => {
@@ -107,6 +99,7 @@ const getFeedPost = async (userFollowing) => {
 		return error;
 	}
 };
+
 const getExplorePost = async () => {
 	try {
 		const postsData = [];

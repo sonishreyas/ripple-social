@@ -38,6 +38,42 @@ export const getFeedPosts = createAsyncThunk(
 	}
 );
 
+export const editPost = createAsyncThunk(
+	"users/editPost",
+	async ({ postId, updatedValue }, { rejectWithValue }) => {
+		try {
+			const res = await editPost(postId, updatedValue);
+			return res;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const deletePost = createAsyncThunk(
+	"users/deletePost",
+	async ({ postId }, { rejectWithValue }) => {
+		try {
+			const res = await deletePost(postId);
+			return res;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const addNewPost = createAsyncThunk(
+	"users/deletePost",
+	async ({ newPost, showToast, msg }, { rejectWithValue }) => {
+		try {
+			const res = await addNewPost(newPost, showToast, msg);
+			return res;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
 const initialState = {
 	status: "idle",
 	error: null,
