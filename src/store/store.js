@@ -6,7 +6,7 @@ import {
 	usersReducer,
 	themeReducer,
 	navbarReducer,
-} from "redux/features";
+} from "features";
 
 export const store = configureStore({
 	reducer: {

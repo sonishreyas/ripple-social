@@ -1,5 +1,4 @@
 import { addNewPost } from "backend";
-import { useModal } from "context";
 import { useToast } from "custom-hooks";
 import { useReducer, useState } from "react";
 import { EmojiContainer } from "./EmojiContainer";
@@ -10,7 +9,10 @@ import {
 	useAuth,
 	setShowScheduleDateInput,
 	setShowPostModal,
-} from "redux";
+	useModal,
+	setModal,
+	addPost,
+} from "features";
 import { postReducer } from "reducers";
 import { useDispatch } from "react-redux";
 
@@ -24,24 +26,23 @@ const NewPostModal = () => {
 		},
 	});
 	const { showToast } = useToast();
-	const { modalDispatch, setShowModal } = useModal();
+	// const { modalDispatch, setShowModal } = useModal();
 	const { uid } = useAuth();
 	const dispatch = useDispatch();
 	const [showEmojiContainer, setShowEmojiContainer] = useState(false);
 	const handleDismissModal = () => setShowModal(false);
 
 	const handleDiscardModal = (e, id) => {
-		modalDispatch({
-			type: "SET_MODAL",
-			payload: {
+		dispatch(
+			setModal({
 				message: "Are you sure you want to discard the post ?",
 				handleConfirm: handleDismissPostModal,
 				handleDismiss: handleDismissModal,
 				confirmChoice: "Yes",
 				dismissChoice: "No",
-			},
-		});
-		setShowModal(true);
+			})
+		);
+		dispatch(setShowModal({ showModal: true }));
 		postDispatch({
 			type: "RESET_FORM",
 			payload: {
@@ -55,8 +56,8 @@ const NewPostModal = () => {
 	};
 
 	const handleDismissPostModal = () => {
-		setShowPostModal(false);
-		setShowModal(false);
+		dispatch(setShowPostModal({ showPostModal: false }));
+		dispatch(setShowModal({ showModal: false }));
 	};
 
 	const handleEmojiContainer = () =>
@@ -87,6 +88,7 @@ const NewPostModal = () => {
 					userId: uid,
 				};
 			}
+			dispatch(addPost());
 			addNewPost(e, newPost, postDispatch, showToast, msg);
 			setShowPostModal(false);
 			postDispatch({
@@ -239,7 +241,9 @@ const NewPostModal = () => {
 						</button>
 					</div>
 				</div>
-				{showEmojiContainer && <EmojiContainer />}{" "}
+				{showEmojiContainer && (
+					<EmojiContainer postState={postState} postDispatch={postDispatch} />
+				)}
 			</div>
 		</div>
 	);

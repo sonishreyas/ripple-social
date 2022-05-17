@@ -1,16 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getExplorePost, getFeedPost } from "backend";
-import { useToast } from "custom-hooks";
-import { db } from "backend/firebase/firebase";
 import {
-	collection,
-	doc,
-	getDocs,
-	query,
-	setDoc,
-	where,
-} from "firebase/firestore";
-import { storage } from "backend/firebase/firebase";
+	getExplorePost,
+	getFeedPost,
+	addPostToBookmark,
+	removePostFromBookmark,
+	getBookmarkDataHandler,
+} from "backend";
 import { useSelector } from "react-redux";
 
 export const getPosts = createAsyncThunk(
@@ -62,11 +57,47 @@ export const deletePost = createAsyncThunk(
 	}
 );
 
-export const addNewPost = createAsyncThunk(
-	"users/deletePost",
+export const addPost = createAsyncThunk(
+	"users/addPost",
 	async ({ newPost, showToast, msg }, { rejectWithValue }) => {
 		try {
 			const res = await addNewPost(newPost, showToast, msg);
+			return res;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const addToBookmark = createAsyncThunk(
+	"users/addToBookmark",
+	async ({ userId, updatedValue }, { rejectWithValue }) => {
+		try {
+			const res = await addPostToBookmark(userId, updatedValue);
+			return res;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const deleteFromBookmark = createAsyncThunk(
+	"users/deleteFromBookmark",
+	async ({ userId, updatedValue }, { rejectWithValue }) => {
+		try {
+			const res = await removePostFromBookmark(userId, updatedValue);
+			return res;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
+		}
+	}
+);
+
+export const getBookmarkData = createAsyncThunk(
+	"users/getBookmarkData",
+	async ({ userId }, { rejectWithValue }) => {
+		try {
+			const res = await getBookmarkDataHandler(userId);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -82,6 +113,7 @@ const initialState = {
 	explorePosts: [],
 	showPostModal: false,
 	showScheduleDateInput: false,
+	itemsInBookmark: [],
 };
 
 const postSlice = createSlice({
@@ -105,14 +137,35 @@ const postSlice = createSlice({
 		[getPosts.rejected]: (state, { payload }) => {
 			console.log(payload);
 		},
-		[getFeedPosts.fulfilled]: (state, { payload }) => {
-			state.feedPosts = payload;
-		},
 		[getFeedPosts.rejected]: (state, { payload }) => {
 			console.log(payload);
 		},
 		[getFeedPosts.fulfilled]: (state, { payload }) => {
 			state.feedPosts = payload;
+		},
+		[addPost.rejected]: (state, { payload }) => {
+			console.log(payload);
+		},
+		[addPost.fulfilled]: (state, { payload }) => {
+			state.itemsInBookmark = payload;
+		},
+		[addToBookmark.rejected]: (state, { payload }) => {
+			console.log(payload);
+		},
+		[addToBookmark.fulfilled]: (state, { payload }) => {
+			state.itemsInBookmark = payload;
+		},
+		[deleteFromBookmark.rejected]: (state, { payload }) => {
+			console.log(payloaaddNewPostd);
+		},
+		[deleteFromBookmark.fulfilled]: (state, { payload }) => {
+			state.itemsInBookmark = payload;
+		},
+		[getBookmarkData.rejected]: (state, { payload }) => {
+			console.log(payload);
+		},
+		[getBookmarkData.fulfilled]: (state, { payload }) => {
+			state.itemsInBookmark = payload;
 		},
 	},
 });

@@ -1,24 +1,19 @@
 import { usePost } from "context";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "redux/features";
+import { getPosts } from "features";
 import { CreatePost, Posts } from ".";
 
 const HomeContent = () => {
-	const { postState } = usePost();
 	const dispatch = useDispatch();
-	let { allPosts, sortBy } = useSelector((state) => state.posts);
+	let { feedPosts, sortBy } = useSelector((state) => state.posts);
 
 	const [postData, setPostData] = useState([]);
-	// useEffect(() => {
-	// 	postState?.feedPosts.length && setPostData(postState?.feedPosts);
-	// }, [postState]);
+
 	useEffect(() => {
-		console.log("here");
-		dispatch(getPosts());
+		dispatch(getFeedPosts());
 	}, []);
 
-	console.log(allPosts);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />
@@ -31,7 +26,7 @@ const HomeContent = () => {
 					<option value="date">Date old to new</option>
 				</select>
 			</div>
-			<Posts postData={postData} />
+			<Posts postData={feedPosts} />
 		</main>
 	);
 };

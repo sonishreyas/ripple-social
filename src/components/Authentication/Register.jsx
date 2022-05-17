@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "react-router";
 import { useReducer, useState } from "react";
-import { registerHandler, setValueHandler, setFocusHandler } from "backend";
+import { setValueHandler, setFocusHandler } from "backend";
 import { useToast } from "custom-hooks";
-import { register } from "redux/features";
+import { register } from "features";
 import { registerReducer } from "reducers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const Register = () => {
 	const [registerState, registerDispatch] = useReducer(registerReducer, {
 		email: "",

@@ -1,19 +1,16 @@
 import { useDispatch } from "react-redux";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { toggleTheme } from "redux";
-import { useTheme } from "redux";
-import { useNavbar } from "../../context";
+import { Link, useLocation } from "react-router-dom";
+import { useTheme, toggleTheme } from "features";
 
 const Header = () => {
 	const { themeIcon } = useTheme();
 	const dispatch = useDispatch();
-	const { setShowNavbar } = useNavbar();
 	const location = useLocation();
 	const getActiveClass = ({ isActive }) =>
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
 			: "no-link cursor-pointer";
-	const handleShowNavbar = () => setShowNavbar(true);
+	const handleShowNavbar = () => dispatch(toggleNavbar({ showNavbar: true }));
 	return (
 		<header className="header header-shadow flex-column">
 			<div className="flex-row justify-content-space-between align-center w-100">

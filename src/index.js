@@ -4,21 +4,21 @@ import "css/app.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { BookmarkProvider, ModalProvider, NavbarProvider } from "context";
+import { BookmarkProvider } from "context";
 import { ToastPortal } from "components";
-import { store } from "redux/store/store";
+import { store } from "store";
 import { Provider } from "react-redux";
 // Call make Server
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<Router>
+		<Router>
+			<Provider store={store}>
 				<BookmarkProvider>
 					<App />
 					<ToastPortal />
 				</BookmarkProvider>
-			</Router>
-		</Provider>
+			</Provider>
+		</Router>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

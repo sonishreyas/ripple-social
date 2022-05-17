@@ -1,12 +1,12 @@
 import { usePost } from "context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const CreatePost = () => {
 	const { token } = useSelector((state) => state.auth);
-	const { setShowPostModal } = usePost();
-
-	const handleShowPostModal = () => setShowPostModal(true);
+	const dispatch = useDispatch();
+	const handleShowPostModal = () =>
+		dispatch(setShowPostModal({ showPostModal: true }));
 
 	return (
 		<div className="basic-card create-post-container p-5 b-radius-2 flex-row justify-content-center align-center flex-gap-1">
