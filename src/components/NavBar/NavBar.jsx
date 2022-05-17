@@ -11,6 +11,15 @@ const NavBar = () => {
 			? "no-link cursor-pointer text-cta-color text-bold"
 			: "no-link cursor-pointer";
 	const handleHideNavbar = () => setShowNavbar(false);
+
+	useEffect(() => {
+		if (window.innerWidth <= 768) {
+			setShowNavbar(false);
+			window.addEventListener("resize", () => setShowNavbar(false));
+		} else if (window.innerWidth > 768) {
+			setShowNavbar(true);
+		} else setShowNavbar(true);
+	}, []);
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">
 			<div className="nav-content p-0 m-0">

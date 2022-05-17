@@ -1,10 +1,13 @@
+import { useDispatch } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useAuth, useNavbar, useTheme } from "../../context";
+import { toggleTheme } from "redux";
+import { useTheme } from "redux";
+import { useNavbar } from "../../context";
 
 const Header = () => {
-	const { handleSetTheme, themeIcon } = useTheme();
+	const { themeIcon } = useTheme();
+	const dispatch = useDispatch();
 	const { setShowNavbar } = useNavbar();
-	const { authState } = useAuth();
 	const location = useLocation();
 	const getActiveClass = ({ isActive }) =>
 		isActive
@@ -39,7 +42,7 @@ const Header = () => {
 								<i
 									className={`fas fa-${themeIcon} theme-icon social`}
 									aria-label="dark/light theme icon"
-									onClick={handleSetTheme}
+									onClick={() => dispatch(toggleTheme())}
 								></i>
 							</span>
 						</li>

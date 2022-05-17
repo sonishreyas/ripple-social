@@ -80,6 +80,8 @@ const initialState = {
 	feedPosts: [],
 	allPosts: [],
 	explorePosts: [],
+	showPostModal: false,
+	showScheduleDateInput: false,
 };
 
 const postSlice = createSlice({
@@ -88,6 +90,12 @@ const postSlice = createSlice({
 	reducers: {
 		sortByValue: (state, action) => {
 			state.sortBy = action.payload;
+		},
+		setShowPostModal: (state, { payload }) => {
+			state.showPostModal = payload.showPostModal;
+		},
+		setShowScheduleDateInput: (state, { payload }) => {
+			state.showPostModal = payload.showScheduleDateInput;
 		},
 	},
 	extraReducers: {
@@ -109,6 +117,7 @@ const postSlice = createSlice({
 	},
 });
 
-export const { sortByValue } = postSlice.actions;
+export const { sortByValue, setShowPostModal, setShowScheduleDateInput } =
+	postSlice.actions;
 export const postReducer = postSlice.reducer;
-export const usePosts = useSelector((state) => state.posts);
+export const usePosts = () => useSelector((state) => state.posts);

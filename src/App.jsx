@@ -1,11 +1,12 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import { Authentication, Bookmark, Home } from "pages";
 import { Header, Footer, NavBar, NewPostModal, ConfirmModal } from "components";
-import { useModal, useNavbar, usePost } from "context";
+import { useModal, useNavbar } from "context";
 import { RequireAuth } from "backend";
+import { usePosts } from "redux";
 function App() {
 	const { showNavbar } = useNavbar();
-	const { showPostModal } = usePost();
+	const { showPostModal } = usePosts();
 	const { showModal } = useModal();
 	const location = useLocation();
 	return (

@@ -1,22 +1,32 @@
 import { addNewPost } from "backend";
-import { useAuth, useModal, usePost } from "context";
+import { useModal } from "context";
 import { useToast } from "custom-hooks";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { EmojiContainer } from "./EmojiContainer";
 import { uploadFilesForPost } from "backend/utils";
 import { FilesContainer } from ".";
+import {
+	usePosts,
+	useAuth,
+	setShowScheduleDateInput,
+	setShowPostModal,
+} from "redux";
+import { postReducer } from "reducers";
+import { useDispatch } from "react-redux";
 
 const NewPostModal = () => {
-	const {
-		setShowPostModal,
-		postState,
-		postDispatch,
-		showScheduleDateInput,
-		setShowScheduleDateInput,
-	} = usePost();
+	const { setShowPostModal, showScheduleDateInput } = usePosts();
+	const [postState, postDispatch] = useReducer(postReducer, {
+		newPost: {
+			postText: "",
+			fileUrls: [],
+			createdAt: "",
+		},
+	});
 	const { showToast } = useToast();
 	const { modalDispatch, setShowModal } = useModal();
-	const { authState } = useAuth();
+	const { uid } = useAuth();
+	const dispatch = useDispatch();
 	const [showEmojiContainer, setShowEmojiContainer] = useState(false);
 	const handleDismissModal = () => setShowModal(false);
 
@@ -41,7 +51,7 @@ const NewPostModal = () => {
 				},
 			},
 		});
-		setShowScheduleDateInput(false);
+		dispatch(setShowScheduleDateInput({ showScheduleDateInput: false }));
 	};
 
 	const handleDismissPostModal = () => {
@@ -67,14 +77,14 @@ const NewPostModal = () => {
 			if (postState.newPost?.createdAt?.length) {
 				newPost = {
 					...postState.newPost,
-					userId: authState.uid,
+					userId: uid,
 				};
 				msg = `Post is scheduled on ${postState.newPost.createdAt}`;
 			} else {
 				newPost = {
 					...postState.newPost,
 					createdAt: new Date().toISOString(),
-					userId: authState.uid,
+					userId: uid,
 				};
 			}
 			addNewPost(e, newPost, postDispatch, showToast, msg);
@@ -187,7 +197,11 @@ const NewPostModal = () => {
 						{!showScheduleDateInput ? (
 							<button
 								className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
-								onClick={() => setShowScheduleDateInput(true)}
+								onClick={() =>
+									dispatch(
+										setShowScheduleDateInput({ showScheduleDataInput: true })
+									)
+								}
 							>
 								Schedule Post
 							</button>

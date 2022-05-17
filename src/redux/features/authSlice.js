@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { loginHandler, registerHandler } from "backend";
+import { useSelector } from "react-redux";
 
 const initialState = JSON.parse(localStorage.getItem("user")) || {
 	token: "",
@@ -83,3 +84,4 @@ const authSlice = createSlice({
 
 export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;
+export const useAuth = () => useSelector((state) => state.auth);
