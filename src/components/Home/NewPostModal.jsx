@@ -88,9 +88,8 @@ const NewPostModal = () => {
 					userId: uid,
 				};
 			}
-			dispatch(addPost());
-			addNewPost(e, newPost, postDispatch, showToast, msg);
-			setShowPostModal(false);
+			dispatch(addPost({ newPost: newPost, showToast: showToast, msg: msg }));
+			dispatch(setShowPostModal({ showPostModal: false }));
 			postDispatch({
 				type: "RESET_FORM",
 				payload: {
@@ -100,7 +99,7 @@ const NewPostModal = () => {
 					},
 				},
 			});
-			setShowScheduleDateInput(false);
+			dispatch(setShowScheduleDateInput({ showScheduleDateInput: false }));
 		}
 	};
 

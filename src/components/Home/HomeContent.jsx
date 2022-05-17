@@ -1,12 +1,12 @@
 import { usePost } from "context";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "features";
+import { useDispatch } from "react-redux";
+import { getFeedPosts, usePosts } from "features";
 import { CreatePost, Posts } from ".";
 
 const HomeContent = () => {
 	const dispatch = useDispatch();
-	let { feedPosts, sortBy } = useSelector((state) => state.posts);
+	let { feedPosts, sortBy } = usePosts();
 
 	const [postData, setPostData] = useState([]);
 

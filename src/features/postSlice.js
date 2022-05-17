@@ -147,7 +147,9 @@ const postSlice = createSlice({
 			console.log(payload);
 		},
 		[addPost.fulfilled]: (state, { payload }) => {
-			state.itemsInBookmark = payload;
+			state.feedPosts = [...state.feedPosts, { ...payload }];
+			state.allPosts = [...state.allPosts, { ...payload }];
+			state.explorePosts = [...state.explorePosts, { ...payload }];
 		},
 		[addToBookmark.rejected]: (state, { payload }) => {
 			console.log(payload);
