@@ -79,4 +79,4 @@ const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 export const { reset } = usersSlice.actions;
-export const useProfile = () => useSelector((state) => state.users);
+export const useUser = () => useSelector((state) => state.users);

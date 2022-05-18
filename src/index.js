@@ -4,7 +4,6 @@ import "css/app.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { BookmarkProvider } from "context";
 import { ToastPortal } from "components";
 import { store } from "store";
 import { Provider } from "react-redux";
@@ -13,10 +12,8 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Router>
 			<Provider store={store}>
-				<BookmarkProvider>
-					<App />
-					<ToastPortal />
-				</BookmarkProvider>
+				<App />
+				<ToastPortal />
 			</Provider>
 		</Router>
 	</React.StrictMode>,

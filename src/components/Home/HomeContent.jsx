@@ -1,19 +1,25 @@
 import { usePost } from "context";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getFeedPosts, usePosts } from "features";
+import { getFeedPosts, getUser, getUsers, useAuth, usePosts } from "features";
 import { CreatePost, Posts } from ".";
 
 const HomeContent = () => {
 	const dispatch = useDispatch();
-	let { feedPosts, sortBy } = usePosts();
-
+	const { feedPosts, sortBy } = usePosts();
+	const { uid } = useAuth();
 	const [postData, setPostData] = useState([]);
 
 	useEffect(() => {
 		dispatch(getFeedPosts());
 	}, []);
 
+	useEffect(() => {
+		if (uid?.length) {
+			dispatch(getUsers());
+			dispatch(getUser(uid));
+		}
+	}, [uid]);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />

@@ -1,25 +1,24 @@
-import { useNavbar, useAuth } from "context";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { navData } from "./nav-data";
 
 const NavBar = () => {
-	const { setShowNavbar } = useNavbar();
-	const { authState } = useAuth();
-
+	const dispatch = useDispatch();
 	const getActiveClass = ({ isActive }) =>
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
 			: "no-link cursor-pointer";
-	const handleHideNavbar = () => setShowNavbar(false);
+	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false}));
 
 	useEffect(() => {
 		if (window.innerWidth <= 768) {
-			setShowNavbar(false);
-			window.addEventListener("resize", () => setShowNavbar(false));
+			dispatch(toggleNavbar({ showNavbar: false}));
+			window.addEventListener("resize", () => dispatch(toggleNavbar({ showNavbar: false}));
 		} else if (window.innerWidth > 768) {
-			setShowNavbar(true);
-		} else setShowNavbar(true);
+			dispatch(toggleNavbar({ showNavbar: true}));
+		} else dispatch(toggleNavbar({ showNavbar: true}));
 	}, []);
+
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">
 			<div className="nav-content p-0 m-0">

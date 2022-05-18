@@ -1,41 +1,35 @@
-import { addPostToBookmark, removePostFromBookmark } from "backend";
-import { useAuth, useBookmark, usePost, useUser } from "context";
 import { useToast } from "custom-hooks";
+import { useAuth, usePosts, useUser } from "features";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserData, presentInArray, removeFromArray, trimData } from "utils";
 import { FilesContainer } from ".";
 
 const Posts = ({ postData }) => {
-	const { userState } = useUser();
-	const { bookmarkState, bookmarkDispatch } = useBookmark();
-	const { authState } = useAuth();
+	const { users } = useUser();
+	const { itemsInBookmark } = usePosts();
+	const { uid } = useAuth();
 	const { showToast } = useToast();
-
+	const dispatch = useDispatch();
 	const handleAddToBookmark = (e, id) => {
-		addPostToBookmark(
-			e,
-			authState.uid,
-			{ bookmarks: [...bookmarkState.itemsInBookmark, id] },
-			bookmarkDispatch
-		);
-
+		dispatch(addToBookmark(uid, { bookmarks: [...itemsInBookmark, id] }));
 		showToast("Post bookmarked", "success");
 	};
 
 	const handleRemoveFromBookmark = (e, id) => {
-		removePostFromBookmark(
-			e,
-			authState.uid,
-			{ bookmarks: removeFromArray(bookmarkState.itemsInBookmark, id) },
-			bookmarkDispatch
+		dispatch(
+			deleteFromBookmark(uid, {
+				bookmarks: removeFromArray(itemsInBookmark, id),
+			})
 		);
 		showToast("Post removed from bookmark", "success");
 	};
+
 	return (
 		<>
 			{postData?.length &&
 				postData?.map(({ id, createdAt, fileUrls, postText, userId }) => {
-					const user = getUserData(userId, userState.users);
+					const user = getUserData(userId, users);
 					return (
 						<div className="card post-card p-5 b-radius-3" key={id}>
 							<div className="p-5 b-radius-3 flex-column justify-content-center align-start flex-gap-half">
@@ -76,7 +70,7 @@ const Posts = ({ postData }) => {
 										</span>
 									</section>
 									<span>
-										{presentInArray(bookmarkState.itemsInBookmark, id) ? (
+										{presentInArray(itemsInBookmark, id) ? (
 											<i
 												className="fa-solid fa-bookmark social text-cta-color"
 												onClick={(e) => handleRemoveFromBookmark(e, id)}
