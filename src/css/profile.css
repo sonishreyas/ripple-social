@@ -1,0 +1,34 @@
+.profile-card {
+	width: 80rem;
+	height: auto;
+}
+
+.background-img {
+	height: 30rem;
+}
+
+.profile-img {
+	height: 12rem;
+	width: 12rem;
+	font-size: 2.5rem;
+	border: 0.3rem solid var(--secondary-color);
+	position: absolute;
+	top: 25rem;
+	left: 5%;
+}
+
+.user-details {
+	margin-top: 5rem;
+}
+.user-container {
+	margin-left: 2rem;
+}
+
+.basic-card-primary {
+	background-color: var(--primary-color);
+}
+@media screen and (max-width: 900px) {
+	.profile-card {
+		width: 100%;
+	}
+}

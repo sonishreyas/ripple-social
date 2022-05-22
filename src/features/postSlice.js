@@ -74,7 +74,6 @@ export const addToBookmark = createAsyncThunk(
 	async ({ userId, updatedValue }, { rejectWithValue }) => {
 		try {
 			const res = await addPostToBookmark(userId, updatedValue);
-			console.log(res);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -99,7 +98,6 @@ export const getBookmarkData = createAsyncThunk(
 	async ({ userId }, { rejectWithValue }) => {
 		try {
 			const res = await getBookmarkDataHandler(userId);
-			console.log("Bookmark", res);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);

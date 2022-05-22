@@ -7,3 +7,4 @@ export { ToastPortal } from "./Toast";
 export { ConfirmModal } from "./Modal";
 export { Posts } from "./Home";
 export { BookmarkContent } from "./Bookmark";
+export { ProfileContent } from "./Profile";

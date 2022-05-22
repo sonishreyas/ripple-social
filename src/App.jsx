@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import { Authentication, Bookmark, Home } from "pages";
+import { Authentication, Bookmark, Home, Profile } from "pages";
 import { Header, Footer, NavBar, NewPostModal, ConfirmModal } from "components";
 import { RequireAuth } from "backend";
 import { usePosts, useNavbar, useModal } from "features";
@@ -27,6 +27,14 @@ function App() {
 					element={
 						<RequireAuth>
 							<Bookmark />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path="/profile/:username"
+					element={
+						<RequireAuth>
+							<Profile />
 						</RequireAuth>
 					}
 				/>
