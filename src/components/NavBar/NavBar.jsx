@@ -1,9 +1,8 @@
-import { toggleNavbar } from "features";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { navData } from "./nav-data";
-
+import { toggleNavbar } from "features";
+import { useEffect } from "react";
 const NavBar = () => {
 	const dispatch = useDispatch();
 	const getActiveClass = ({ isActive }) =>

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme, toggleTheme } from "features";
+import { useTheme, toggleTheme, toggleNavbar } from "features";
 
 const Header = () => {
 	const { themeIcon } = useTheme();
