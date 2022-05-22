@@ -1,7 +1,10 @@
+import { CreatePost, Posts } from ".";
+
 const HomeContent = () => {
 	return (
-		<main className="main flex-row align-center justify-content-center all-grid-columns">
-			<h1>Home Page</h1>
+		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
+			<CreatePost />
+			<Posts />
 		</main>
 	);
 };

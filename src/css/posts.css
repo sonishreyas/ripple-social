@@ -1,0 +1,32 @@
+.create-post-container {
+  width: 50rem;
+  height: 10rem;
+
+}
+
+.outline-btn {
+  background-color: var(--primary-color);
+}
+
+.post-icons {
+  font-size: 1.8rem;
+}
+textarea {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
+}
+.post-text-container {
+  background-color: var(--primary-color);
+  font-family: inherit;
+  font-size: inherit;
+  height: 20rem;
+  border: 0.1rem solid var(--primary-color); 
+  color: var(--secondary-color);
+}

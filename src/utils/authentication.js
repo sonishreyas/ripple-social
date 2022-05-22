@@ -59,7 +59,8 @@ const registerHandler = (
 	registerState,
 	navigate,
 	location,
-	authDispatch
+	authDispatch,
+	showToast
 ) => {
 	e.preventDefault();
 	(async () => {
@@ -74,7 +75,7 @@ const registerHandler = (
 					)
 				);
 				if (checkUsername.docs.length) {
-					toast.error("Username not available");
+					showToast("Username not available", "error");
 				} else {
 					const result = await createUserWithEmailAndPassword(
 						auth,
@@ -100,7 +101,7 @@ const registerHandler = (
 						following: [],
 						bookmarks: [],
 					});
-					toast.success("User registered successfully..");
+					showToast("User registered successfully..", "success");
 					navigate(location?.state?.from?.pathname);
 				}
 			}

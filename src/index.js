@@ -1,17 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "css/index.css";
+import "css/app.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import {
 	AuthProvider,
 	LoginProvider,
+	ModalProvider,
 	NavbarProvider,
+	PostProvider,
 	RegisterProvider,
 	ThemeProvider,
 } from "context";
-
+import { ToastPortal } from "components";
 // Call make Server
 ReactDOM.render(
 	<React.StrictMode>
@@ -21,7 +23,12 @@ ReactDOM.render(
 					<RegisterProvider>
 						<LoginProvider>
 							<AuthProvider>
-								<App />
+								<PostProvider>
+									<ModalProvider>
+										<App />
+										<ToastPortal />
+									</ModalProvider>
+								</PostProvider>
 							</AuthProvider>
 						</LoginProvider>
 					</RegisterProvider>

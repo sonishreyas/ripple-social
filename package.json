@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "emoji-picker-react": "^3.5.1",
     "firebase": "^9.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

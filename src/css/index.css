@@ -145,6 +145,8 @@ input:checked + .slider::before {
 .modal-content {
   position: absolute;
   z-index: var(--max-z-index);
+  background-color: var(--secondary-background-color);
+  width: 60rem;
 }
 
 .grid-container .modal {
@@ -452,6 +454,9 @@ input:checked + .slider::before {
 @media screen and (max-width: 480px) {
   .grid-container .header {
     overflow: visible;
+  }
+  .modal-content {
+    width: 100%;
   }
 }
 
