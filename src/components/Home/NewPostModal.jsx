@@ -98,10 +98,9 @@ const NewPostModal = () => {
 					},
 				},
 			});
-			dispatch(setShowScheduleDateInput({ showScheduleDateInput: false }));
+			dispatch(setShowScheduleDateInput(false));
 		}
 	};
-	console.log(showScheduleDateInput);
 	const handleUploadFiles = (e, type) => {
 		Object.keys(e.target.files).map((i) =>
 			uploadFilesForPost(
@@ -197,11 +196,7 @@ const NewPostModal = () => {
 						{!showScheduleDateInput ? (
 							<button
 								className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
-								onClick={() =>
-									dispatch(
-										setShowScheduleDateInput({ showScheduleDataInput: true })
-									)
-								}
+								onClick={() => dispatch(setShowScheduleDateInput(true))}
 							>
 								Schedule Post
 							</button>

@@ -26,7 +26,6 @@ export const getFeedPosts = createAsyncThunk(
 	async ({ userFollowing }, { rejectWithValue }) => {
 		try {
 			const res = await getFeedPost(userFollowing);
-			console.log("res", res);
 			return res;
 		} catch (err) {
 			return rejectWithValue(err.response.data);
@@ -128,7 +127,7 @@ const postSlice = createSlice({
 			state.showPostModal = payload.showPostModal;
 		},
 		setShowScheduleDateInput: (state, { payload }) => {
-			state.showScheduleDateInput = payload.showScheduleDateInput;
+			state.showScheduleDateInput = payload;
 		},
 	},
 	extraReducers: {

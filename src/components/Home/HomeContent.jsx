@@ -14,11 +14,11 @@ const HomeContent = () => {
 	const dispatch = useDispatch();
 	const { feedPosts, sortBy } = usePosts();
 	const { uid } = useAuth();
-	const { userProfile } = useUser();
+	const { userProfile, users } = useUser();
 	const [postData, setPostData] = useState([]);
 
 	useEffect(() => {
-		console.log(userProfile);
+		console.log(users);
 		Object.keys(userProfile).length &&
 			dispatch(getFeedPosts({ userFollowing: userProfile?.following }));
 	}, [userProfile]);
@@ -29,7 +29,6 @@ const HomeContent = () => {
 			dispatch(getUser({ uid: uid }));
 		}
 	}, [uid]);
-	console.log(feedPosts);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />

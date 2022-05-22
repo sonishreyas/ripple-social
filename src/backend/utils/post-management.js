@@ -85,17 +85,20 @@ const uploadFilesForPost = (file, postDispatch) => {
 
 const getFeedPost = async (userFollowing) => {
 	try {
-		const postsData = [];
-		await userFollowing.forEach(async (item) => {
-			const q = query(collection(db, "posts"), where("userId", "==", item));
-			const querySnapshot = await getDocs(q);
-			querySnapshot.forEach((doc) => {
-				let data = doc.data();
-				postsData.push({ id: doc.id, ...data });
-			});
-		});
+		let postsData = [];
+		await Promise.all(
+			userFollowing.map(async (item) => {
+				const q = query(collection(db, "posts"), where("userId", "==", item));
+				const querySnapshot = await getDocs(q);
+				querySnapshot.forEach((doc) => {
+					let data = doc.data();
+					postsData = postsData.concat({ id: doc.id, ...data });
+				});
+			})
+		);
 		return postsData;
 	} catch (error) {
+		console.log(error);
 		return error;
 	}
 };
