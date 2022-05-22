@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+	getBookmarkData,
 	getFeedPosts,
 	getUser,
 	getUsers,
@@ -14,13 +15,14 @@ const HomeContent = () => {
 	const dispatch = useDispatch();
 	const { feedPosts, sortBy } = usePosts();
 	const { uid } = useAuth();
-	const { userProfile, users } = useUser();
+	const { userProfile } = useUser();
 	const [postData, setPostData] = useState([]);
 
 	useEffect(() => {
-		console.log(users);
-		Object.keys(userProfile).length &&
+		if (Object.keys(userProfile).length) {
 			dispatch(getFeedPosts({ userFollowing: userProfile?.following }));
+			dispatch(getBookmarkData({ userId: userProfile.uid }));
+		}
 	}, [userProfile]);
 
 	useEffect(() => {

@@ -1,17 +1,15 @@
 import { db } from "backend/firebase/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-const getBookmarkDataHandler = async (userId, bookmarkDispatch) => {
-	(async () => {
-		try {
-			const userRef = doc(db, "users", userId);
-			const userSnapshot = await getDoc(userRef);
-			const user = userSnapshot.data();
-			return user?.bookmarks ? user.bookmarks : [];
-		} catch (error) {
-			return error;
-		}
-	})();
+const getBookmarkDataHandler = async (userId) => {
+	try {
+		const userRef = doc(db, "users", userId);
+		const userSnapshot = await getDoc(userRef);
+		const user = userSnapshot.data();
+		return user?.bookmarks ? user.bookmarks : [];
+	} catch (error) {
+		return error;
+	}
 };
 
 const addPostToBookmark = async (userId, updatedValue) => {
@@ -28,12 +26,6 @@ const removePostFromBookmark = async (userId, updatedValue) => {
 	try {
 		const userRef = doc(db, "users", userId);
 		await updateDoc(userRef, updatedValue);
-		bookmarkDispatch({
-			type: "REMOVE_ITEM",
-			payload: {
-				itemsInBookmark: [...updatedValue.bookmarks],
-			},
-		});
 		return [...updatedValue.bookmarks];
 	} catch (error) {
 		return error;

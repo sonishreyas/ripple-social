@@ -18,19 +18,26 @@ const Posts = ({ postData }) => {
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
 	const handleAddToBookmark = (e, id) => {
-		dispatch(addToBookmark(uid, { bookmarks: [...itemsInBookmark, id] }));
+		dispatch(
+			addToBookmark({
+				userId: uid,
+				updatedValue: { bookmarks: [...itemsInBookmark, id] },
+			})
+		);
 		showToast("Post bookmarked", "success");
 	};
 
 	const handleRemoveFromBookmark = (e, id) => {
 		dispatch(
-			deleteFromBookmark(uid, {
-				bookmarks: removeFromArray(itemsInBookmark, id),
+			deleteFromBookmark({
+				userId: uid,
+				updatedValue: {
+					bookmarks: removeFromArray(itemsInBookmark, id),
+				},
 			})
 		);
 		showToast("Post removed from bookmark", "success");
 	};
-
 	return (
 		<>
 			{postData?.length &&
