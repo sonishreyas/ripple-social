@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { modalReducer } from "reducers";
 import {
 	authReducer,
 	postReducer,
 	usersReducer,
 	themeReducer,
 	navbarReducer,
+	modalReducer,
 } from "features";
 
 export const store = configureStore({

@@ -23,7 +23,6 @@ const Login = () => {
 		const res = await dispatch(
 			login({ email: loginState.email, password: loginState.password })
 		);
-		console.log("login", res);
 		if (res) {
 			navigate(location?.state?.from?.pathname);
 		}

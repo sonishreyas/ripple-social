@@ -5,6 +5,7 @@ import {
 	addPostToBookmark,
 	removePostFromBookmark,
 	getBookmarkDataHandler,
+	addNewPost,
 } from "backend";
 import { useSelector } from "react-redux";
 
@@ -127,7 +128,7 @@ const postSlice = createSlice({
 			state.showPostModal = payload.showPostModal;
 		},
 		setShowScheduleDateInput: (state, { payload }) => {
-			state.showPostModal = payload.showScheduleDateInput;
+			state.showScheduleDateInput = payload.showScheduleDateInput;
 		},
 	},
 	extraReducers: {
@@ -158,7 +159,7 @@ const postSlice = createSlice({
 			state.itemsInBookmark = payload;
 		},
 		[deleteFromBookmark.rejected]: (state, { payload }) => {
-			console.log(payloaaddNewPostd);
+			console.log(payload);
 		},
 		[deleteFromBookmark.fulfilled]: (state, { payload }) => {
 			state.itemsInBookmark = payload;

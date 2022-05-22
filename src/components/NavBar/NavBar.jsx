@@ -1,3 +1,5 @@
+import { toggleNavbar } from "features";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { navData } from "./nav-data";
@@ -8,15 +10,17 @@ const NavBar = () => {
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
 			: "no-link cursor-pointer";
-	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false}));
+	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false }));
 
 	useEffect(() => {
 		if (window.innerWidth <= 768) {
-			dispatch(toggleNavbar({ showNavbar: false}));
-			window.addEventListener("resize", () => dispatch(toggleNavbar({ showNavbar: false}));
+			dispatch(toggleNavbar({ showNavbar: false }));
+			window.addEventListener("resize", () =>
+				dispatch(toggleNavbar({ showNavbar: false }))
+			);
 		} else if (window.innerWidth > 768) {
-			dispatch(toggleNavbar({ showNavbar: true}));
-		} else dispatch(toggleNavbar({ showNavbar: true}));
+			dispatch(toggleNavbar({ showNavbar: true }));
+		} else dispatch(toggleNavbar({ showNavbar: true }));
 	}, []);
 
 	return (

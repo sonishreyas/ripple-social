@@ -34,17 +34,12 @@ const getAllUsers = async () => {
 	}
 };
 
-const getCurrentUser = async (userId, userDispatch) => {
+const getCurrentUser = async (userId) => {
 	try {
 		const userRef = doc(db, "users", userId);
 		const userSnapshot = await getDoc(userRef);
 		const user = userSnapshot.data();
-		userDispatch({
-			type: "SET_USER_PROFILE",
-			payload: {
-				userProfile: user,
-			},
-		});
+		return user;
 	} catch (error) {
 		console.log(error);
 	}

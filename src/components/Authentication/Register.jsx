@@ -13,6 +13,7 @@ const Register = () => {
 		lastName: "",
 		username: "",
 		confirmPassword: "",
+		profileURL: "https://i.stack.imgur.com/l60Hf.png",
 		showPassword: { password: false, confirmPassword: false },
 		focus: {
 			firstName: false,

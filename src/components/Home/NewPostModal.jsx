@@ -1,4 +1,3 @@
-import { addNewPost } from "backend";
 import { useToast } from "custom-hooks";
 import { useReducer, useState } from "react";
 import { EmojiContainer } from "./EmojiContainer";
@@ -12,12 +11,13 @@ import {
 	useModal,
 	setModal,
 	addPost,
+	setShowModal,
 } from "features";
 import { postReducer } from "reducers";
 import { useDispatch } from "react-redux";
 
 const NewPostModal = () => {
-	const { setShowPostModal, showScheduleDateInput } = usePosts();
+	const { showPostModal, showScheduleDateInput } = usePosts();
 	const [postState, postDispatch] = useReducer(postReducer, {
 		newPost: {
 			postText: "",
@@ -26,11 +26,10 @@ const NewPostModal = () => {
 		},
 	});
 	const { showToast } = useToast();
-	// const { modalDispatch, setShowModal } = useModal();
 	const { uid } = useAuth();
 	const dispatch = useDispatch();
 	const [showEmojiContainer, setShowEmojiContainer] = useState(false);
-	const handleDismissModal = () => setShowModal(false);
+	const handleDismissModal = () => dispatch(setShowModal({ showModal: false }));
 
 	const handleDiscardModal = (e, id) => {
 		dispatch(
@@ -102,7 +101,7 @@ const NewPostModal = () => {
 			dispatch(setShowScheduleDateInput({ showScheduleDateInput: false }));
 		}
 	};
-
+	console.log(showScheduleDateInput);
 	const handleUploadFiles = (e, type) => {
 		Object.keys(e.target.files).map((i) =>
 			uploadFilesForPost(

@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
 const initialState = {
-	message: {},
-	handleConfirm: () => {},
-	handeDismiss: () => {},
+	message: null,
+	handleConfirm: null,
+	handeDismiss: null,
 	confirmChoice: "Yes",
 	dismissChoice: "No",
 	showModal: false,
@@ -25,9 +25,9 @@ const modalSlice = createSlice({
 			state.showModal = payload.showModal;
 		},
 		resetModal: (state) => {
-			state.message = "";
-			state.handleConfirm = () => {};
-			state.handleDismiss = () => {};
+			state.message = null;
+			state.handleConfirm = null;
+			state.handleDismiss = null;
 			state.confirmChoice = "Yes";
 			state.dismissChoice = "No";
 		},

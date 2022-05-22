@@ -1,20 +1,14 @@
 import { Posts } from "components";
-import { useBookmark, usePost } from "context";
+import { usePosts } from "features";
 import { useEffect, useState } from "react";
 import { getBookmarkDataFromId } from "utils";
 
 const BookmarkContent = () => {
-	const { postState } = usePost();
-	const { bookmarkState } = useBookmark();
+	const { allPosts, itemsInBookmark } = usePosts();
 	const [postData, setPostData] = useState();
 	useEffect(() => {
-		setPostData(
-			getBookmarkDataFromId(
-				postState.explorePosts,
-				bookmarkState.itemsInBookmark
-			)
-		);
-	}, [bookmarkState]);
+		setPostData(getBookmarkDataFromId(allPosts, itemsInBookmark));
+	}, [itemsInBookmark]);
 
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">

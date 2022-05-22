@@ -1,4 +1,4 @@
-import { useAuth, useUser } from "features";
+import { setShowPostModal, useAuth, useUser } from "features";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -8,11 +8,10 @@ const CreatePost = () => {
 	const dispatch = useDispatch();
 	const handleShowPostModal = () =>
 		dispatch(setShowPostModal({ showPostModal: true }));
-
 	return (
 		<div className="basic-card create-post-container p-5 b-radius-2 flex-row justify-content-center align-center flex-gap-1">
-			{token && (
-				<Link to={`/profile/${userProfile.username}`} className="no-link">
+			{token && userProfile !== null && (
+				<Link to={`/profile/${userProfile?.username}`} className="no-link">
 					<article className="avatar-container flex-row justify-content-center align-center flex-gap-1">
 						<img
 							src={

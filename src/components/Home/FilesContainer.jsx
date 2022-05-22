@@ -1,4 +1,3 @@
-import { usePost } from "context";
 import { useState } from "react";
 
 const FilesContainer = ({ fileUrls }) => {
