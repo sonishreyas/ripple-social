@@ -8,7 +8,7 @@ const ProfileButton = ({ type, userData }) => {
 	const handleFollowUser = () => {
 		dispatch(
 			updateUser({
-				userId: userProfile?.userId,
+				userId: userProfile?.uid,
 				updatedValue: {
 					following: [...userProfile?.following, userData?.uid],
 				},
@@ -16,7 +16,7 @@ const ProfileButton = ({ type, userData }) => {
 		);
 		dispatch(
 			updateUser({
-				userId: userData?.userId,
+				userId: userData?.uid,
 				updatedValue: {
 					followers: [...userData?.followers, userProfile?.uid],
 				},
@@ -27,15 +27,15 @@ const ProfileButton = ({ type, userData }) => {
 	const handleUnfollowUser = () => {
 		dispatch(
 			updateUser({
-				userId: userProfile?.userId,
+				userId: userProfile?.uid,
 				updatedValue: {
-					following: removeFromArray(userProfile?.followers, userData?.uid),
+					following: removeFromArray(userProfile?.following, userData?.uid),
 				},
 			})
 		);
 		dispatch(
 			updateUser({
-				userId: userData?.userId,
+				userId: userData?.uid,
 				updatedValue: {
 					followers: removeFromArray(userData?.followers, userProfile?.uid),
 				},

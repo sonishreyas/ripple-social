@@ -11,9 +11,8 @@ import {
 const updateUserData = async (userId, updatedValue) => {
 	try {
 		const userRef = doc(db, "users", userId);
-		const response = await updateDoc(userRef, updatedValue);
-		console.log(response);
-		return response;
+		await updateDoc(userRef, updatedValue);
+		return { uid: userId, ...updatedValue };
 	} catch (error) {
 		return error;
 	}

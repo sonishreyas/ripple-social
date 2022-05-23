@@ -30,6 +30,7 @@ export const updateUser = createAsyncThunk(
 	"users/updateUser",
 	async ({ userId, updatedValue }, { rejectWithValue }) => {
 		try {
+			console.log(userId, updatedValue);
 			const res = await updateUserData(userId, updatedValue);
 			return res;
 		} catch (error) {
@@ -66,10 +67,12 @@ const usersSlice = createSlice({
 			console.log(payload);
 		},
 		[updateUser.fulfilled]: (state, { payload }) => {
+			console.log("here", payload);
 			state.users = state.users.map((user) =>
-				user.uid === payload.uid ? payload : user
+				user.uid === payload.uid ? { ...user, ...payload } : user
 			);
-			if (payload.uid === state.userProfile.uid) state.userProfile = payload;
+			if (payload.uid === state.userProfile.uid)
+				state.userProfile = { ...state.userProfile, ...payload };
 		},
 		[updateUser.rejected]: (state, { payload }) => {
 			console.log(payload);
