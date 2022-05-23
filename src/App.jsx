@@ -1,6 +1,13 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import { Authentication, Bookmark, Home, Profile } from "pages";
-import { Header, Footer, NavBar, NewPostModal, ConfirmModal } from "components";
+import {
+	Header,
+	Footer,
+	NavBar,
+	NewPostModal,
+	ConfirmModal,
+	ProfileFormModal,
+} from "components";
 import { RequireAuth } from "backend";
 import {
 	usePosts,
@@ -9,6 +16,7 @@ import {
 	getUsers,
 	getUser,
 	useAuth,
+	useUser,
 } from "features";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -17,6 +25,7 @@ function App() {
 	const { showNavbar } = useNavbar();
 	const { showPostModal } = usePosts();
 	const { showModal } = useModal();
+	const { showEditProfile } = useUser();
 	const location = useLocation();
 
 	const dispatch = useDispatch();
@@ -62,6 +71,7 @@ function App() {
 			{showNavbar && location.pathname !== "/auth" && <NavBar />}
 			{showPostModal && <NewPostModal />}
 			{showModal && <ConfirmModal />}
+			{showEditProfile && <ProfileFormModal />}
 			<Footer />
 		</div>
 	);

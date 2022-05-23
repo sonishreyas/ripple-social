@@ -1,6 +1,5 @@
 import { Posts } from "components/Home";
 import { usePosts, useUser } from "features";
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { presentInArray } from "utils";
 import { ProfileButton } from ".";
@@ -11,7 +10,6 @@ const ProfileContent = () => {
 	const { allPosts } = usePosts();
 	const userData = users.find((item) => item.username === username);
 	const postData = allPosts.filter((item) => item.userId === userData.uid);
-	console.log(userProfile, userData);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<div className="basic-card profile-card p-5 b-radius-3 flex-column justify-centent-center align-center flex-gap-1">

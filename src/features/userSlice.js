@@ -30,7 +30,6 @@ export const updateUser = createAsyncThunk(
 	"users/updateUser",
 	async ({ userId, updatedValue }, { rejectWithValue }) => {
 		try {
-			console.log(userId, updatedValue);
 			const res = await updateUserData(userId, updatedValue);
 			return res;
 		} catch (error) {
@@ -42,6 +41,7 @@ export const updateUser = createAsyncThunk(
 const initialState = {
 	userProfile: {},
 	users: [],
+	showEditProfile: false,
 };
 
 const usersSlice = createSlice({
@@ -52,7 +52,11 @@ const usersSlice = createSlice({
 			state.userProfile = {};
 			state.users = [];
 		},
+		setShowEditProfile: (state, { payload }) => {
+			state.showEditProfile = payload.showEditProfile;
+		},
 	},
+
 	extraReducers: {
 		[getUser.fulfilled]: (state, { payload }) => {
 			state.userProfile = payload;
@@ -67,7 +71,6 @@ const usersSlice = createSlice({
 			console.log(payload);
 		},
 		[updateUser.fulfilled]: (state, { payload }) => {
-			console.log("here", payload);
 			state.users = state.users.map((user) =>
 				user.uid === payload.uid ? { ...user, ...payload } : user
 			);
@@ -81,5 +84,5 @@ const usersSlice = createSlice({
 });
 
 export const usersReducer = usersSlice.reducer;
-export const { reset } = usersSlice.actions;
+export const { reset, setShowEditProfile } = usersSlice.actions;
 export const useUser = () => useSelector((state) => state.users);

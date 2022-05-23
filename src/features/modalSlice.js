@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const initialState = {
 	message: null,
 	handleConfirm: null,
-	handeDismiss: null,
+	handleDismiss: null,
 	confirmChoice: "Yes",
 	dismissChoice: "No",
 	showModal: false,

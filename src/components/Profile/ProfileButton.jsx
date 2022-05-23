@@ -1,4 +1,4 @@
-import { updateUser, useUser } from "features";
+import { setShowEditProfile, updateUser, useUser } from "features";
 import { useDispatch } from "react-redux";
 import { removeFromArray } from "utils";
 
@@ -42,10 +42,16 @@ const ProfileButton = ({ type, userData }) => {
 			})
 		);
 	};
+
+	const handleShowProfileModal = () =>
+		dispatch(setShowEditProfile({ showEditProfile: true }));
 	return (
 		<>
 			{type === "EDIT_PROFILE" && (
-				<button className="primary-btn b-radius-2 p-5 flex-grow-half cursor-pointer">
+				<button
+					className="primary-btn b-radius-2 p-5 flex-grow-half cursor-pointer"
+					onClick={handleShowProfileModal}
+				>
 					Edit Profile
 				</button>
 			)}

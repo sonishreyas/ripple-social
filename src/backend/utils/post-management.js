@@ -21,7 +21,7 @@ const addNewPost = async (newPost, showToast, msg) => {
 	}
 };
 
-const uploadFilesForPost = (file, postDispatch) => {
+const uploadFilesForPost = (file, dispatch, update = "post") => {
 	(async () => {
 		try {
 			const storageRef = ref(storage, `${file.type}/` + file.payload.name);
@@ -63,17 +63,32 @@ const uploadFilesForPost = (file, postDispatch) => {
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-						postDispatch({
-							type: "UPDATE_UPLOADED_URL",
-							payload: {
-								newPost: {
-									fileUrls: {
-										type: file.type,
-										url: url,
+						if (update === "post")
+							dispatch({
+								type: "UPDATE_UPLOADED_URL",
+								payload: {
+									newPost: {
+										fileUrls: {
+											type: file.type,
+											url: url,
+										},
 									},
 								},
-							},
-						});
+							});
+						else if (update === "profile-img")
+							dispatch({
+								type: "UPDATE_PROFILE_URL",
+								payload: {
+									profileURL: url,
+								},
+							});
+						else if (update === "background-img")
+							dispatch({
+								type: "UPDATE_BACKGROUND_URL",
+								payload: {
+									backgroundURL: url,
+								},
+							});
 					});
 				}
 			);
