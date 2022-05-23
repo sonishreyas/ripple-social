@@ -7,7 +7,7 @@ export {
 	setFocusHandler,
 	getAllUsers,
 	getCurrentUser,
-	updateUser,
+	updateUserData,
 	addNewPost,
 	getFeedPost,
 	getExplorePost,

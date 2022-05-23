@@ -6,7 +6,11 @@ export {
 	setTestHandler,
 	setFocusHandler,
 } from "./authentication";
-export { getAllUsers, getCurrentUser, updateUser } from "./users-management";
+export {
+	getAllUsers,
+	getCurrentUser,
+	updateUserData,
+} from "./users-management";
 export {
 	addNewPost,
 	uploadFilesForPost,

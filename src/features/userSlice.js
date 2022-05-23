@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers, getCurrentUser } from "backend";
+import { getAllUsers, getCurrentUser, updateUserData } from "backend";
 import { useSelector } from "react-redux";
 
 export const getUsers = createAsyncThunk(
@@ -30,7 +30,7 @@ export const updateUser = createAsyncThunk(
 	"users/updateUser",
 	async ({ userId, updatedValue }, { rejectWithValue }) => {
 		try {
-			const res = await updateUser(userId, updatedValue);
+			const res = await updateUserData(userId, updatedValue);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -69,7 +69,7 @@ const usersSlice = createSlice({
 			state.users = state.users.map((user) =>
 				user.uid === payload.uid ? payload : user
 			);
-			state.userProfile = payload;
+			if (payload.uid === state.userProfile.uid) state.userProfile = payload;
 		},
 		[updateUser.rejected]: (state, { payload }) => {
 			console.log(payload);

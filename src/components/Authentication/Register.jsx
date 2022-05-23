@@ -14,6 +14,8 @@ const Register = () => {
 		username: "",
 		confirmPassword: "",
 		profileURL: "https://i.stack.imgur.com/l60Hf.png",
+		backgroundURL:
+			"https://firebasestorage.googleapis.com/v0/b/ripple-54aa4.appspot.com/o/default%2Fbg-img.jpg?alt=media&token=56416a73-c90a-4c7e-b65d-584453fdbe07",
 		showPassword: { password: false, confirmPassword: false },
 		focus: {
 			firstName: false,

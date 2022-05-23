@@ -8,7 +8,7 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 
-const updateUser = async (userId, updatedValue) => {
+const updateUserData = async (userId, updatedValue) => {
 	try {
 		const userRef = doc(db, "users", userId);
 		const response = await updateDoc(userRef, updatedValue);
@@ -45,4 +45,4 @@ const getCurrentUser = async (userId) => {
 	}
 };
 
-export { getAllUsers, getCurrentUser, updateUser };
+export { getAllUsers, getCurrentUser, updateUserData };
