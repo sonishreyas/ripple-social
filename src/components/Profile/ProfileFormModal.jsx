@@ -1,6 +1,7 @@
+import { db } from "backend/firebase/firebase";
 import { uploadFilesForPost } from "backend/utils";
 import { useToast } from "custom-hooks";
-import { setShowEditProfile, useUser } from "features";
+import { setShowEditProfile, updateUser, useUser } from "features";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useReducer, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,7 +16,7 @@ const ProfileFormModal = () => {
 		dispatch(setShowEditProfile({ showEditProfile: false }));
 	const [profileState, profileDispatch] = useReducer(profileReducer, {
 		name: userProfile?.name,
-		bio: userProfile?.bio,
+		bio: userProfile?.bio || "",
 		username: userProfile?.username,
 		profileURL:
 			userProfile?.profileURL || "https://i.stack.imgur.com/l60Hf.png",
@@ -44,30 +45,36 @@ const ProfileFormModal = () => {
 	};
 
 	const handleUpdateProfile = () => {
-		(async () => {
-			try {
-				if (profileState.username !== userProfile.username) {
-					const checkUsername = await getDocs(
-						query(
-							collection(db, "users"),
-							where("username", "==", profileState.username)
-						)
+		try {
+			if (profileState?.username !== userProfile?.username) {
+				const checkUsername = getDocs(
+					query(
+						collection(db, "users"),
+						where("username", "==", profileState.username)
+					)
+				);
+				if (checkUsername.docs.length) {
+					showToast.error("Username not available");
+				} else {
+					dispatch(
+						updateUser({
+							userId: userProfile.uid,
+							updatedValue: { ...userProfile, ...profileState },
+						})
 					);
-					if (checkUsername.docs.length) {
-						showToast.error("Username not available");
-					} else {
-						dispatch(
-							updateUser({
-								userId: userProfile.uid,
-								updatedValue: { ...userProfile, ...profileState },
-							})
-						);
-					}
 				}
-			} catch (error) {
-				console.log(error);
+			} else {
+				dispatch(
+					updateUser({
+						userId: userProfile.uid,
+						updatedValue: { ...userProfile, ...profileState },
+					})
+				);
 			}
-		})();
+			dispatch(setShowEditProfile({ showEditProfile: false }));
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<div className="modal flex-row justify-content-center align-center">
