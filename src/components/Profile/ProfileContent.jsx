@@ -1,5 +1,7 @@
 import { Posts } from "components/Home";
-import { usePosts, useUser } from "features";
+import { getPosts, usePosts, useUser } from "features";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { presentInArray } from "utils";
 import { ProfileButton } from ".";
@@ -9,7 +11,11 @@ const ProfileContent = () => {
 	const { users, userProfile } = useUser();
 	const { allPosts } = usePosts();
 	const userData = users.find((item) => item.username === username);
-	const postData = allPosts.filter((item) => item.userId === userData.uid);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getPosts());
+	}, []);
+	const postData = allPosts?.filter((item) => item?.userId === userData?.uid);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<div className="basic-card profile-card p-5 b-radius-3 flex-column justify-centent-center align-center flex-gap-1">
@@ -66,7 +72,11 @@ const ProfileContent = () => {
 			<div className="profile-card flex-column align-start w-100">
 				<h2 className="p-5 text-bold">Posts</h2>
 			</div>
-			{postData?.length ? <Posts postData={postData} /> : <p>No post yet</p>}
+			{postData?.length ? (
+				<Posts postData={postData} userPost={true} />
+			) : (
+				<p>No post yet</p>
+			)}
 		</main>
 	);
 };

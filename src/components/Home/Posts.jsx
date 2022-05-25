@@ -6,17 +6,41 @@ import {
 	usePosts,
 	useUser,
 } from "features";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserData, presentInArray, removeFromArray, trimData } from "utils";
 import { FilesContainer } from ".";
 
-const Posts = ({ postData }) => {
+const Posts = ({ postData, userPost = false }) => {
 	const { users } = useUser();
 	const { itemsInBookmark } = usePosts();
 	const { uid } = useAuth();
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
+	const [showDropdown, setShowDropdown] = useState(
+		postData.reduce((prev, curr) => {
+			prev[curr.id] = false;
+			return prev;
+		}, {})
+	);
+	const handleDropdown = (id) => {
+		console.log("lll", showDropdown[id]);
+		if (showDropdown[id]) {
+			const newObj = { ...showDropdown };
+			newObj[id] = false;
+			console.log("here", newObj);
+			setShowDropdown({ ...newObj });
+		} else {
+			const newObj = { ...showDropdown };
+			newObj[id] = true;
+			setShowDropdown({ ...newObj });
+		}
+	};
+	// useEffect(() => {
+	// 	document.addEventListener("click", () => setShowDropdown(false));
+	// }, []);
+	console.log(showDropdown);
 	const handleAddToBookmark = (e, id) => {
 		dispatch(
 			addToBookmark({
@@ -52,7 +76,7 @@ const Posts = ({ postData }) => {
 								>
 									<article className="avatar-container w-max-content">
 										<img
-											src="https://raw.githubusercontent.com/sonishreyas/rippleUI/dev/components/media/images/profile.jpeg"
+											src={user?.profileURL}
 											alt="User Profile Picture"
 											className="avatar b-radius-circle l"
 											aria-label="User Profile Avatar"
@@ -64,14 +88,40 @@ const Posts = ({ postData }) => {
 										</h4>
 										<p>{user?.bio ? trimData(user?.bio) : ""}</p>
 									</div>
+									{userPost ? (
+										<div className="dropdown-container">
+											<div className="py-8 flex-row justify-content-center align-center">
+												<i
+													className="fa-solid fa-ellipsis-vertical"
+													onClick={() => handleDropdown(id)}
+												></i>
+											</div>
+											{showDropdown[id] ? (
+												<div className="dropdown">
+													<ul className="no-list">
+														<li>Edit</li>
+														<li>Delete</li>
+													</ul>
+												</div>
+											) : (
+												<></>
+											)}
+										</div>
+									) : (
+										<></>
+									)}
 								</Link>
 								<div className="card-image-container p-5 b-radius-2 flex-column justify-content-center align-start flex-gap-half w-100">
-									<div className="p-5 flex-column justify-content-center align-start w-100 border-bottom-secondary">
+									<div className="p-5 flex-column justify-content-center align-start w-100">
 										<p className="h5">{postText}</p>
 									</div>
-									<div className="border-bottom w-100 flex-column justify-content-center align-center">
-										<FilesContainer fileUrls={fileUrls} />
-									</div>
+									{fileUrls?.length ? (
+										<div className=" w-100 flex-column justify-content-center align-center">
+											<FilesContainer fileUrls={fileUrls} />
+										</div>
+									) : (
+										<></>
+									)}
 								</div>
 								<div className="post-icons-container card-image-container b-radius-2 w-100 flex-row justify-content-space-between align-center px-10 py-7 my-5">
 									<section className="flex-row justify-content-center align-center flex-gap-1">
