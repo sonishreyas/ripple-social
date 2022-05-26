@@ -9,7 +9,7 @@ import { ProfileButton } from ".";
 const ProfileContent = () => {
 	const { username } = useParams();
 	const { users, userProfile } = useUser();
-	const { allPosts } = usePosts();
+	const { allPosts, feedPosts, explorePosts } = usePosts();
 	const userData = users.find((item) => item.username === username);
 	const dispatch = useDispatch();
 	useEffect(() => {

@@ -7,6 +7,7 @@ import {
 	NewPostModal,
 	ConfirmModal,
 	ProfileFormModal,
+	EditPostModal,
 } from "components";
 import { RequireAuth } from "backend";
 import {
@@ -23,7 +24,7 @@ import { useEffect } from "react";
 
 function App() {
 	const { showNavbar } = useNavbar();
-	const { showPostModal } = usePosts();
+	const { showPostModal, showEditPostModal } = usePosts();
 	const { showModal } = useModal();
 	const { showEditProfile } = useUser();
 	const location = useLocation();
@@ -70,6 +71,7 @@ function App() {
 			<Outlet />
 			{showNavbar && location.pathname !== "/auth" && <NavBar />}
 			{showPostModal && <NewPostModal />}
+			{showEditPostModal && <EditPostModal />}
 			{showModal && <ConfirmModal />}
 			{showEditProfile && <ProfileFormModal />}
 			<Footer />

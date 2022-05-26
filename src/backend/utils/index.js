@@ -16,6 +16,8 @@ export {
 	uploadFilesForPost,
 	getFeedPost,
 	getExplorePost,
+	deletePostHandler,
+	editPostHandler,
 } from "./post-management";
 export {
 	getBookmarkDataHandler,

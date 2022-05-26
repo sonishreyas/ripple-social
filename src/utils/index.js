@@ -5,7 +5,7 @@ export {
 	presentObjInArray,
 	removeObjFromArray,
 	updateObjInArray,
-	updateAddressObjInArray,
+	updateArray,
 	getDataFromId,
 	checkIdPresentInArray,
 	getDataFromPlaylist,

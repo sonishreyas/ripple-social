@@ -2,6 +2,11 @@ import { useToast } from "custom-hooks";
 import {
 	addToBookmark,
 	deleteFromBookmark,
+	deletePost,
+	editPost,
+	setEditPost,
+	setShowEditPostModal,
+	setShowPostModal,
 	useAuth,
 	usePosts,
 	useUser,
@@ -25,11 +30,9 @@ const Posts = ({ postData, userPost = false }) => {
 		}, {})
 	);
 	const handleDropdown = (id) => {
-		console.log("lll", showDropdown[id]);
 		if (showDropdown[id]) {
 			const newObj = { ...showDropdown };
 			newObj[id] = false;
-			console.log("here", newObj);
 			setShowDropdown({ ...newObj });
 		} else {
 			const newObj = { ...showDropdown };
@@ -37,10 +40,7 @@ const Posts = ({ postData, userPost = false }) => {
 			setShowDropdown({ ...newObj });
 		}
 	};
-	// useEffect(() => {
-	// 	document.addEventListener("click", () => setShowDropdown(false));
-	// }, []);
-	console.log(showDropdown);
+
 	const handleAddToBookmark = (e, id) => {
 		dispatch(
 			addToBookmark({
@@ -61,6 +61,19 @@ const Posts = ({ postData, userPost = false }) => {
 			})
 		);
 		showToast("Post removed from bookmark", "success");
+	};
+
+	const handleDeletePost = (id) => {
+		dispatch(deletePost({ postId: id }));
+	};
+
+	const handleEditPost = (id) => {
+		const data = postData.find((item) => item.id === id);
+		dispatch(setEditPost(data));
+		dispatch(setShowEditPostModal(true));
+		const newObj = { ...showDropdown };
+		newObj[id] = false;
+		setShowDropdown({ ...newObj });
 	};
 	return (
 		<>
@@ -97,10 +110,20 @@ const Posts = ({ postData, userPost = false }) => {
 												></i>
 											</div>
 											{showDropdown[id] ? (
-												<div className="dropdown">
+												<div className="dropdown p-5 b-radius-1">
 													<ul className="no-list">
-														<li>Edit</li>
-														<li>Delete</li>
+														<li
+															className="p-3 dropdown-content b-radius-1"
+															onClick={() => handleEditPost(id)}
+														>
+															Edit
+														</li>
+														<li
+															className="p-3 dropdown-content b-radius-1"
+															onClick={() => handleDeletePost(id)}
+														>
+															Delete
+														</li>
 													</ul>
 												</div>
 											) : (

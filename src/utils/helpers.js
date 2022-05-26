@@ -14,7 +14,7 @@ const removeFromArray = (arr, element) =>
  * @returns Array with element removed
  */
 const removeObjFromArray = (arr, element) =>
-	arr.filter((item) => item.addressId !== element);
+	arr.filter((item) => item?.id !== element);
 
 /**
  * Removed element from array
@@ -67,17 +67,11 @@ const updateObjInArray = (arr, element) =>
 		[]
 	);
 
-/**
- * Check if id is present in the array of objects and update the Address
- * @param {Array} arr Array of objects
- * @param {any} element Element id that needs to be searched from arr
- * @returns true if element is found else false
- */
-const updateAddressObjInArray = (arr, element) =>
+const updateArray = (arr, element) =>
 	arr.reduce(
 		(prev, curr) =>
-			curr.addressId === element.addressId
-				? [...prev, { ...element }]
+			curr.id === element.id
+				? [...prev, { ...curr, ...element }]
 				: [...prev, { ...curr }],
 		[]
 	);
@@ -228,7 +222,7 @@ export {
 	presentObjInArray,
 	removeObjFromArray,
 	updateObjInArray,
-	updateAddressObjInArray,
+	updateArray,
 	getDataFromId,
 	checkIdPresentInArray,
 	getDataFromPlaylist,
