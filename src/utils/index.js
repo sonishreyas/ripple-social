@@ -1,12 +1,4 @@
 export {
-	RequireAuth,
-	loginHandler,
-	registerHandler,
-	setValueHandler,
-	setTestHandler,
-	setFocusHandler,
-} from "./authentication";
-export {
 	removeFromArray,
 	removeFromDateArray,
 	presentInArray,
@@ -26,4 +18,6 @@ export {
 	getStreaks,
 	addNoteToHabits,
 	deleteNoteFromHabits,
+	getUserData,
+	getBookmarkDataFromId,
 } from "./helpers";

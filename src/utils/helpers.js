@@ -5,7 +5,7 @@
  * @returns Array with element removed
  */
 const removeFromArray = (arr, element) =>
-	arr.filter((item) => item._id !== element);
+	arr.filter((item) => item !== element);
 
 /**
  * Removed element from array
@@ -214,6 +214,13 @@ const deleteNoteFromHabits = (data, updatedData) =>
 		[]
 	);
 
+const getUserData = (userId, users) =>
+	users.filter((item) => item.uid === userId)[0];
+
+const getBookmarkDataFromId = (data, items) =>
+	items.map((_id) => ({
+		...data.find((item) => item.id === _id),
+	}));
 export {
 	removeFromArray,
 	removeFromDateArray,
@@ -234,4 +241,6 @@ export {
 	getStreaks,
 	addNoteToHabits,
 	deleteNoteFromHabits,
+	getUserData,
+	getBookmarkDataFromId,
 };

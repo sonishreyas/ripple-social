@@ -4,36 +4,17 @@ import "css/app.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import {
-	AuthProvider,
-	LoginProvider,
-	ModalProvider,
-	NavbarProvider,
-	PostProvider,
-	RegisterProvider,
-	ThemeProvider,
-} from "context";
 import { ToastPortal } from "components";
+import { store } from "store";
+import { Provider } from "react-redux";
 // Call make Server
 ReactDOM.render(
 	<React.StrictMode>
 		<Router>
-			<ThemeProvider>
-				<NavbarProvider>
-					<RegisterProvider>
-						<LoginProvider>
-							<AuthProvider>
-								<PostProvider>
-									<ModalProvider>
-										<App />
-										<ToastPortal />
-									</ModalProvider>
-								</PostProvider>
-							</AuthProvider>
-						</LoginProvider>
-					</RegisterProvider>
-				</NavbarProvider>
-			</ThemeProvider>
+			<Provider store={store}>
+				<App />
+				<ToastPortal />
+			</Provider>
 		</Router>
 	</React.StrictMode>,
 	document.getElementById("root")

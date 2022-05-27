@@ -1,8 +1,6 @@
-import { usePost } from "context";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 
-const EmojiContainer = () => {
-	const { postDispatch, postState } = usePost();
+const EmojiContainer = ({ postState, postDispatch }) => {
 	const onEmojiClick = (event, emojiObject) => {
 		postDispatch({
 			type: "UPDATE_POST_TEXT",
@@ -14,7 +12,7 @@ const EmojiContainer = () => {
 		});
 	};
 	return (
-		<div>
+		<div className="emoji-container">
 			<Picker
 				onEmojiClick={onEmojiClick}
 				disableAutoFocus={true}

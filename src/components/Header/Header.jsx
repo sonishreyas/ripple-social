@@ -1,16 +1,16 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { useAuth, useNavbar, useTheme } from "../../context";
+import { useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { useTheme, toggleTheme, toggleNavbar } from "features";
 
 const Header = () => {
-	const { handleSetTheme, themeIcon } = useTheme();
-	const { setShowNavbar } = useNavbar();
-	const { authState } = useAuth();
+	const { themeIcon } = useTheme();
+	const dispatch = useDispatch();
 	const location = useLocation();
 	const getActiveClass = ({ isActive }) =>
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
 			: "no-link cursor-pointer";
-	const handleShowNavbar = () => setShowNavbar(true);
+	const handleShowNavbar = () => dispatch(toggleNavbar({ showNavbar: true }));
 	return (
 		<header className="header header-shadow flex-column">
 			<div className="flex-row justify-content-space-between align-center w-100">
@@ -39,7 +39,7 @@ const Header = () => {
 								<i
 									className={`fas fa-${themeIcon} theme-icon social`}
 									aria-label="dark/light theme icon"
-									onClick={handleSetTheme}
+									onClick={() => dispatch(toggleTheme())}
 								></i>
 							</span>
 						</li>

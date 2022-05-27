@@ -1,15 +1,27 @@
-import { useNavbar, useAuth } from "../../context";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-
+import { navData } from "./nav-data";
+import { toggleNavbar } from "features";
+import { useEffect } from "react";
 const NavBar = () => {
-	const { setShowNavbar } = useNavbar();
-	const { authState } = useAuth();
-
+	const dispatch = useDispatch();
 	const getActiveClass = ({ isActive }) =>
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
 			: "no-link cursor-pointer";
-	const handleHideNavbar = () => setShowNavbar(false);
+	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false }));
+
+	useEffect(() => {
+		if (window.innerWidth <= 768) {
+			dispatch(toggleNavbar({ showNavbar: false }));
+			window.addEventListener("resize", () =>
+				dispatch(toggleNavbar({ showNavbar: false }))
+			);
+		} else if (window.innerWidth > 768) {
+			dispatch(toggleNavbar({ showNavbar: true }));
+		} else dispatch(toggleNavbar({ showNavbar: true }));
+	}, []);
+
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">
 			<div className="nav-content p-0 m-0">
@@ -31,36 +43,20 @@ const NavBar = () => {
 								></i>
 							</section>
 						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">Home</span>
-								</div>
-							</NavLink>
-						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/dashboard"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">Dashboard</span>
-								</div>
-							</NavLink>
-						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/habits"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">My Habits</span>
-								</div>
-							</NavLink>
-						</li>
-						<li className="rui-drawer-content">
-							<NavLink to={"/profile"} className={getActiveClass}>
-								<div className="rui-drawer-links">
-									<span className="rui-drawer-content--text">
-										{authState.token ? "Profile" : "SignIn"}
-									</span>
-								</div>
-							</NavLink>
-						</li>
+						<>
+							{navData.map(({ id, route, name, icon }) => (
+								<li className="rui-drawer-content" key={id}>
+									<NavLink to={route} className={getActiveClass}>
+										<div className="rui-drawer-links flex-row justify-content-start align-center flex-gap-1 p-5 m-2">
+											<span>
+												<i className={`${icon}`}></i>
+											</span>
+											<span className="rui-drawer-content--text">{name}</span>
+										</div>
+									</NavLink>
+								</li>
+							))}
+						</>
 					</ul>
 				</nav>
 			</div>

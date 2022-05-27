@@ -1,19 +1,24 @@
-import { useAuth, usePost } from "context";
+import { setShowPostModal, useAuth, useUser } from "features";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const CreatePost = () => {
-	const { authState } = useAuth();
-	const { setShowPostModal } = usePost();
-
-	const handleShowPostModal = () => setShowPostModal(true);
-
+	const { token } = useAuth();
+	const { userProfile } = useUser();
+	const dispatch = useDispatch();
+	const handleShowPostModal = () =>
+		dispatch(setShowPostModal({ showPostModal: true }));
 	return (
 		<div className="basic-card create-post-container p-5 b-radius-2 flex-row justify-content-center align-center flex-gap-1">
-			{authState.token && (
-				<Link to={"/profile"} className="no-link">
+			{token && userProfile !== null && (
+				<Link to={`/profile/${userProfile?.username}`} className="no-link">
 					<article className="avatar-container flex-row justify-content-center align-center flex-gap-1">
 						<img
-							src="https://raw.githubusercontent.com/sonishreyas/rippleUI/dev/components/media/images/profile.jpeg"
+							src={
+								userProfile?.profileURL
+									? userProfile?.profileURL
+									: "https://i.stack.imgur.com/l60Hf.png"
+							}
 							alt="User Profile Picture"
 							className="avatar b-radius-circle l"
 							aria-label="User Profile Avatar"
