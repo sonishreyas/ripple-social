@@ -65,7 +65,7 @@ const Comments = ({ comments, postId }) => {
 								</article>
 								<div className="card-content w-100 flex-grow-1">
 									<div
-										className={`input-container flex-column m-5 w-100 h-auto`}
+										className="input-container flex-column m-5 w-100 h-auto"
 										key="new-comment-input"
 									>
 										<input

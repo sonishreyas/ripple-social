@@ -19,14 +19,18 @@ const Header = () => {
 	const debounceSearch = useDebounce(searchQuery, 500);
 	const [searchUser, setSearchUser] = useState([]);
 	useEffect(() => {
-		debounceSearch.length &&
-			setSearchUser(
-				users.filter((user) =>
-					user?.name.toLowerCase().includes(debounceSearch.toLowerCase())
-				)
-			);
+		debounceSearch.length
+			? setSearchUser(
+					users.filter((user) =>
+						user?.name.toLowerCase().includes(debounceSearch.toLowerCase())
+					)
+			  )
+			: setSearchUser([]);
 	}, [debounceSearch]);
-	console.log(users, searchUser, searchQuery, debounceSearch);
+	useEffect(() => {
+		setSearchQuery("");
+		setSearchUser([]);
+	}, []);
 	return (
 		<header className="header header-shadow flex-column">
 			<div className="flex-row justify-content-space-between align-center w-100">
@@ -52,7 +56,7 @@ const Header = () => {
 					<ul className="no-list spaced-list flex-row align-center flex-gap-2 mx-5">
 						<li className="search-bar h-auto">
 							<form className="input-form flex-column flex-gap-1 flex-grow-1 flex-wrap h-auto w-100">
-								<section className="input-container input-with-icon flex-column b-radius-2 m-5">
+								<section className="input-container flex-column b-radius-1 m-5">
 									<input
 										id="search"
 										className="textbox-content p-5"
@@ -67,10 +71,10 @@ const Header = () => {
 								</section>
 							</form>
 							{searchUser?.length ? (
-								<div className="">
+								<div className="search-user-container w-100">
 									<ul className="no-list">
 										{searchUser.map(({ id, username, profileURL, name }) => (
-											<li className="no-list" key={id}>
+											<li className="no-list p-5 search-list" key={id}>
 												<Link to={`profile/${username}`} className="no-link">
 													<div className="flex-row justify-content-start align-center">
 														<article className="avatar-container w-max-content">
@@ -86,7 +90,7 @@ const Header = () => {
 														</article>
 														<div className="card-content p-5 pb-0">
 															<p className="h5 text-bold">{name}</p>
-															<p className="py-1">{username}</p>
+															<p className="py-1">@{username}</p>
 														</div>
 													</div>
 												</Link>
