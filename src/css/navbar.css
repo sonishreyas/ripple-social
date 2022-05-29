@@ -39,3 +39,9 @@
 .rui-drawer-links {
 	font-size: 1.7rem;
 }
+
+@media screen and (max-width: 1180px) {
+	.grid-container .nav {
+		visibility: visible;
+	}
+}

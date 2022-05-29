@@ -1,10 +1,12 @@
 import { db } from "backend/firebase/firebase";
 import {
 	collection,
+	deleteDoc,
 	doc,
 	getDocs,
 	query,
 	setDoc,
+	updateDoc,
 	where,
 } from "firebase/firestore";
 import { storage } from "backend/firebase/firebase";
@@ -21,7 +23,7 @@ const addNewPost = async (newPost, showToast, msg) => {
 	}
 };
 
-const uploadFilesForPost = (file, postDispatch) => {
+const uploadFilesForPost = (file, dispatch, update = "post") => {
 	(async () => {
 		try {
 			const storageRef = ref(storage, `${file.type}/` + file.payload.name);
@@ -63,17 +65,32 @@ const uploadFilesForPost = (file, postDispatch) => {
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-						postDispatch({
-							type: "UPDATE_UPLOADED_URL",
-							payload: {
-								newPost: {
-									fileUrls: {
-										type: file.type,
-										url: url,
+						if (update === "post")
+							dispatch({
+								type: "UPDATE_UPLOADED_URL",
+								payload: {
+									newPost: {
+										fileUrls: {
+											type: file.type,
+											url: url,
+										},
 									},
 								},
-							},
-						});
+							});
+						else if (update === "profile-img")
+							dispatch({
+								type: "UPDATE_PROFILE_URL",
+								payload: {
+									profileURL: url,
+								},
+							});
+						else if (update === "background-img")
+							dispatch({
+								type: "UPDATE_BACKGROUND_URL",
+								payload: {
+									backgroundURL: url,
+								},
+							});
 					});
 				}
 			);
@@ -117,4 +134,32 @@ const getExplorePost = async () => {
 		return error;
 	}
 };
-export { addNewPost, uploadFilesForPost, getFeedPost, getExplorePost };
+
+const deletePostHandler = async (postId) => {
+	try {
+		const postRef = doc(db, "posts", postId);
+		await deleteDoc(postRef);
+		return postId;
+	} catch (error) {
+		return error;
+	}
+};
+
+const editPostHandler = async (postId, updatedValue, showToast, msg) => {
+	try {
+		const postRef = doc(db, "posts", postId);
+		await updateDoc(postRef, updatedValue);
+		showToast(msg, "success");
+		return updatedValue;
+	} catch (error) {
+		return error;
+	}
+};
+export {
+	addNewPost,
+	uploadFilesForPost,
+	getFeedPost,
+	getExplorePost,
+	deletePostHandler,
+	editPostHandler,
+};

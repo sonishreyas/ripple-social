@@ -8,12 +8,11 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 
-const updateUser = async (userId, updatedValue) => {
+const updateUserData = async (userId, updatedValue) => {
 	try {
 		const userRef = doc(db, "users", userId);
-		const response = await updateDoc(userRef, updatedValue);
-		console.log(response);
-		return response;
+		await updateDoc(userRef, updatedValue);
+		return { uid: userId, ...updatedValue };
 	} catch (error) {
 		return error;
 	}
@@ -45,4 +44,4 @@ const getCurrentUser = async (userId) => {
 	}
 };
 
-export { getAllUsers, getCurrentUser, updateUser };
+export { getAllUsers, getCurrentUser, updateUserData };

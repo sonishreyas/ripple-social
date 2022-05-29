@@ -6,8 +6,11 @@ import {
 	removePostFromBookmark,
 	getBookmarkDataHandler,
 	addNewPost,
+	editPostHandler,
 } from "backend";
+import { deletePostHandler } from "backend/utils";
 import { useSelector } from "react-redux";
+import { removeFromArray, removeObjFromArray, updateArray } from "utils";
 
 export const getPosts = createAsyncThunk(
 	"posts/getPosts",
@@ -35,9 +38,9 @@ export const getFeedPosts = createAsyncThunk(
 
 export const editPost = createAsyncThunk(
 	"users/editPost",
-	async ({ postId, updatedValue }, { rejectWithValue }) => {
+	async ({ postId, updatedValue, showToast, msg }, { rejectWithValue }) => {
 		try {
-			const res = await editPost(postId, updatedValue);
+			const res = await editPostHandler(postId, updatedValue, showToast, msg);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -49,7 +52,7 @@ export const deletePost = createAsyncThunk(
 	"users/deletePost",
 	async ({ postId }, { rejectWithValue }) => {
 		try {
-			const res = await deletePost(postId);
+			const res = await deletePostHandler(postId);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -74,7 +77,6 @@ export const addToBookmark = createAsyncThunk(
 	async ({ userId, updatedValue }, { rejectWithValue }) => {
 		try {
 			const res = await addPostToBookmark(userId, updatedValue);
-			console.log(res);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -99,7 +101,6 @@ export const getBookmarkData = createAsyncThunk(
 	async ({ userId }, { rejectWithValue }) => {
 		try {
 			const res = await getBookmarkDataHandler(userId);
-			console.log("Bookmark", res);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -116,6 +117,11 @@ const initialState = {
 	showPostModal: false,
 	showScheduleDateInput: false,
 	itemsInBookmark: [],
+	editPostData: {
+		postText: "",
+		fileUrls: [],
+	},
+	showEditPostModal: false,
 };
 
 const postSlice = createSlice({
@@ -130,6 +136,12 @@ const postSlice = createSlice({
 		},
 		setShowScheduleDateInput: (state, { payload }) => {
 			state.showScheduleDateInput = payload;
+		},
+		setShowEditPostModal: (state, { payload }) => {
+			state.showEditPostModal = payload;
+		},
+		setEditPost: (state, { payload }) => {
+			state.editPostData = { ...payload };
 		},
 	},
 	extraReducers: {
@@ -171,10 +183,35 @@ const postSlice = createSlice({
 		[getBookmarkData.fulfilled]: (state, { payload }) => {
 			state.itemsInBookmark = payload;
 		},
+		[deletePost.rejected]: (state, { payload }) => {
+			console.log(payload);
+		},
+		[deletePost.fulfilled]: (state, { payload }) => {
+			state.allPosts = removeObjFromArray(state.allPosts, payload);
+			state.feedPosts = removeObjFromArray(state.feedPosts, payload);
+			state.explorePosts = removeObjFromArray(state.explorePosts, payload);
+			state.itemsInBookmark = removeFromArray(state.itemsInBookmark, payload);
+		},
+		[editPost.rejected]: (state, { payload }) => {
+			console.log(payload);
+		},
+		[editPost.fulfilled]: (state, { payload }) => {
+			console.log(payload);
+			state.allPosts = updateArray(state.allPosts, payload);
+			state.feedPosts = updateArray(state.feedPosts, payload);
+			state.explorePosts = updateArray(state.explorePosts, payload);
+			state.itemsInBookmark = updateArray(state.itemsInBookmark, payload);
+			console.log(state.allPosts);
+		},
 	},
 });
 
-export const { sortByValue, setShowPostModal, setShowScheduleDateInput } =
-	postSlice.actions;
+export const {
+	sortByValue,
+	setShowPostModal,
+	setShowScheduleDateInput,
+	setShowEditPostModal,
+	setEditPost,
+} = postSlice.actions;
 export const postReducer = postSlice.reducer;
 export const usePosts = () => useSelector((state) => state.posts);

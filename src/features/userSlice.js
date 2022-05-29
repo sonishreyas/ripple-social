@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers, getCurrentUser } from "backend";
+import { getAllUsers, getCurrentUser, updateUserData } from "backend";
 import { useSelector } from "react-redux";
 
 export const getUsers = createAsyncThunk(
@@ -30,7 +30,7 @@ export const updateUser = createAsyncThunk(
 	"users/updateUser",
 	async ({ userId, updatedValue }, { rejectWithValue }) => {
 		try {
-			const res = await updateUser(userId, updatedValue);
+			const res = await updateUserData(userId, updatedValue);
 			return res;
 		} catch (error) {
 			return rejectWithValue(error.response.data);
@@ -41,6 +41,7 @@ export const updateUser = createAsyncThunk(
 const initialState = {
 	userProfile: {},
 	users: [],
+	showEditProfile: false,
 };
 
 const usersSlice = createSlice({
@@ -51,7 +52,11 @@ const usersSlice = createSlice({
 			state.userProfile = {};
 			state.users = [];
 		},
+		setShowEditProfile: (state, { payload }) => {
+			state.showEditProfile = payload.showEditProfile;
+		},
 	},
+
 	extraReducers: {
 		[getUser.fulfilled]: (state, { payload }) => {
 			state.userProfile = payload;
@@ -67,9 +72,10 @@ const usersSlice = createSlice({
 		},
 		[updateUser.fulfilled]: (state, { payload }) => {
 			state.users = state.users.map((user) =>
-				user.uid === payload.uid ? payload : user
+				user.uid === payload.uid ? { ...user, ...payload } : user
 			);
-			state.userProfile = payload;
+			if (payload.uid === state.userProfile.uid)
+				state.userProfile = { ...state.userProfile, ...payload };
 		},
 		[updateUser.rejected]: (state, { payload }) => {
 			console.log(payload);
@@ -78,5 +84,5 @@ const usersSlice = createSlice({
 });
 
 export const usersReducer = usersSlice.reducer;
-export const { reset } = usersSlice.actions;
+export const { reset, setShowEditProfile } = usersSlice.actions;
 export const useUser = () => useSelector((state) => state.users);

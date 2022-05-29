@@ -1,10 +1,12 @@
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { navData } from "./nav-data";
-import { toggleNavbar } from "features";
+import { toggleNavbar, useNavbar, useUser } from "features";
 import { useEffect } from "react";
 const NavBar = () => {
 	const dispatch = useDispatch();
+	const { userProfile } = useUser();
+	const { showNavbar } = useNavbar();
 	const getActiveClass = ({ isActive }) =>
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
@@ -13,14 +15,13 @@ const NavBar = () => {
 
 	useEffect(() => {
 		if (window.innerWidth <= 768) {
-			dispatch(toggleNavbar({ showNavbar: false }));
 			window.addEventListener("resize", () =>
 				dispatch(toggleNavbar({ showNavbar: false }))
 			);
-		} else if (window.innerWidth > 768) {
+		} else {
 			dispatch(toggleNavbar({ showNavbar: true }));
-		} else dispatch(toggleNavbar({ showNavbar: true }));
-	}, []);
+		}
+	}, [window.innerWidth]);
 
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">
@@ -46,7 +47,14 @@ const NavBar = () => {
 						<>
 							{navData.map(({ id, route, name, icon }) => (
 								<li className="rui-drawer-content" key={id}>
-									<NavLink to={route} className={getActiveClass}>
+									<NavLink
+										to={
+											route !== "/profile"
+												? route
+												: `${route}/${userProfile?.username}`
+										}
+										className={getActiveClass}
+									>
 										<div className="rui-drawer-links flex-row justify-content-start align-center flex-gap-1 p-5 m-2">
 											<span>
 												<i className={`${icon}`}></i>

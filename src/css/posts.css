@@ -4,7 +4,8 @@
 }
 
 .post-card {
-	width: 50rem;
+	width: 50%;
+	min-width: 50rem;
 	height: auto;
 }
 .post-card .card-image-container {
@@ -28,7 +29,7 @@
 }
 
 .border-bottom {
-	border-bottom: 0.2rem solid var(--primary-color);
+	border-bottom: 0.05rem solid var(--secondary-color);
 }
 
 .border-bottom-secondary {
@@ -66,7 +67,23 @@ textarea {
 .remove-input-file-style {
 	display: none;
 }
+.dropdown-container {
+	position: relative;
+}
+.dropdown {
+	position: absolute;
+	top: 100%;
+	right: -1rem;
+	width: 10rem;
+	z-index: var(--max-z-index);
+	background-color: var(--tertiary-color);
+	color: var(--primary-color-light);
+}
 
+.dropdown-content:hover {
+	background-color: var(--cta-color);
+	color: var(--tertiary-color);
+}
 @media screen and (max-width: 650px) {
 	.create-post-container {
 		width: 100%;
