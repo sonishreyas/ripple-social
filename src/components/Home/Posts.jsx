@@ -128,7 +128,6 @@ const Posts = ({ postData, userPost = false }) => {
 		}
 	};
 
-	console.log(postData);
 	return (
 		<>
 			{postData?.length &&
