@@ -23,6 +23,8 @@ const NewPostModal = () => {
 			postText: "",
 			fileUrls: [],
 			createdAt: "",
+			likes: 0,
+			comments: [],
 		},
 	});
 	const { showToast } = useToast();

@@ -48,4 +48,23 @@ const postReducer = (state, { type, payload }) => {
 			return state;
 	}
 };
-export { postReducer };
+
+const sortReducer = (sortType, postData) => {
+	switch (sortType) {
+		case "trending":
+			return [...postData].sort(
+				(currPost, nextPost) => nextPost?.likes - currPost?.likes
+			);
+		case "recent":
+			return [...postData].sort(
+				(currPost, nextPost) => nextPost?.createdAt - currPost?.createdAt
+			);
+		case "date":
+			return [...postData].sort(
+				(currPost, nextPost) => currPost?.createdAt - nextPost?.createdAt
+			);
+		default:
+			return postData;
+	}
+};
+export { postReducer, sortReducer };
