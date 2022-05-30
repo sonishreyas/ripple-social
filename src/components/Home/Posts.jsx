@@ -1,12 +1,15 @@
 import { useToast } from "custom-hooks";
 import {
+	addLike,
 	addToBookmark,
 	deleteFromBookmark,
+	deleteLike,
 	deletePost,
 	editPost,
 	setEditPost,
 	setShowEditPostModal,
 	setShowPostModal,
+	updateLikes,
 	useAuth,
 	usePosts,
 	useUser,
@@ -19,7 +22,7 @@ import { FilesContainer } from ".";
 
 const Posts = ({ postData, userPost = false }) => {
 	const { users } = useUser();
-	const { itemsInBookmark } = usePosts();
+	const { itemsInBookmark, itemsLiked } = usePosts();
 	const { uid } = useAuth();
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
@@ -74,6 +77,36 @@ const Posts = ({ postData, userPost = false }) => {
 		const newObj = { ...showDropdown };
 		newObj[id] = false;
 		setShowDropdown({ ...newObj });
+	};
+
+	const handleLike = (e, id) => {
+		dispatch(
+			addLike({
+				userId: uid,
+				updatedValue: { liked: [...itemsLiked, id] },
+			})
+		);
+		dispatch(
+			updateLikes({
+				userId: uid,
+				updatedValue: { likes: postData.likes + 1 },
+			})
+		);
+	};
+
+	const handleUnlike = (e, id) => {
+		dispatch(
+			deleteLike({
+				userId: uid,
+				updatedValue: { liked: removeFromArray(itemsLiked, id) },
+			})
+		);
+		dispatch(
+			updateLikes({
+				userId: uid,
+				updatedValue: { likes: postData.likes - 1 },
+			})
+		);
 	};
 	return (
 		<>
@@ -149,7 +182,17 @@ const Posts = ({ postData, userPost = false }) => {
 								<div className="post-icons-container card-image-container b-radius-2 w-100 flex-row justify-content-space-between align-center px-10 py-7 my-5">
 									<section className="flex-row justify-content-center align-center flex-gap-1">
 										<span>
-											<i className="fa-regular fa-thumbs-up social"></i>
+											{presentInArray(itemsLiked, id) ? (
+												<i
+													className="fa-solid fa-thumbs-up social text-cta-color"
+													onClick={(e) => handleUnlike(e, id)}
+												></i>
+											) : (
+												<i
+													className="fa-regular fa-thumbs-up social"
+													onClick={(e) => handleLike(e, id)}
+												></i>
+											)}
 										</span>
 										<span>
 											<i className="fa-solid fa-comment social"></i>
