@@ -1,6 +1,9 @@
 .profile-card {
 	width: 100%;
 	height: auto;
+	position: relative;
+	/* min-width: 30rem; */
+	max-width: 80rem;
 }
 
 .background-img {
@@ -13,13 +16,14 @@
 	font-size: 2.5rem;
 	border: 0.3rem solid var(--secondary-color);
 	position: absolute;
-	top: 50%;
-	left: 15%;
+	top: 53%;
+	left: 5%;
 }
 
 .user-details {
 	margin-top: 5rem;
 }
+
 .user-container {
 	margin-left: 2rem;
 }

@@ -141,7 +141,7 @@ const Posts = ({ postData, userPost = false }) => {
 					({ id, createdAt, fileUrls, postText, userId, comments }) => {
 						const user = getUserData(userId, users);
 						return (
-							<div className="card post-card p-5 b-radius-3" key={id}>
+							<div className="basic-card post-card p-5 b-radius-3" key={id}>
 								<div className="p-5 b-radius-3 flex-column justify-content-center align-start flex-gap-half">
 									<Link
 										to={`/profile/${user.username}`}
@@ -164,7 +164,7 @@ const Posts = ({ postData, userPost = false }) => {
 											</h4>
 											<p>{user?.bio ? trimData(user?.bio) : ""}</p>
 										</div>
-										{userPost ? (
+										{userPost && userId === uid ? (
 											<div className="dropdown-container">
 												<div className="py-8 flex-row justify-content-center align-center">
 													<i

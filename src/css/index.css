@@ -14,10 +14,14 @@
 
 .grid-container .header {
 	width: 100%;
+	z-index: 11;
 }
 
+.grid-container .footer {
+	z-index: 11;
+}
 .grid-container .main {
-	grid-column: 2/13;
+	grid-column: 3/13;
 	width: 100%;
 	min-height: 100vh;
 	max-height: max-content;
