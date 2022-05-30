@@ -18,6 +18,7 @@ import {
 	getUser,
 	useAuth,
 	useUser,
+	toggleNavbar,
 } from "features";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -38,6 +39,11 @@ function App() {
 			dispatch(getUser({ uid: uid }));
 		}
 	}, [uid]);
+
+	useEffect(() => {
+		if (window.innerWidth <= 768) dispatch(toggleNavbar({ showNavbar: false }));
+		else dispatch(toggleNavbar({ showNavbar: true }));
+	}, []);
 
 	return (
 		<div className="grid-container">
