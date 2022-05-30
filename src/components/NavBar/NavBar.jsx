@@ -13,21 +13,11 @@ const NavBar = () => {
 			: "no-link cursor-pointer";
 	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false }));
 
-	// useEffect(() => {
-	// 	if (window.innerWidth <= 768) {
-	// 		window.addEventListener("resize", () =>
-	// 			dispatch(toggleNavbar({ showNavbar: false }))
-	// 		);
-	// 	} else {
-	// 		dispatch(toggleNavbar({ showNavbar: true }));
-	// 	}
-	// }, [window.innerWidth]);
+	useEffect(() => {
+		if (window.innerWidth <= 768) dispatch(toggleNavbar({ showNavbar: false }));
+		else dispatch(toggleNavbar({ showNavbar: true }));
+	}, []);
 
-	// useEffect(() => {
-	// 	if (window.innerWidth <= 768) dispatch(toggleNavbar({ showNavbar: false }));
-	// 	else dispatch(toggleNavbar({ showNavbar: true }));
-	// }, []);
-	console.log("navbar", showNavbar);
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">
 			<div className="nav-content p-0 m-0">

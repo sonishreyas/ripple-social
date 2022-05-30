@@ -38,6 +38,7 @@ function App() {
 			dispatch(getUser({ uid: uid }));
 		}
 	}, [uid]);
+
 	return (
 		<div className="grid-container">
 			<Header />
