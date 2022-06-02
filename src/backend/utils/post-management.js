@@ -145,11 +145,11 @@ const deletePostHandler = async (postId) => {
 	}
 };
 
-const editPostHandler = async (postId, updatedValue, showToast, msg) => {
+const editPostHandler = async (postId, updatedValue, showToast, msg = "") => {
 	try {
 		const postRef = doc(db, "posts", postId);
 		await updateDoc(postRef, updatedValue);
-		showToast(msg, "success");
+		msg.length && showToast(msg, "success");
 		return updatedValue;
 	} catch (error) {
 		return error;

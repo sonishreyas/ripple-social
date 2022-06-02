@@ -9,7 +9,8 @@ import {
 	editPostHandler,
 	getLikeDataHandler,
 	addPostToLike,
-	removePostFromLike,updateLikesData
+	removePostFromLike,
+	updateLikesData,
 } from "backend";
 import { deletePostHandler } from "backend/utils";
 import { useSelector } from "react-redux";
@@ -158,6 +159,19 @@ export const updateLikes = createAsyncThunk(
 		}
 	}
 );
+
+export const addComment = createAsyncThunk(
+	"posts/addComment",
+	async ({ postId, updatedValue }, { rejectWithValue }) => {
+		try {
+			console.log(postId, updatedValue);
+			const res = await editPostHandler(postId, updatedValue);
+			return { ...res, id: postId };
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	}
+);
 const initialState = {
 	status: "idle",
 	error: null,
@@ -274,6 +288,16 @@ const postSlice = createSlice({
 			console.log(payload);
 		},
 		[updateLikes.fulfilled]: (state, { payload }) => {
+			state.allPosts = updateArray(state.allPosts, payload);
+			state.feedPosts = updateArray(state.feedPosts, payload);
+			state.explorePosts = updateArray(state.explorePosts, payload);
+			state.itemsInBookmark = updateArray(state.itemsInBookmark, payload);
+		},
+		[addComment.rejected]: (state, { payload }) => {
+			console.log(payload);
+		},
+		[addComment.fulfilled]: (state, { payload }) => {
+			console.log(payload);
 			state.allPosts = updateArray(state.allPosts, payload);
 			state.feedPosts = updateArray(state.feedPosts, payload);
 			state.explorePosts = updateArray(state.explorePosts, payload);

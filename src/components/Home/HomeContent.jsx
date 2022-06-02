@@ -25,6 +25,9 @@ const HomeContent = () => {
 		}
 	}, [userProfile]);
 
+	useEffect(() => {
+		setPostData(feedPosts);
+	}, [feedPosts]);
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />
@@ -37,7 +40,7 @@ const HomeContent = () => {
 					<option value="date">Date old to new</option>
 				</select>
 			</div>
-			<Posts postData={feedPosts} />
+			<Posts postData={postData} />
 		</main>
 	);
 };
