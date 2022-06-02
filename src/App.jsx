@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import { Authentication, Bookmark, Home, Profile } from "pages";
+import { Authentication, Bookmark, Home, PageNotFound, Profile } from "pages";
 import {
 	Header,
 	Footer,
@@ -74,6 +74,7 @@ function App() {
 						</RequireAuth>
 					}
 				/>
+				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 			<Outlet />
 			{showNavbar && location.pathname !== "/auth" && <NavBar />}

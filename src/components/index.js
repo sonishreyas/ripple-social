@@ -8,3 +8,4 @@ export { ConfirmModal } from "./Modal";
 export { Posts } from "./Home";
 export { BookmarkContent } from "./Bookmark";
 export { ProfileContent, ProfileFormModal } from "./Profile";
+export { SideBar } from "./SideBar";
