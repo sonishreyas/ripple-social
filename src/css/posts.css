@@ -1,11 +1,14 @@
 .create-post-container {
-	width: 50rem;
+	width: 100%;
+	/* min-width: 30rem; */
+	max-width: 80rem;
 	height: 10rem;
 }
 
 .post-card {
-	width: 50rem;
-	min-width: 50rem;
+	width: 100%;
+	/* min-width: 30rem; */
+	max-width: 80rem;
 	height: auto;
 }
 .post-card .card-image-container {

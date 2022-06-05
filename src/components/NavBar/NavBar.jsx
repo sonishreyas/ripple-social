@@ -13,15 +13,17 @@ const NavBar = () => {
 			: "no-link cursor-pointer";
 	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false }));
 
-	useEffect(() => {
-		if (window.innerWidth <= 768) {
-			window.addEventListener("resize", () =>
-				dispatch(toggleNavbar({ showNavbar: false }))
-			);
-		} else {
-			dispatch(toggleNavbar({ showNavbar: true }));
-		}
-	}, [window.innerWidth]);
+	// useEffect(() => {
+	// 	if (window.innerWidth <= 768) {
+	// 		window.addEventListener("resize", () =>
+	// 			dispatch(toggleNavbar({ showNavbar: false }))
+	// 		);
+	// 	} else {
+	// 		window.removeEventListener("resize", () =>
+	// 			dispatch(toggleNavbar({ showNavbar: true }))
+	// 		);
+	// 	}
+	// }, [window.innerWidth]);
 
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">

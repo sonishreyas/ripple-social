@@ -44,15 +44,17 @@ const HomeContent = () => {
 			<CreatePost />
 			<div className="post-card flex-row justify-content-end align-center w-100 flex-gap-half">
 				<hr className="flex-grow-1" />
-				<p>Sort by: </p>
-				<select
-					className="options-container p-2 b-radius-1"
-					onChange={handleSortBy}
-				>
-					<option value="trending">Trending</option>
-					<option value="recent">Recent</option>
-					<option value="date">Date old to new</option>
-				</select>
+				<section className="flex-row justify-content-end align-center flex-gap-1">
+					<p>Sort by: </p>
+					<select
+						className="options-container p-2 b-radius-1"
+						onChange={handleSortBy}
+					>
+						<option value="trending">Trending</option>
+						<option value="recent">Recent</option>
+						<option value="date">Date old to new</option>
+					</select>
+				</section>
 			</div>
 			<Posts postData={postData} />
 		</main>

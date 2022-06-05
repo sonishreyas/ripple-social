@@ -45,3 +45,52 @@
 		visibility: visible;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.rui-drawer-header {
+		display: flex;
+	}
+	.grid-container .nav-container {
+		grid-row: 1/13;
+		grid-column: 1/13;
+		z-index: 12;
+		width: 100%;
+	}
+	.grid-container .nav-background {
+		height: 100%;
+		grid-column: 1/13;
+		grid-row: 1/13;
+		background-color: var(--tertiary-color);
+		opacity: 0.5;
+		display: block;
+	}
+
+	.grid-container .main {
+		grid-column: 1/13;
+	}
+	.search-bar .input-form {
+		width: 100%;
+	}
+
+	.profile-card,
+	.post-card,
+	.create-post-container,
+	.post-card > * {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	.input-form,
+	.input-form .input-container,
+	.input-form .textbox-content,
+	.input-with-icon {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.header-brand {
+		display: none;
+	}
+}

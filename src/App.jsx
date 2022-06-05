@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import { Authentication, Bookmark, Home, Profile } from "pages";
+import { Authentication, Bookmark, Home, PageNotFound, Profile } from "pages";
 import {
 	Header,
 	Footer,
@@ -18,6 +18,7 @@ import {
 	getUser,
 	useAuth,
 	useUser,
+	toggleNavbar,
 } from "features";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -38,6 +39,12 @@ function App() {
 			dispatch(getUser({ uid: uid }));
 		}
 	}, [uid]);
+
+	useEffect(() => {
+		if (window.innerWidth <= 768) dispatch(toggleNavbar({ showNavbar: false }));
+		else dispatch(toggleNavbar({ showNavbar: true }));
+	}, []);
+
 	return (
 		<div className="grid-container">
 			<Header />
@@ -67,6 +74,7 @@ function App() {
 						</RequireAuth>
 					}
 				/>
+				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 			<Outlet />
 			{showNavbar && location.pathname !== "/auth" && <NavBar />}

@@ -1,4 +1,4 @@
-import { useToast } from "custom-hooks";
+import { useInfiniteScroll, useToast } from "custom-hooks";
 import {
 	addLike,
 	addToBookmark,
@@ -14,7 +14,7 @@ import {
 	usePosts,
 	useUser,
 } from "features";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserData, presentInArray, removeFromArray, trimData } from "utils";
@@ -32,7 +32,6 @@ const Posts = ({ postData, userPost = false }) => {
 			return prev;
 		}, {})
 	);
-
 	const [showComments, setShowComments] = useState(
 		postData.reduce((prev, curr) => {
 			prev[curr.id] = false;
@@ -133,15 +132,21 @@ const Posts = ({ postData, userPost = false }) => {
 			setShowComments({ ...newObj });
 		}
 	};
-
+	const lastPost = useRef(null);
+	let { pageNum } = useInfiniteScroll({
+		lastElement: lastPost,
+		posts: postData,
+	});
+	const posts = postData.slice(0, pageNum * 6);
+	console.log(posts);
 	return (
 		<>
-			{postData?.length &&
-				postData?.map(
-					({ id, createdAt, fileUrls, postText, userId, comments }) => {
+			{posts?.length &&
+				posts?.map(
+					({ id, createdAt, fileUrls, postText, userId, comments }, index) => {
 						const user = getUserData(userId, users);
 						return (
-							<div className="card post-card p-5 b-radius-3" key={id}>
+							<div className="basic-card post-card p-5 b-radius-3" key={id}>
 								<div className="p-5 b-radius-3 flex-column justify-content-center align-start flex-gap-half">
 									<Link
 										to={`/profile/${user.username}`}
@@ -164,7 +169,7 @@ const Posts = ({ postData, userPost = false }) => {
 											</h4>
 											<p>{user?.bio ? trimData(user?.bio) : ""}</p>
 										</div>
-										{userPost ? (
+										{userPost && userId === uid ? (
 											<div className="dropdown-container">
 												<div className="py-8 flex-row justify-content-center align-center">
 													<i
@@ -255,6 +260,7 @@ const Posts = ({ postData, userPost = false }) => {
 						);
 					}
 				)}
+			<div ref={lastPost} />
 		</>
 	);
 };
