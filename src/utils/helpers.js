@@ -211,7 +211,7 @@ const deleteNoteFromHabits = (data, updatedData) =>
 const getUserData = (userId, users) =>
 	users.filter((item) => item.uid === userId)[0];
 
-const getBookmarkDataFromId = (data, items) =>
+const getPostDataFromId = (data, items) =>
 	items.map((_id) => ({
 		...data.find((item) => item.id === _id),
 	}));
@@ -236,5 +236,5 @@ export {
 	addNoteToHabits,
 	deleteNoteFromHabits,
 	getUserData,
-	getBookmarkDataFromId,
+	getPostDataFromId,
 };

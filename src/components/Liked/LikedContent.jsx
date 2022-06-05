@@ -3,12 +3,12 @@ import { usePosts } from "features";
 import { useEffect, useState } from "react";
 import { getPostDataFromId } from "utils";
 
-const BookmarkContent = () => {
-	const { allPosts, itemsInBookmark } = usePosts();
+const LikedContent = () => {
+	const { allPosts, itemsLiked } = usePosts();
 	const [postData, setPostData] = useState([]);
 	useEffect(() => {
-		setPostData(getPostDataFromId(allPosts, itemsInBookmark));
-	}, [itemsInBookmark]);
+		setPostData(getPostDataFromId(allPosts, itemsLiked));
+	}, [itemsLiked]);
 
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
@@ -17,4 +17,4 @@ const BookmarkContent = () => {
 	);
 };
 
-export { BookmarkContent };
+export { LikedContent };

@@ -1,5 +1,4 @@
-import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import { Authentication, Bookmark, Home, PageNotFound, Profile } from "pages";
+import { Outlet, useLocation } from "react-router-dom";
 import {
 	Header,
 	Footer,
@@ -9,7 +8,6 @@ import {
 	ProfileFormModal,
 	EditPostModal,
 } from "components";
-import { RequireAuth } from "backend";
 import {
 	usePosts,
 	useNavbar,
@@ -19,9 +17,11 @@ import {
 	useAuth,
 	useUser,
 	toggleNavbar,
+	getPosts,
 } from "features";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { AppRoutes } from "routes";
 
 function App() {
 	const { showNavbar } = useNavbar();
@@ -45,37 +45,14 @@ function App() {
 		else dispatch(toggleNavbar({ showNavbar: true }));
 	}, []);
 
+	useEffect(() => {
+		dispatch(getPosts());
+	}, []);
+
 	return (
 		<div className="grid-container">
 			<Header />
-			<Routes>
-				<Route path="/auth" element={<Authentication />} />
-				<Route
-					path="/"
-					element={
-						<RequireAuth>
-							<Home />
-						</RequireAuth>
-					}
-				/>
-				<Route
-					path="/bookmarks"
-					element={
-						<RequireAuth>
-							<Bookmark />
-						</RequireAuth>
-					}
-				/>
-				<Route
-					path="/profile/:username"
-					element={
-						<RequireAuth>
-							<Profile />
-						</RequireAuth>
-					}
-				/>
-				<Route path="*" element={<PageNotFound />} />
-			</Routes>
+			<AppRoutes />
 			<Outlet />
 			{showNavbar && location.pathname !== "/auth" && <NavBar />}
 			{showPostModal && <NewPostModal />}

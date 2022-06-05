@@ -19,5 +19,5 @@ export {
 	addNoteToHabits,
 	deleteNoteFromHabits,
 	getUserData,
-	getBookmarkDataFromId,
+	getPostDataFromId,
 } from "./helpers";

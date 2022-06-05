@@ -27,13 +27,13 @@ const Posts = ({ postData, userPost = false }) => {
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
 	const [showDropdown, setShowDropdown] = useState(
-		postData.reduce((prev, curr) => {
+		postData?.reduce((prev, curr) => {
 			prev[curr.id] = false;
 			return prev;
 		}, {})
 	);
 	const [showComments, setShowComments] = useState(
-		postData.reduce((prev, curr) => {
+		postData?.reduce((prev, curr) => {
 			prev[curr.id] = false;
 			return prev;
 		}, {})
@@ -138,7 +138,6 @@ const Posts = ({ postData, userPost = false }) => {
 		posts: postData,
 	});
 	const posts = postData.slice(0, pageNum * 6);
-	console.log(posts);
 	return (
 		<>
 			{posts?.length &&

@@ -21,9 +21,9 @@ export const navData = [
 	},
 	{
 		id: uuid(),
-		route: "/drafts",
-		name: "Drafts",
-		icon: "fa-solid fa-clipboard",
+		route: "/liked",
+		name: "Liked",
+		icon: "fa-solid fa-thumbs-up",
 	},
 	{
 		id: uuid(),

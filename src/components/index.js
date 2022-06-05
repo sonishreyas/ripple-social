@@ -9,3 +9,5 @@ export { Posts } from "./Home";
 export { BookmarkContent } from "./Bookmark";
 export { ProfileContent, ProfileFormModal } from "./Profile";
 export { SideBar } from "./SideBar";
+export { LikedContent } from "./Liked";
+export { ExploreContent } from "./Explore";
