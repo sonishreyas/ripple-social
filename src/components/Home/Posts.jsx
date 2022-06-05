@@ -94,10 +94,13 @@ const Posts = ({ postData, userPost = false }) => {
 				updatedValue: { liked: [...itemsLiked, id] },
 			})
 		);
+
 		dispatch(
 			updateLikes({
-				userId: uid,
-				updatedValue: { likes: postData.likes + 1 },
+				postId: id,
+				updatedValue: {
+					likes: postData.find((item) => id === item.id)?.likes + 1,
+				},
 			})
 		);
 	};
@@ -109,10 +112,13 @@ const Posts = ({ postData, userPost = false }) => {
 				updatedValue: { liked: removeFromArray(itemsLiked, id) },
 			})
 		);
+
 		dispatch(
 			updateLikes({
-				userId: uid,
-				updatedValue: { likes: postData.likes - 1 },
+				postId: id,
+				updatedValue: {
+					likes: postData.find((item) => id === item.id)?.likes - 1,
+				},
 			})
 		);
 	};
