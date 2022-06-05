@@ -7,6 +7,7 @@ import {
 	ConfirmModal,
 	ProfileFormModal,
 	EditPostModal,
+	SideBar,
 } from "components";
 import {
 	usePosts,
@@ -59,6 +60,7 @@ function App() {
 			{showEditPostModal && <EditPostModal />}
 			{showModal && <ConfirmModal />}
 			{showEditProfile && <ProfileFormModal />}
+			<SideBar />
 			<Footer />
 		</div>
 	);
