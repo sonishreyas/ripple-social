@@ -113,7 +113,7 @@ const NewPostModal = () => {
 	};
 
 	return (
-		<div className="modal flex-row justify-content-center align-start">
+		<div className="modal flex-row justify-content-center align-center">
 			<div className="modal-background"></div>
 			<div className="modal-content p-5 m-5 b-radius-2 card-shadow">
 				<div className="flex-row justify-content-space-between align-center flex-gap-1">
