@@ -197,7 +197,7 @@ const NewPostModal = () => {
 					<div className="flex-row justify-content-center align-center flex-gap-1 w-100">
 						{!showScheduleDateInput ? (
 							<button
-								className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
+								className="outline-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
 								onClick={() => dispatch(setShowScheduleDateInput(true))}
 							>
 								Schedule Post
@@ -230,9 +230,6 @@ const NewPostModal = () => {
 							onClick={handleCreatePost}
 						>
 							Create Post
-						</button>
-						<button className="outline-btn p-5 cursor-pointer b-radius-2 flex-grow-1">
-							Save Draft
 						</button>
 					</div>
 				</div>

@@ -12,6 +12,7 @@ const BookmarkContent = () => {
 
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
+			<h2 className="p-5 text-bold">Bookmark Posts</h2>
 			<Posts postData={postData} />
 		</main>
 	);
