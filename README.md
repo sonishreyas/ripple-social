@@ -7,7 +7,7 @@
 </p>
 <h1 align="center" color="green">Ripple</h3>
 <p align="center">
- Ripple is a social media app where you can connect your friends. Build using React
+ Ripple is a social media app where you can connect your friends. Build using React, Redux, and Firebase
   <br>
   <a href="https://ripple-social.netlify.app/"><strong>Here</strong></a>
  <br />
@@ -51,5 +51,7 @@
 - Html
 - CSS
 - React
+- Redux
+- Firebase
 
-<img src = "https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=html5&logoColor=white">  <img src = "https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3&logoColor=white">  <img src="https://img.shields.io/badge/-React-1572B6?style=flat&logo=react">
+<img src = "https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=html5&logoColor=white">  <img src = "https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3&logoColor=white">  <img src="https://img.shields.io/badge/-React-1572B6?style=flat&logo=react"> <img src="https://img.shields.io/badge/-Redux-1572B6?style=flat&logo=redux"> <img src="https://img.shields.io/badge/-Firebase-E34F26?style=flat&logo=firebase">
