@@ -43,6 +43,7 @@
 
 ### Desktop
 
+![ripple-social-preview](https://user-images.githubusercontent.com/46019734/172262483-d850e561-2ad1-4287-8db4-79a9cf9c9360.gif)
 
 
 # Technology Stack
