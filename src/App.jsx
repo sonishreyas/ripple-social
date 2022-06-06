@@ -19,6 +19,9 @@ import {
 	useUser,
 	toggleNavbar,
 	getPosts,
+	getFeedPosts,
+	getBookmarkData,
+	getLikePosts,
 } from "features";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -28,7 +31,7 @@ function App() {
 	const { showNavbar } = useNavbar();
 	const { showPostModal, showEditPostModal } = usePosts();
 	const { showModal } = useModal();
-	const { showEditProfile } = useUser();
+	const { showEditProfile, userProfile } = useUser();
 	const location = useLocation();
 
 	const dispatch = useDispatch();
@@ -49,6 +52,14 @@ function App() {
 	useEffect(() => {
 		dispatch(getPosts());
 	}, []);
+
+	useEffect(() => {
+		if (Object.keys(userProfile).length) {
+			dispatch(getFeedPosts({ userFollowing: userProfile?.following }));
+			dispatch(getBookmarkData({ userId: userProfile.uid }));
+			dispatch(getLikePosts({ userId: userProfile.uid }));
+		}
+	}, [userProfile]);
 
 	return (
 		<div className="grid-container">

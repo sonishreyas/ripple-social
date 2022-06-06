@@ -14,18 +14,9 @@ import { CreatePost, Posts } from ".";
 import { sortReducer } from "reducers";
 
 const HomeContent = () => {
-	const dispatch = useDispatch();
 	const { feedPosts } = usePosts();
-	const { userProfile } = useUser();
 	const [postData, setPostData] = useState([]);
 	const [sortType, setSortType] = useState("trending");
-	useEffect(() => {
-		if (Object.keys(userProfile).length) {
-			dispatch(getFeedPosts({ userFollowing: userProfile?.following }));
-			dispatch(getBookmarkData({ userId: userProfile.uid }));
-			dispatch(getLikePosts({ userId: userProfile.uid }));
-		}
-	}, [userProfile]);
 
 	useEffect(() => {
 		setPostData(sortReducer(sortType, feedPosts));
