@@ -60,7 +60,7 @@ function App() {
 			{showEditPostModal && <EditPostModal />}
 			{showModal && <ConfirmModal />}
 			{showEditProfile && <ProfileFormModal />}
-			<SideBar />
+			{location.pathname !== "/auth" && <SideBar />}
 			<Footer />
 		</div>
 	);
