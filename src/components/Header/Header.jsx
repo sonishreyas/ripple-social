@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { useTheme, toggleTheme, toggleNavbar, useUser } from "features";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTheme, toggleTheme, toggleNavbar, useUser, logout } from "features";
 import { useEffect, useState } from "react";
 import { useDebounce } from "custom-hooks";
 
@@ -9,6 +9,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const { users } = useUser();
+	const navigate = useNavigate();
 	const getActiveClass = ({ isActive }) =>
 		isActive
 			? "no-link cursor-pointer text-cta-color text-bold"
@@ -105,9 +106,23 @@ const Header = () => {
 						<li className="header-theme-small-icon h-auto pr-2 cursor-pointer">
 							<span className="social">
 								<i
+									className={`fas fa-right-from-bracket theme-icon social`}
+									aria-label="Logout"
+									title="Logout"
+									onClick={() => dispatch(logout())}
+								></i>
+							</span>
+						</li>
+						<li className="header-theme-small-icon h-auto pr-2 cursor-pointer">
+							<span className="social">
+								<i
 									className={`fas fa-${themeIcon} theme-icon social`}
 									aria-label="dark/light theme icon"
-									onClick={() => dispatch(toggleTheme())}
+									title="dark/light theme icon"
+									onClick={() => {
+										dispatch(toggleTheme());
+										navigate("/");
+									}}
 								></i>
 							</span>
 						</li>

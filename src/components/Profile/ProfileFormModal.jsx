@@ -11,9 +11,11 @@ const ProfileFormModal = () => {
 	const { userProfile } = useUser();
 	const dispatch = useDispatch();
 	const { showToast } = useToast();
-	const handleSaveProfile = () => {};
 	const handleProfileModalDismiss = () =>
 		dispatch(setShowEditProfile({ showEditProfile: false }));
+	const [profileLoader, setProfileLoader] = useState(0);
+	const [backgroundLoader, setBackgroundLoader] = useState(0);
+
 	const [profileState, profileDispatch] = useReducer(profileReducer, {
 		name: userProfile?.name,
 		bio: userProfile?.bio || "",
@@ -40,7 +42,9 @@ const ProfileFormModal = () => {
 		uploadFilesForPost(
 			{ type: type, payload: e.target.files[0] },
 			profileDispatch,
-			updateType
+			updateType,
+			setProfileLoader,
+			setBackgroundLoader
 		);
 	};
 
@@ -154,6 +158,7 @@ const ProfileFormModal = () => {
 							/>
 							<p>Change Profile Picture : </p>
 							<i className="fa-solid fa-images social post-icons"></i>
+							{profileLoader !== 0 && <p>{"Progress : " + profileLoader} %</p>}
 						</label>
 						<label className="basic-card b-radius-2 w-max-content p-4 flex-row justify-content-center align-center flex-gap-1 cursor-pointer">
 							<input
@@ -166,15 +171,29 @@ const ProfileFormModal = () => {
 							/>
 							<p>Change Background Picture : </p>
 							<i className="fa-solid fa-images social post-icons"></i>
+							{backgroundLoader !== 0 && (
+								<p>{"Progress : " + backgroundLoader} %</p>
+							)}
 						</label>
 						<section className="card-footer flex-row flex-grow-1 justify-content-center flex-gap-1 py-5 px-5">
-							<button
-								className="cursor-pointer primary-btn save-btn p-5 b-radius-2 my-0 text-bold flex-grow-1"
-								type="button"
-								onClick={handleUpdateProfile}
-							>
-								Save
-							</button>
+							{(profileLoader === 0 || profileLoader === 100) &&
+							(backgroundLoader === 0 || backgroundLoader === 100) ? (
+								<button
+									className="cursor-pointer primary-btn save-btn p-5 b-radius-2 my-0 text-bold flex-grow-1"
+									type="button"
+									onClick={handleUpdateProfile}
+								>
+									Save
+								</button>
+							) : (
+								<button
+									className="cursor-pointer primary-btn save-btn p-5 b-radius-2 my-0 text-bold flex-grow-1"
+									type="button"
+									disabled
+								>
+									Save
+								</button>
+							)}
 							<button
 								className="cursor-pointer outline-btn cancel-btn p-5 b-radius-2 my-0 text-bold flex-grow-1"
 								type="button"

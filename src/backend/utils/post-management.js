@@ -23,7 +23,13 @@ const addNewPost = async (newPost, showToast, msg) => {
 	}
 };
 
-const uploadFilesForPost = (file, dispatch, update = "post") => {
+const uploadFilesForPost = (
+	file,
+	dispatch,
+	update = "post",
+	setProfileLoader,
+	setBackgroundLoader
+) => {
 	(async () => {
 		try {
 			const storageRef = ref(storage, `${file.type}/` + file.payload.name);
@@ -35,14 +41,10 @@ const uploadFilesForPost = (file, dispatch, update = "post") => {
 					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 					const progress =
 						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					console.log("Upload is " + progress + "% done");
-					switch (snapshot.state) {
-						case "paused":
-							console.log("Upload is paused");
-							break;
-						case "running":
-							console.log("Upload is running");
-							break;
+					if (update === "profile-img") {
+						setProfileLoader(progress);
+					} else if (update === "background-img") {
+						setBackgroundLoader(progress);
 					}
 				},
 				(error) => {

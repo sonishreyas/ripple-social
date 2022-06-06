@@ -148,7 +148,7 @@ const Posts = ({ postData, userPost = false }) => {
 							<div className="basic-card post-card p-5 b-radius-3" key={id}>
 								<div className="p-5 b-radius-3 flex-column justify-content-center align-start flex-gap-half">
 									<Link
-										to={`/profile/${user.username}`}
+										to={`/profile/${user?.username}`}
 										className="no-link-decoration flex-row justify-content-start align-start w-100 flex-gap-2 pb-5"
 									>
 										<article className="avatar-container w-max-content">

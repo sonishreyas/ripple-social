@@ -6,7 +6,6 @@ import { presentInArray } from "utils";
 const SideBar = () => {
 	const { users, userProfile } = useUser();
 	const { uid } = useAuth();
-	console.log(userProfile, users);
 	const suggestedUser = users.filter(
 		(item) =>
 			item.id !== uid && !presentInArray(userProfile?.following, item.id)

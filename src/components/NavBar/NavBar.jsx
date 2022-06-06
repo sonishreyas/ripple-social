@@ -9,21 +9,10 @@ const NavBar = () => {
 	const { showNavbar } = useNavbar();
 	const getActiveClass = ({ isActive }) =>
 		isActive
-			? "no-link cursor-pointer text-cta-color text-bold"
-			: "no-link cursor-pointer";
-	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false }));
+			? "no-link cursor-pointer text-cta-color text-bold rui-drawer-links flex-row justify-content-start align-center flex-gap-1 p-5 m-2"
+			: "no-link cursor-pointer rui-drawer-links flex-row justify-content-start align-center flex-gap-1 p-5 m-2";
 
-	// useEffect(() => {
-	// 	if (window.innerWidth <= 768) {
-	// 		window.addEventListener("resize", () =>
-	// 			dispatch(toggleNavbar({ showNavbar: false }))
-	// 		);
-	// 	} else {
-	// 		window.removeEventListener("resize", () =>
-	// 			dispatch(toggleNavbar({ showNavbar: true }))
-	// 		);
-	// 	}
-	// }, [window.innerWidth]);
+	const handleHideNavbar = () => dispatch(toggleNavbar({ showNavbar: false }));
 
 	return (
 		<div className="nav-container p-0 m-0 w-100 h-auto flex-row">
@@ -48,7 +37,7 @@ const NavBar = () => {
 						</li>
 						<>
 							{navData.map(({ id, route, name, icon }) => (
-								<li className="rui-drawer-content" key={id}>
+								<li className="rui-drawer-content p-5 m-5" key={id}>
 									<NavLink
 										to={
 											route !== "/profile"
@@ -57,12 +46,10 @@ const NavBar = () => {
 										}
 										className={getActiveClass}
 									>
-										<div className="rui-drawer-links flex-row justify-content-start align-center flex-gap-1 p-5 m-2">
-											<span>
-												<i className={`${icon}`}></i>
-											</span>
-											<span className="rui-drawer-content--text">{name}</span>
-										</div>
+										<span>
+											<i className={`${icon}`}></i>
+										</span>
+										<span className="rui-drawer-content--text">{name}</span>
 									</NavLink>
 								</li>
 							))}
