@@ -53,7 +53,7 @@ const NewPostModal = () => {
 				},
 			},
 		});
-		dispatch(setShowScheduleDateInput({ showScheduleDateInput: false }));
+		dispatch(setShowScheduleDateInput(false));
 	};
 
 	const handleDismissPostModal = () => {

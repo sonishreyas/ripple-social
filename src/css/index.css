@@ -148,21 +148,24 @@ input:checked + .slider::before {
 
 .modal {
 	padding: var(--p-0);
-	z-index: var(--max-z-index);
+	z-index: 13;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: fixed;
 }
 
 .modal-background {
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	grid-column: 1/13;
-	grid-row: 1/13;
 	background-color: var(--tertiary-color);
 	opacity: 0.5;
-	z-index: 8;
+	z-index: 13;
 }
 .modal-content {
 	position: absolute;
-	z-index: var(--max-z-index);
+	z-index: 13;
 	background-color: var(--secondary-background-color);
 	width: 60rem;
 }
