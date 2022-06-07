@@ -45,6 +45,13 @@
 
 ![ripple-social-preview](https://user-images.githubusercontent.com/46019734/172262483-d850e561-2ad1-4287-8db4-79a9cf9c9360.gif)
 
+### Tablet
+
+![ripple-social-tab-preview](https://user-images.githubusercontent.com/46019734/172459147-2f2bb9fe-4ebd-4c7c-adfb-d986fa235052.gif)
+
+### Mobile
+
+![ripple-social-mobile-preview (1)](https://user-images.githubusercontent.com/46019734/172459563-10f78411-1baf-4471-a5eb-e376bd0fa76b.gif)
 
 # Technology Stack
 
