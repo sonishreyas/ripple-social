@@ -263,7 +263,6 @@ const postSlice = createSlice({
 			state.allPosts = updateArray(state.allPosts, payload);
 			state.feedPosts = updateArray(state.feedPosts, payload);
 			state.explorePosts = updateArray(state.explorePosts, payload);
-			state.itemsInBookmark = updateArray(state.itemsInBookmark, payload);
 		},
 		[addLike.rejected]: (state, { payload }) => {
 			console.log(payload);
@@ -290,7 +289,6 @@ const postSlice = createSlice({
 			state.allPosts = updateArray(state.allPosts, payload);
 			state.feedPosts = updateArray(state.feedPosts, payload);
 			state.explorePosts = updateArray(state.explorePosts, payload);
-			state.itemsInBookmark = updateArray(state.itemsInBookmark, payload);
 		},
 		[addComment.rejected]: (state, { payload }) => {
 			console.log(payload);
