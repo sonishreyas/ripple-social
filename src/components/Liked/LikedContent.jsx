@@ -8,7 +8,7 @@ const LikedContent = () => {
 	const [postData, setPostData] = useState([]);
 	useEffect(() => {
 		setPostData(getPostDataFromId(allPosts, itemsLiked));
-	}, [itemsLiked]);
+	}, [itemsLiked, allPosts]);
 
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">

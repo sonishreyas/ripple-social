@@ -8,7 +8,7 @@ const BookmarkContent = () => {
 	const [postData, setPostData] = useState([]);
 	useEffect(() => {
 		setPostData(getPostDataFromId(allPosts, itemsInBookmark));
-	}, [itemsInBookmark]);
+	}, [itemsInBookmark, allPosts]);
 
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">

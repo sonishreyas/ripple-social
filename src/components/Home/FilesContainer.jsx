@@ -43,6 +43,7 @@ const FilesContainer = ({ fileUrls }) => {
 										slideIndex === index + 1 ? "slide-active" : "slide-inactive"
 									}`}
 									alt="post"
+									key={index}
 								>
 									<source src={url} type="video/*" />
 								</video>
@@ -55,6 +56,7 @@ const FilesContainer = ({ fileUrls }) => {
 										slideIndex === index + 1 ? "slide-active" : "slide-inactive"
 									}`}
 									alt="post"
+									key={index}
 								/>
 							);
 						}
@@ -63,7 +65,7 @@ const FilesContainer = ({ fileUrls }) => {
 			<div className="flex-row justify-content-center align-center flex-gap-half banner-dots-container">
 				{Array.from({ length: fileUrls?.length }).map((item, index) => (
 					<i
-						key={index}
+						key={`index-${index}`}
 						onClick={() => moveIndex(index + 1)}
 						className={`fa-solid fa-circle banner-dot ${
 							slideIndex === index + 1 ? "active-dot" : "dot"

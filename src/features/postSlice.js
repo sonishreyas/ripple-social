@@ -164,7 +164,6 @@ export const addComment = createAsyncThunk(
 	"posts/addComment",
 	async ({ postId, updatedValue }, { rejectWithValue }) => {
 		try {
-			console.log(postId, updatedValue);
 			const res = await editPostHandler(postId, updatedValue);
 			return { ...res, id: postId };
 		} catch (err) {
@@ -301,7 +300,6 @@ const postSlice = createSlice({
 			state.allPosts = updateArray(state.allPosts, payload);
 			state.feedPosts = updateArray(state.feedPosts, payload);
 			state.explorePosts = updateArray(state.explorePosts, payload);
-			state.itemsInBookmark = updateArray(state.itemsInBookmark, payload);
 		},
 	},
 });

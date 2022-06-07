@@ -23,13 +23,12 @@ const HomeContent = () => {
 	}, [feedPosts]);
 
 	useEffect(() => {
-		setPostData(sortReducer(sortType, postData));
+		setPostData(sortReducer(sortType, feedPosts));
 	}, [sortType]);
 
 	const handleSortBy = (e) => {
 		setSortType(e.target.value);
 	};
-
 	return (
 		<main className="main flex-column align-center justify-content-start all-grid-columns flex-gap-1">
 			<CreatePost />

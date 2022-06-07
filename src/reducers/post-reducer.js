@@ -57,11 +57,13 @@ const sortReducer = (sortType, postData) => {
 			);
 		case "recent":
 			return [...postData].sort(
-				(currPost, nextPost) => nextPost?.createdAt - currPost?.createdAt
+				(currPost, nextPost) =>
+					new Date(nextPost?.createdAt) - new Date(currPost?.createdAt)
 			);
 		case "date":
 			return [...postData].sort(
-				(currPost, nextPost) => currPost?.createdAt - nextPost?.createdAt
+				(currPost, nextPost) =>
+					new Date(currPost?.createdAt) - new Date(nextPost?.createdAt)
 			);
 		default:
 			return postData;
