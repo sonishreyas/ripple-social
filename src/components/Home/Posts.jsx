@@ -140,7 +140,7 @@ const Posts = ({ postData, userPost = false }) => {
 	const posts = postData.slice(0, pageNum * 6);
 	return (
 		<>
-			{posts?.length &&
+			{posts?.length ? (
 				posts?.map(
 					({ id, createdAt, fileUrls, postText, userId, comments }, index) => {
 						const user = getUserData(userId, users);
@@ -258,7 +258,10 @@ const Posts = ({ postData, userPost = false }) => {
 							</div>
 						);
 					}
-				)}
+				)
+			) : (
+				<p>No Posts</p>
+			)}
 			<div ref={lastPost} />
 		</>
 	);
