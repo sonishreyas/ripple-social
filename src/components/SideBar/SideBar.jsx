@@ -14,7 +14,7 @@ const SideBar = () => {
 		<aside className="aside">
 			<div className="basic-card b-radius-2 p-5">
 				<h4 className="text-cta-color text-bold p-5">Suggested Users</h4>
-				{suggestedUser?.length &&
+				{suggestedUser?.length ? (
 					suggestedUser?.map((user) => (
 						<div
 							className="p-5 flex-row justify-content-space-between align-center w-100"
@@ -47,7 +47,10 @@ const SideBar = () => {
 								)}
 							</div>
 						</div>
-					))}
+					))
+				) : (
+					<></>
+				)}
 			</div>
 		</aside>
 	);

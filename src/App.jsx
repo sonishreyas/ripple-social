@@ -45,8 +45,11 @@ function App() {
 	}, [uid]);
 
 	useEffect(() => {
-		if (window.innerWidth <= 768) dispatch(toggleNavbar({ showNavbar: false }));
-		else dispatch(toggleNavbar({ showNavbar: true }));
+		window.addEventListener("resize", () => {
+			if (window.innerWidth <= 768)
+				dispatch(toggleNavbar({ showNavbar: false }));
+			else dispatch(toggleNavbar({ showNavbar: true }));
+		});
 	}, [location]);
 
 	useEffect(() => {

@@ -225,9 +225,11 @@ const postSlice = createSlice({
 			console.log(payload);
 		},
 		[addPost.fulfilled]: (state, { payload }) => {
-			state.feedPosts = [...state.feedPosts, { ...payload }];
-			state.allPosts = [...state.allPosts, { ...payload }];
-			state.explorePosts = [...state.explorePosts, { ...payload }];
+			if (new Date(payload.createdAt) <= new Date()) {
+				state.feedPosts = [...state.feedPosts, { ...payload }];
+				state.allPosts = [...state.allPosts, { ...payload }];
+				state.explorePosts = [...state.explorePosts, { ...payload }];
+			}
 		},
 		[addToBookmark.rejected]: (state, { payload }) => {
 			console.log(payload);

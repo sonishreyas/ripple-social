@@ -101,8 +101,12 @@ const Header = () => {
 																		/>
 																	</article>
 																	<div className="card-content p-5 pb-0">
-																		<p className="h5 text-bold">{name}</p>
-																		<p className="py-1">@{username}</p>
+																		<p className="h5 text-bold word-wrap">
+																			{name}
+																		</p>
+																		<p className="py-1 word-wrap">
+																			@{username}
+																		</p>
 																	</div>
 																</div>
 															</div>

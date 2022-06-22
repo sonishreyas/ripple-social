@@ -52,10 +52,22 @@ const Register = () => {
 		if (registerState.password !== registerState.confirmPassword) {
 			showToast("Password should match", "error");
 		} else {
-			e.preventDefault();
-			const res = await dispatch(register(registerState));
-			if (res) {
-				navigate(location?.state?.from?.pathname);
+			if (
+				!registerState.firstName.length ||
+				!registerState.lastName.length ||
+				!registerState.username.length ||
+				!registerState.email.length ||
+				!registerState.password.length ||
+				!registerState.confirmPassword.length
+			) {
+				showToast("Please fill all the values", "warning");
+			} else {
+				e.preventDefault();
+				const res = await dispatch(register(registerState));
+				if (res) {
+					showToast("User registered successfully", "success");
+					navigate(location?.state?.from?.pathname);
+				}
 			}
 		}
 	};

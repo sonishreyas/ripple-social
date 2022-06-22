@@ -4,6 +4,7 @@ import { setValueHandler, setTestHandler, setFocusHandler } from "backend";
 import { loginReducer } from "reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "features";
+import { useToast } from "custom-hooks";
 const Login = () => {
 	const [loginState, loginDispatch] = useReducer(loginReducer, {
 		email: "",
@@ -14,17 +15,26 @@ const Login = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const { showToast } = useToast();
 	const focusReset = { email: false, password: false };
 	const showPasswordHandler = () =>
 		showPassword ? setShowPassword(false) : setShowPassword(true);
 	const handleLogin = async (e) => {
 		e.preventDefault();
-		const res = await dispatch(
-			login({ email: loginState.email, password: loginState.password })
-		);
-		if (res) {
-			navigate(location?.state?.from?.pathname);
+		if (loginState.email.length && loginState.password.length) {
+			const res = await dispatch(
+				login({ email: loginState.email, password: loginState.password })
+			);
+			if (res) {
+				showToast("Login successfull", "success");
+				navigate(location?.state?.from?.pathname);
+			}
+		} else if (!loginState.email.length && !loginState.password.length) {
+			showToast("Please fill all the values", "warning");
+		} else if (!loginState.email.length) {
+			showToast("Email cannot be empty", "warning");
+		} else if (!loginState.password.length) {
+			showToast("Password cannot be empty", "warning");
 		}
 	};
 	return (

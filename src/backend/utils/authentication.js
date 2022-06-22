@@ -71,8 +71,6 @@ const registerHandler = async (registerData) => {
 					following: [],
 					bookmarks: [],
 				});
-				// showToast("User registered successfully..", "success");
-				console.log(userData);
 				return userData;
 			}
 		}
@@ -90,13 +88,14 @@ const setValueHandler = (e, field, type, loginDispatch) => {
 const setTestHandler = (loginDispatch) =>
 	loginDispatch({
 		type: "TEST_CREDENTIAL",
-		payload: { email: "test@gmail.com", password: "test123" },
+		payload: { email: "sonishreyas10@gmail.com", password: "shreyas" },
 	});
 
 const setFocusHandler = (field, value, type, loginDispatch, focusReset) => {
 	focusReset[field] = value;
 	loginDispatch({ payload: { focus: focusReset }, type: type });
 };
+
 export {
 	RequireAuth,
 	loginHandler,
