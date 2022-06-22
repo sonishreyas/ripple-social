@@ -109,9 +109,12 @@ const getFeedPost = async (userFollowing) => {
 			userFollowing.map(async (item) => {
 				const q = query(collection(db, "posts"), where("userId", "==", item));
 				const querySnapshot = await getDocs(q);
+				const date = new Date().toISOString();
 				querySnapshot.forEach((doc) => {
 					let data = doc.data();
-					postsData = postsData.concat({ id: doc.id, ...data });
+					postsData =
+						new Date(data.createdAt) < new Date(date) &&
+						postsData.concat({ id: doc.id, ...data });
 				});
 			})
 		);
@@ -127,9 +130,11 @@ const getExplorePost = async () => {
 		const postsData = [];
 		const q = query(collection(db, "posts"));
 		const querySnapshot = await getDocs(q);
+		const date = new Date().toISOString();
 		querySnapshot.forEach((doc) => {
 			let data = doc.data();
-			postsData.push({ id: doc.id, ...data });
+			new Date(data.createdAt) < new Date(date) &&
+				postsData.push({ id: doc.id, ...data });
 		});
 		return postsData;
 	} catch (error) {

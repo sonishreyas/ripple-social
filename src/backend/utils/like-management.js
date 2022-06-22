@@ -35,7 +35,6 @@ const removePostFromLike = async (userId, updatedValue) => {
 const updateLikesData = async (postId, updatedValue) => {
 	try {
 		const postRef = doc(db, "posts", postId);
-		console.log("post-update", updatedValue);
 		await updateDoc(postRef, updatedValue);
 		return updatedValue;
 	} catch (error) {

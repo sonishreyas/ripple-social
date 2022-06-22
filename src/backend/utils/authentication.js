@@ -71,8 +71,6 @@ const registerHandler = async (registerData) => {
 					following: [],
 					bookmarks: [],
 				});
-				// showToast("User registered successfully..", "success");
-				console.log(userData);
 				return userData;
 			}
 		}
