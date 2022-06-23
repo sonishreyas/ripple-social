@@ -112,15 +112,14 @@ const getFeedPost = async (userFollowing) => {
 				const date = new Date().toISOString();
 				querySnapshot.forEach((doc) => {
 					let data = doc.data();
-					postsData =
-						new Date(data.createdAt) < new Date(date) &&
-						postsData.concat({ id: doc.id, ...data });
+					if (new Date(data.createdAt) < new Date(date)) {
+						postsData = postsData.concat({ id: doc.id, ...data });
+					}
 				});
 			})
 		);
 		return postsData;
 	} catch (error) {
-		console.log(error);
 		return error;
 	}
 };
