@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserData, presentInArray, removeFromArray, trimData } from "utils";
 import { Comments, FilesContainer } from ".";
+import { LoadingCard } from "./LoadingCard";
 
 const Posts = ({ postData, userPost = false }) => {
 	const { users } = useUser();
@@ -133,11 +134,11 @@ const Posts = ({ postData, userPost = false }) => {
 		}
 	};
 	const lastPost = useRef(null);
-	let { pageNum } = useInfiniteScroll({
+	let { pageNum, loader } = useInfiniteScroll({
 		lastElement: lastPost,
 		posts: postData,
 	});
-	const posts = postData.slice(0, pageNum * 6);
+	const posts = postData.slice(0, pageNum * 4);
 	return (
 		<>
 			{posts?.length ? (
@@ -259,9 +260,12 @@ const Posts = ({ postData, userPost = false }) => {
 						);
 					}
 				)
+			) : loader ? (
+				<LoadingCard />
 			) : (
 				<p>No Posts</p>
 			)}
+			{loader && <LoadingCard />}
 			<div ref={lastPost} />
 		</>
 	);
