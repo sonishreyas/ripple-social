@@ -1,7 +1,7 @@
 const LoadingCard = () => {
 	return (
 		<>
-			{Array.from({ length: 2 }).map((item, index) => (
+			{Array.from({ length: 1 }).map((item, index) => (
 				<article className="basic-card post-card p-5 b-radius-3" key={index}>
 					<section className="video-card-image-container card-image-container flex-row justify-content-center align-center flex-wrap b-radius-2 video-card-image-loader" />
 					<section className="flex-row justify-content-start align-start mx-5 ">
