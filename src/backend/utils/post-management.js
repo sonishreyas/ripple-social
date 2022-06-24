@@ -10,7 +10,12 @@ import {
 	where,
 } from "firebase/firestore";
 import { storage } from "backend/firebase/firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+	ref,
+	uploadBytesResumable,
+	getDownloadURL,
+	getMetadata,
+} from "firebase/storage";
 
 const addNewPost = async (newPost, showToast, msg) => {
 	try {
@@ -28,7 +33,8 @@ const uploadFilesForPost = (
 	dispatch,
 	update = "post",
 	setProfileLoader,
-	setBackgroundLoader
+	setBackgroundLoader,
+	setPostLoader
 ) => {
 	(async () => {
 		try {
@@ -42,9 +48,11 @@ const uploadFilesForPost = (
 					const progress =
 						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					if (update === "profile-img") {
-						setProfileLoader(progress);
+						setProfileLoader(parseInt(progress));
 					} else if (update === "background-img") {
-						setBackgroundLoader(progress);
+						setBackgroundLoader(parseInt(progress));
+					} else if (update === "post") {
+						setPostLoader(parseInt(progress));
 					}
 				},
 				(error) => {
@@ -67,7 +75,7 @@ const uploadFilesForPost = (
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-						if (update === "post")
+						if (update === "post") {
 							dispatch({
 								type: "UPDATE_UPLOADED_URL",
 								payload: {
@@ -79,7 +87,7 @@ const uploadFilesForPost = (
 									},
 								},
 							});
-						else if (update === "profile-img")
+						} else if (update === "profile-img")
 							dispatch({
 								type: "UPDATE_PROFILE_URL",
 								payload: {

@@ -29,6 +29,7 @@ const NewPostModal = () => {
 	});
 	const { showToast } = useToast();
 	const { uid } = useAuth();
+	const [postLoader, setPostLoader] = useState(0);
 	const dispatch = useDispatch();
 	const [showEmojiContainer, setShowEmojiContainer] = useState(false);
 	const handleDismissModal = () => dispatch(setShowModal({ showModal: false }));
@@ -107,7 +108,11 @@ const NewPostModal = () => {
 		Object.keys(e.target.files).map((i) =>
 			uploadFilesForPost(
 				{ type: type, payload: e.target.files[i] },
-				postDispatch
+				postDispatch,
+				"post",
+				"_",
+				"_",
+				setPostLoader
 			)
 		);
 	};
@@ -193,6 +198,9 @@ const NewPostModal = () => {
 						>
 							<i className="fa-solid fa-face-laugh social post-icons"></i>
 						</span>
+						{postLoader > 0 && postLoader < 100 && (
+							<p>Uploading: {postLoader} %</p>
+						)}
 					</div>
 					<div className="flex-row justify-content-center align-center flex-gap-1 w-100">
 						{!showScheduleDateInput ? (
@@ -225,12 +233,21 @@ const NewPostModal = () => {
 								/>
 							</div>
 						)}
-						<button
-							className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
-							onClick={handleCreatePost}
-						>
-							Create Post
-						</button>
+						{postLoader > 0 && postLoader < 100 ? (
+							<button
+								className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1 disabled"
+								disabled
+							>
+								Create Post
+							</button>
+						) : (
+							<button
+								className="primary-btn p-5 cursor-pointer b-radius-2 flex-grow-1"
+								onClick={handleCreatePost}
+							>
+								Create Post
+							</button>
+						)}
 					</div>
 				</div>
 				{showEmojiContainer && (
